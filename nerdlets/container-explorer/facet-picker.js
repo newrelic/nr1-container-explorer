@@ -1,8 +1,8 @@
 import React from 'react'
 import { Spinner, Grid, GridItem } from 'nr1'
 
-import nrdbQuery from '../../lib/nrdb-query'
-import quote from '../../lib/quote'
+import getCardinality from '../../lib/get-cardinality'
+
 
 import FacetTable from './facet-table'
 
@@ -61,29 +61,17 @@ export default class FacetPicker extends React.Component {
     this.setState({facets: null})
     const timeWindow = "SINCE 30 seconds ago"
     const { account, where } = this.props
-    const whereClause = where ? "WHERE " + where : ''
-    const keySet = (await nrdbQuery(account.id, `SELECT keySet() FROM ProcessSample ${whereClause} ${timeWindow}`))
-      .filter(key => key.type == 'string')//.slice(0, 30)
 
-    const batchSize = 50
-    const facets = []
     let facet = null
-    for (var i = 0; i < keySet.length; i += batchSize) {
-      const batch = keySet.slice(i, i + batchSize)
-      const select = batch.map(key => `uniqueCount(${quote(key.key)}) AS '${key.key}'`)
-      const nrql = `SELECT ${select} FROM ProcessSample ${whereClause} ${timeWindow}`
+    let facets = await getCardinality({accountId: account.id, 
+      eventType: "ProcessSample",
+      where, timeWindow
+    })
+    facets = facets.filter(facet => {
+      if(facet.name == "containerImageName"&& facet.count > 1) facet=facet.name
+      return facet.count > 1 && facet.count < 10000 && !OMIT_KEYS[facet.name]
+    })
 
-      const uniqueCounts = (await nrdbQuery(account.id, nrql))[0]
-      Object.keys(uniqueCounts).forEach(key => {
-        const count = uniqueCounts[key]
-        if (count > 1 && count < 5000 && !OMIT_KEYS[key]) {
-          facets.push({ name: key, count })
-          if(key == 'containerImageName') facet = key
-        } else {
-          console.log("omit", key, count)
-        }
-      })
-    }
     facets.sort((f1, f2) => f1.name.localeCompare(f2.name))
     this.setState({ facets, facet })
   }

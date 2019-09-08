@@ -26,6 +26,7 @@ export default class ContainerExplorer extends React.Component {
     // TODO add an account picker
     this.state = {
       account: { id: 686435, name: "Container Fabric" },
+      showFacetPicker: true,
       filters: []
     }    
   }
@@ -72,7 +73,6 @@ export default class ContainerExplorer extends React.Component {
     const whereClause = where ? `WHERE ${where}` : ""
     const select = `uniqueCount(entityAndPid) as processes, uniqueCount(entityGuid) as hosts, uniqueCount(containerId) AS containers`
     const nrql = `SELECT ${select} FROM ProcessSample ${whereClause} ${timeWindow}`
-    console.log(nrql)
     const counts = (await nrdbQuery(account.id, nrql))[0]
     this.setState({counts})
   }
