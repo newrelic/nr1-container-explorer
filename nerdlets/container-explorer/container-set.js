@@ -7,7 +7,7 @@ import {Grid, GridItem, Tabs, TabsItem, Spinner} from 'nr1'
 
 import nrdbQuery from '../../lib/nrdb-query'
 import bytesToSize from '../../lib/bytes-to-size'
-
+import getCardinality from '../../lib/get-cardinality'
 
 function groupProcessData(processData, groupBy) {
   const tableData = processData.reduce((groups, row) => {
@@ -69,11 +69,12 @@ export default class ContainerSet extends React.Component {
   async reload() {
     this.setState({conatinerData: null})
     const {where, account} = this.props
+    const timeWindow = "SINCE 3 minutes ago"
     const nrql = `SELECT sum(cpuPercent) AS sortValue,
           latest(hostname) as hostname,
           latest(containerId) as containerId
       FROM ProcessSample FACET containerId LIMIT 2000
-      SINCE 30 minutes ago WHERE ${where || "true"}`
+      ${timeWindow} WHERE ${where || "true"}`
 
     const results = await nrdbQuery(account.id, nrql)
 
@@ -86,7 +87,16 @@ export default class ContainerSet extends React.Component {
     const inClause = results.map(c => `'${c.facet}'`).join(', ')
     const containerWhere = `containerId IN (${inClause})`
 
-    await this.setState({containers, containerWhere}, () => this.update())
+    const facets = await getCardinality({
+      eventType: 'ProcessSample',
+      accountId: account.id,
+      where: containerWhere,
+      timeWindow
+    })
+    const groups = facets.filter(facet => facet.count > 1 && facet.count < results.length *.6)
+    console.log("Groups", groups)
+
+    await this.setState({containers, containerWhere, groups}, () => this.update())
   }
 
   /*

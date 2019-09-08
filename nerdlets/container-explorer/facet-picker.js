@@ -9,10 +9,12 @@ import FacetTable from './facet-table'
 const OMIT_KEYS = {
   systemMemoryBytes: true,
   apmApplicationIds: true,
-  contanierId: true,
+  containerId: true,
   commandLine: true,
   commandName: true,  
+  processId: true
 }
+
 function FacetList({ facets, facet, setFacet }) {
   return <div className="facet-picker-container">
     <h3>Segment</h3>
@@ -62,13 +64,13 @@ export default class FacetPicker extends React.Component {
     const timeWindow = "SINCE 30 seconds ago"
     const { account, where } = this.props
 
-    let facet = null
+    let facet = "containerImageName"
     let facets = await getCardinality({accountId: account.id, 
       eventType: "ProcessSample",
       where, timeWindow
     })
     facets = facets.filter(facet => {
-      if(facet.name == "containerImageName"&& facet.count > 1) facet=facet.name
+    
       return facet.count > 1 && facet.count < 10000 && !OMIT_KEYS[facet.name]
     })
 
