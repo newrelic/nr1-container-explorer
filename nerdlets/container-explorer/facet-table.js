@@ -7,8 +7,8 @@ import {TableChart} from 'nr1'
 export default function FacetTable(props) {
   const {account, facet, setFacetValue} = props
   const nrql = `SELECT uniqueCount(containerId) as 'Containers', 
-      uniqueCount(entityAndPid) as 'Processes', uniqueCount(entityGuid) as 'Hosts' 
-      FROM ProcessSample FACET ${quote(facet)} LIMIT max SINCE 30 seconds ago`
+    uniqueCount(entityGuid) as 'Hosts' 
+    FROM ProcessSample FACET ${quote(facet)} LIMIT max SINCE 30 seconds ago`
 
   const onClickTable = setFacetValue && function (ignored, row) {
     setFacetValue(row[facet])

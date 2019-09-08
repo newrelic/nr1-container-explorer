@@ -1,9 +1,12 @@
 import React from 'React'
 
 import ContainerChart from './container-chart'
-import {Grid, GridItem} from 'nr1' 
+import ContainerGrid from './container-grid'
+
+import {Grid, GridItem, Tabs, TabsItem} from 'nr1' 
 
 import nrdbQuery from '../../lib/nrdb-query'
+import bytesToSize from '../../lib/bytes-to-size'
 
 
 function SummaryChart(props) {
@@ -35,69 +38,80 @@ function groupProcessData(processData, groupBy) {
 }
 
 function SummaryTable(props) {
-  const {processData, groupBy, title} = props
+  const {containerData} = props
 
-  const rows = groupProcessData(processData, groupBy)
-
-  return <table>
+  return <table className="container-table">
     <thead>
       <tr>
-        <th>{title}</th>
-        <th>Processes</th>
+        <th>Host</th>
+        <th>Container</th>
         <th>CPU</th>
         <th>Memory</th>
       </tr>
     </thead>
     <tbody>
-      {rows.map(row => {
-        return <tr key={row[groupBy]}>
-          <td>{row[groupBy]}</td>
-          <td>{row.processCount}</td>
+      {containerData.map(row => {
+        return <tr key={row.containerId}>
+          <td>{row.hostname}</td>
+          <td>{row.containerId.slice(0, 6)+"..."}</td>
           <td>{Math.round(row.cpuPercent)}%</td>
-          <td>{row.memoryResidentSizeBytes}</td>
+          <td>{bytesToSize(row.memoryResidentSizeBytes)}</td>
         </tr>
       })}
     </tbody>
   </table>
-
 }
 
 export default class ContainerSet extends React.Component {
-
   componentDidMount() {
-    this.load()
+    this.interval = setInterval(() => {this.load()}, 15000)
+  }
+
+  componentWillMount() {
+    clearInterval(this.interval)
+  }
+
+  componentDidUpdate({where, account}) {
+    if(where != this.props.where || account != this.props.account) {
+      this.load()
+    }
   }
 
   async load() {
-    const {where, account} = this.props
-        
+    const {where, account} = this.props        
     const select = [
       'cpuPercent', 'memoryResidentSizeBytes', 'entityGuid', 'hostname', 'containerId'
     ].map(s => `latest(${s}) AS ${s}`).join(', ')
 
-    const nrql = `SELECT ${select} FROM ProcessSample WHERE ${where} AND (cpuPercent > 0 OR memoryResidentSizeBytes > 0)  SINCE 30 seconds ago FACET entityAndPid LIMIT max`
-    console.log(nrql)
+    const nrql = `SELECT ${select} FROM ProcessSample WHERE ${where} AND (cpuPercent > 0 OR memoryResidentSizeBytes > 0) SINCE 1 minute ago FACET entityAndPid LIMIT max`
     const processData = await nrdbQuery(account.id, nrql)
 
-    this.setState({processData})
+    await this.setState({processData})
   }
 
   render() {
-    const {facet, facetValue} = this.props
     const {processData} = this.state || {}
 
     if(!processData) return <div/>
+    const containerData = groupProcessData(processData, 'containerId')
+    const defaultTab = containerData.length > 40 ? "grid" : "table"
 
     return <div>
-      <p className="facet-name">{facet}</p>
-      <h2>{facetValue}</h2>
-      {/* <Grid>
-        <SummaryChart {...this.props} 
-          title="CPU" select="latest(cpuPercent) AS CPU"/>
-        <SummaryChart {...this.props} 
-          title="Memory" select="latest(memoryResidentSizeBytes) AS Memory"/>
-      </Grid> */}
-      <SummaryTable title="Host" groupBy="hostname" processData={processData}/>
+      <Grid>
+        <GridItem columnSpan={7}>
+          <Tabs defaultSelectedItem={defaultTab}>
+            <TabsItem itemKey="table" label="Table">
+              <SummaryTable containerData={containerData}/>
+            </TabsItem>
+            <TabsItem itemKey="grid" label="Grid">
+              <ContainerGrid containerData={containerData}/>
+            </TabsItem>
+          </Tabs>
+        </GridItem>
+        <GridItem columnSpan={5}>
+          <h2>Select a Container</h2>
+        </GridItem>
+      </Grid>
     </div>
   }
 

@@ -11,6 +11,7 @@
         "uuid": "dd253927-5aee-4ac3-bd56-702c8bcfc749"
     },
     "dependencies": {
+        "hsl-to-hex": "^1.0.0",
         "lodash": "^4.17.15",
         "prop-types": "^15.6.2",
         "react": "^16.6.3",

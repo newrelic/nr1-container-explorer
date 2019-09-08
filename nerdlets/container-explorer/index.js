@@ -21,6 +21,7 @@ export default class ContainerExplorer extends React.Component {
     super(props)
 
     this.addFilter = this.addFilter.bind(this)
+    this.removeFilter = this.removeFilter.bind(this)
 
     // TODO add an account picker
     this.state = {
@@ -29,29 +30,35 @@ export default class ContainerExplorer extends React.Component {
     }    
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    // FIXME remove
+    await this.addFilter("containerImageName", "cf-registry.nr-ops.net/browser/browser-monitoring-service:release-373")
     this.countProcesses()
   }
 
-  addFilter(name, value) {
+  async addFilter(name, value) {
     const {filters} = this.state
     filters.push({name, value})
+    await this.setFilters(filters)
+  }
+
+  async removeFilter(name, value) {
+    let {filters} = this.state
+    
+    filters = filters.filter(f => !(f.name == name && f.value == value))
+    console.log("rremove", filters)
     this.setFilters(filters)
   }
 
-  removeFilter(name, value) {
-    const {filters} = this.state
-    
-    this.setFilters(filters.filter(f => !(f.name == name && f.value == value)))
-  }
-
-  setFilters(filters) {
+  async setFilters(filters) {
     if(filters == null || filters.length == 0) {
-      this.setState({filters, where: null})
+      await this.setState({filters, where: null})
+      await this.countProcesses()
     }
     else {
       const where = filters.map(({name, value}) => `${quote(name)} = '${value}'`).join(" AND ")
-      this.setState({filters, where}, () => this.countProcesses())
+      await this.setState({filters, where})
+      await this.countProcesses()
     }
   }
 
@@ -69,12 +76,13 @@ export default class ContainerExplorer extends React.Component {
 
   render() {
     const { filters, counts } = this.state
-    const showFacetPicker = true
+    const showFacetPicker = counts && counts.processes > 2000  
 
     return <div>
       <FilterHeader filters={filters} removeFilter={this.removeFilter}/>
       <CountsHeader {...counts}/>
       {showFacetPicker && <FacetPicker {...this.state} addFilter={this.addFilter}/>}
+      {!showFacetPicker && <ContainerSet {...this.state}/>}
     </div>
   }
 }

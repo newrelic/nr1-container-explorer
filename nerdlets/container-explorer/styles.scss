@@ -43,10 +43,13 @@
   background-color: #d0f0ff;
   padding: 8px;
   margin: 8px;
-  font-size: 12px;
 
+  p {
+    font-size: 12px;
+    margin-bottom: 3px;
+  }
   .name {
-    color: #888888;
+    color: #666666;
   }
   .value {
     font-weight: 400;
@@ -58,4 +61,20 @@
   .count {
     text-align: center;
   }
+}
+
+.container-grid {
+  display: flex;
+  flex-wrap: wrap;
+
+  .node {
+    width: 24px;
+    height: 24px;
+    border: 1px solid #aaaaaa;
+    margin: 4px;
+  }
+}
+
+.container-table {
+  font-size: 12px;
 }

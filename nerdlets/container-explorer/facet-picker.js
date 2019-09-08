@@ -51,6 +51,7 @@ export default class FacetPicker extends React.Component {
   }
 
   async loadFacets() {
+    this.setState({facets: null})
     const timeWindow = "SINCE 30 seconds ago"
     const { account, where } = this.props
     const whereClause = where ? "WHERE " + where : ''
