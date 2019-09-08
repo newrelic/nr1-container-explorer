@@ -66,12 +66,38 @@
 .container-grid {
   display: flex;
   flex-wrap: wrap;
+  padding-top: 12px;
 
   .node {
     width: 24px;
     height: 24px;
     border: 1px solid #aaaaaa;
     margin: 4px;
+  }
+}
+
+.value-spectrum {
+  display: flex;
+  height: 24px;
+  width: 100%;
+
+  .slice {
+    width: 0.5%
+  }
+}
+
+.legend {
+  width: 100%;
+  display: flex;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px dotted #eeeeee;
+  
+  span {
+    padding-left: 8px;
+    font-size: 18px;
+    padding-right: 8px;
+    padding-top: 1px;
   }
 }
 

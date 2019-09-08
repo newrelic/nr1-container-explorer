@@ -54,7 +54,7 @@ function SummaryTable(props) {
         return <tr key={row.containerId}>
           <td>{row.hostname}</td>
           <td>{row.containerId.slice(0, 6)+"..."}</td>
-          <td>{Math.round(row.cpuPercent)}%</td>
+          <td>{row.cpuPercent.toFixed(1)}%</td>
           <td>{bytesToSize(row.memoryResidentSizeBytes)}</td>
         </tr>
       })}
