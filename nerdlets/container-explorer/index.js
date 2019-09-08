@@ -32,7 +32,7 @@ export default class ContainerExplorer extends React.Component {
 
   async componentDidMount() {
     // FIXME remove
-    await this.addFilter("containerImageName", "cf-registry.nr-ops.net/browser/browser-monitoring-service:release-373")
+    // await this.addFilter("containerImageName", "cf-registry.nr-ops.net/browser/browser-monitoring-service:release-373")
     this.countProcesses()
   }
 
@@ -76,7 +76,7 @@ export default class ContainerExplorer extends React.Component {
 
   render() {
     const { filters, counts } = this.state
-    const showFacetPicker = counts && counts.processes > 2000  
+    const showFacetPicker = false; counts && counts.processes > 2000  
 
     return <div>
       <FilterHeader filters={filters} removeFilter={this.removeFilter}/>

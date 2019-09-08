@@ -16,7 +16,7 @@ function Node(props) {
   const { value } = props
 
   const color = valueColor(value)
-  const toolTip = `${props.hostname}: CPU ${Math.round(props.cpuPercent)}%`
+  const toolTip = `${props.name}: CPU ${Math.round(props.cpuPercent)}%`
 
   return <Tooltip text={toolTip}>
     <div className="node" style={{ backgroundColor: color }} />

@@ -42,7 +42,7 @@ function SummaryTable(props) {
     <tbody>
       {containerData.map(row => {
         return <tr key={row.containerId}>
-          <td>{row.hostname}</td>
+          <td>{row.name}</td>
           <td>{row.containerId.slice(0, 6)+"..."}</td>
           <td>{row.cpuPercent.toFixed(1)}%</td>
           <td>{bytesToSize(row.memoryResidentSizeBytes)}</td>
@@ -54,8 +54,8 @@ function SummaryTable(props) {
 
 export default class ContainerSet extends React.Component {
   async componentDidMount() {
-    await this.getContainerSet()
-    this.interval = setInterval(() => {this.load()}, 15000)
+    await this.reload()
+    this.interval = setInterval(() => {this.update()}, 15000)
   }
 
   componentWillMount() {
@@ -64,39 +64,39 @@ export default class ContainerSet extends React.Component {
 
   async componentDidUpdate({where, account}) {
     if(where != this.props.where || account != this.props.account) {
-      await this.getContainerSet()
+      await this.reload()
     }
   }
 
-  async getContainerSet() {
+  async reload() {
     const {where, account} = this.props
     const nrql = `SELECT sum(cpuPercent) AS sortValue,
           latest(hostname) as hostname,
           latest(containerId) as containerId
-      FROM ProcessSample FACET containerId LIMIT 100
+      FROM ProcessSample FACET containerId LIMIT 2000
       SINCE 30 minutes ago WHERE ${where || "true"}`
 
     const results = await nrdbQuery(account.id, nrql)
 
     const containers = {}
     results.forEach(c => {
+      c.name = `${c.hostname}:${c.containerId.slice(0,6)}`
       c.cpuPercent = 0
       containers[c.facet] = c
     })
     const inClause = results.map(c => `'${c.facet}'`).join(', ')
     const containerWhere = `containerId IN (${inClause})`
-    console.log(containerWhere)
 
-    await this.setState({containers, containerWhere}, () => this.load())
+    await this.setState({containers, containerWhere}, () => this.update())
   }
 
   /*
    * ProcessSample data arrives every 15 seconds, so aggregate CPU, etc
    * by containerId with the assumption that we get one sample per process
    */
-  async load() {
+  async update() {
     if(!this.state.containers) {
-      this.getContainerSet()
+      this.reload()()
       return
     }
 
