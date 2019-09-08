@@ -7,7 +7,6 @@ import FacetPicker from './facet-picker'
 import FacetTable from './facet-table'
 import ContainerSet from './container-set'
 import FilterHeader from './filter-header'
-import CountsHeader from './counts-header'
 
 export default class ContainerExplorer extends React.Component {
   static propTypes = {
@@ -22,6 +21,7 @@ export default class ContainerExplorer extends React.Component {
 
     this.addFilter = this.addFilter.bind(this)
     this.removeFilter = this.removeFilter.bind(this)
+    this.showFacetPicker = this.showFacetPicker.bind(this)
 
     // TODO add an account picker
     this.state = {
@@ -46,20 +46,23 @@ export default class ContainerExplorer extends React.Component {
     let {filters} = this.state
     
     filters = filters.filter(f => !(f.name == name && f.value == value))
-    console.log("rremove", filters)
     this.setFilters(filters)
   }
 
   async setFilters(filters) {
     if(filters == null || filters.length == 0) {
-      await this.setState({filters, where: null})
+      await this.setState({filters, where: null, showFacetPicker: false})
       await this.countProcesses()
     }
     else {
       const where = filters.map(({name, value}) => `${quote(name)} = '${value}'`).join(" AND ")
-      await this.setState({filters, where})
+      await this.setState({filters, where, showFacetPicker: false})
       await this.countProcesses()
     }
+  }
+
+  showFacetPicker() {
+    this.setState({showFacetPicker: true})
   }
 
   async countProcesses() {
@@ -75,12 +78,11 @@ export default class ContainerExplorer extends React.Component {
   }
 
   render() {
-    const { filters, counts } = this.state
-    const showFacetPicker = false; counts && counts.processes > 2000  
+    const { filters, counts, showFacetPicker } = this.state
+    if(!counts) return <div/>
 
     return <div>
-      <FilterHeader filters={filters} removeFilter={this.removeFilter}/>
-      <CountsHeader {...counts}/>
+      <FilterHeader counts={counts} filters={filters} showFacetPicker={this.showFacetPicker} removeFilter={this.removeFilter}/>
       {showFacetPicker && <FacetPicker {...this.state} addFilter={this.addFilter}/>}
       {!showFacetPicker && <ContainerSet {...this.state}/>}
     </div>

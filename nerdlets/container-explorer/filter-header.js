@@ -14,11 +14,24 @@ function Filter({ name, value, removeFilter }) {
     </Stack>
   </StackItem>
 }
-export default function FilterHeader({ filters, removeFilter }) {
+export default function FilterHeader(props) {
+  const { counts, filters, removeFilter, showFacetPicker } = props
+  console.log(props)
   return <Stack>
+    <StackItem>
+      <h2>
+        {counts.containers} Containers<br/> 
+        {counts.hosts} Hosts
+      </h2>
+    </StackItem>
     {filters.map(filterProps => {
       console.log(filterProps)
       return <Filter key={filterProps.name} {...filterProps} removeFilter={removeFilter} />
     })}
+    <StackItem>
+      <Button iconType="interface_operations_filter_a-add" onClick={showFacetPicker}>
+        Add A Filter
+      </Button>
+    </StackItem>
   </Stack>
 }

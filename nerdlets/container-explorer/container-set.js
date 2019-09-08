@@ -3,7 +3,7 @@ import React from 'React'
 import ContainerChart from './container-chart'
 import ContainerGrid from './container-grid'
 
-import {Grid, GridItem, Tabs, TabsItem} from 'nr1' 
+import {Grid, GridItem, Tabs, TabsItem, Spinner} from 'nr1' 
 
 import nrdbQuery from '../../lib/nrdb-query'
 import bytesToSize from '../../lib/bytes-to-size'
@@ -33,7 +33,6 @@ function SummaryTable(props) {
   return <table className="container-table">
     <thead>
       <tr>
-        <th>Host</th>
         <th>Container</th>
         <th>CPU</th>
         <th>Memory</th>
@@ -43,7 +42,6 @@ function SummaryTable(props) {
       {containerData.map(row => {
         return <tr key={row.containerId}>
           <td>{row.name}</td>
-          <td>{row.containerId.slice(0, 6)+"..."}</td>
           <td>{row.cpuPercent.toFixed(1)}%</td>
           <td>{bytesToSize(row.memoryResidentSizeBytes)}</td>
         </tr>
@@ -69,6 +67,7 @@ export default class ContainerSet extends React.Component {
   }
 
   async reload() {
+    this.setState({conatinerData: null})
     const {where, account} = this.props
     const nrql = `SELECT sum(cpuPercent) AS sortValue,
           latest(hostname) as hostname,
@@ -120,6 +119,7 @@ export default class ContainerSet extends React.Component {
     results.forEach(result => {
       const container = containers[result.facet]
       container.cpuPercent = result.cpuPercent      
+      container.memoryResidentSizeBytes = result.memoryResidentSizeBytes
     })    
 
     console.log(containers)
@@ -130,7 +130,7 @@ export default class ContainerSet extends React.Component {
   render() {
     const {containerData} = this.state || {}
 
-    if(!containerData) return <div/>
+    if(!containerData) return <Spinner fillContent/>
     const defaultTab = containerData.length > 40 ? "grid" : "table"
 
     return <div>

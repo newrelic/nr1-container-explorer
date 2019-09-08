@@ -6,6 +6,13 @@ import quote from '../../lib/quote'
 
 import FacetTable from './facet-table'
 
+const OMIT_KEYS = {
+  systemMemoryBytes: true,
+  apmApplicationIds: true,
+  contanierId: true,
+  commandLine: true,
+  commandName: true,  
+}
 function FacetList({ facets, facet, setFacet }) {
   return <div className="facet-picker-container">
     <h3>Segment</h3>
@@ -60,6 +67,7 @@ export default class FacetPicker extends React.Component {
 
     const batchSize = 50
     const facets = []
+    let facet = null
     for (var i = 0; i < keySet.length; i += batchSize) {
       const batch = keySet.slice(i, i + batchSize)
       const select = batch.map(key => `uniqueCount(${quote(key.key)}) AS '${key.key}'`)
@@ -68,13 +76,16 @@ export default class FacetPicker extends React.Component {
       const uniqueCounts = (await nrdbQuery(account.id, nrql))[0]
       Object.keys(uniqueCounts).forEach(key => {
         const count = uniqueCounts[key]
-        if (count > 1 && count < 5000 && key != "systemMemoryBytes") {
+        if (count > 1 && count < 5000 && !OMIT_KEYS[key]) {
           facets.push({ name: key, count })
+          if(key == 'containerImageName') facet = key
+        } else {
+          console.log("omit", key, count)
         }
       })
     }
     facets.sort((f1, f2) => f1.name.localeCompare(f2.name))
-    this.setState({ facets })
+    this.setState({ facets, facet })
   }
 
   render() {

@@ -47,8 +47,9 @@ function Legend({title, maxValue, maxStr}) {
 export default function ContainerGrid({ containerData }) {
   containerData = containerData.sort((d1, d2) => d1.containerId.localeCompare(d2.containerId))
 
+  // calulate max CPU rounded to nearest 100%
   const values = containerData.map(d => d.cpuPercent)
-  const max = Math.max(...values)
+  const max = Math.floor(Math.max(...values)/100+1)*100
 
   return <div>
     <Legend title="CPU" maxValue={max} maxStr={`${Math.round(max)}%`}/>
