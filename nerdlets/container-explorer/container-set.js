@@ -9,16 +9,6 @@ import nrdbQuery from '../../lib/nrdb-query'
 import bytesToSize from '../../lib/bytes-to-size'
 
 
-function SummaryChart(props) {
-  const {title, where, select, account } = props
-  const nrql = `SELECT ${select} FROM ProcessSample WHERE ${where} TIMESERIES FACET entityAndPid LIMIT max`
-  console.log(nrql)
-  return <GridItem columnSpan={4}>
-    <h3>{title}</h3>
-    <ContainerChart className={"summary-chart"} accountId={account.id} query={nrql}/>
-  </GridItem>
-}
-
 function groupProcessData(processData, groupBy) {
   const tableData = processData.reduce((groups, row) => {
     const group = groups[row[groupBy]]
@@ -63,7 +53,8 @@ function SummaryTable(props) {
 }
 
 export default class ContainerSet extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
+    await this.getContainerSet()
     this.interval = setInterval(() => {this.load()}, 15000)
   }
 
@@ -71,29 +62,75 @@ export default class ContainerSet extends React.Component {
     clearInterval(this.interval)
   }
 
-  componentDidUpdate({where, account}) {
+  async componentDidUpdate({where, account}) {
     if(where != this.props.where || account != this.props.account) {
-      this.load()
+      await this.getContainerSet()
     }
   }
 
+  async getContainerSet() {
+    const {where, account} = this.props
+    const nrql = `SELECT sum(cpuPercent) AS sortValue,
+          latest(hostname) as hostname,
+          latest(containerId) as containerId
+      FROM ProcessSample FACET containerId LIMIT 100
+      SINCE 30 minutes ago WHERE ${where || "true"}`
+
+    const results = await nrdbQuery(account.id, nrql)
+
+    const containers = {}
+    results.forEach(c => {
+      c.cpuPercent = 0
+      containers[c.facet] = c
+    })
+    const inClause = results.map(c => `'${c.facet}'`).join(', ')
+    const containerWhere = `containerId IN (${inClause})`
+    console.log(containerWhere)
+
+    await this.setState({containers, containerWhere}, () => this.load())
+  }
+
+  /*
+   * ProcessSample data arrives every 15 seconds, so aggregate CPU, etc
+   * by containerId with the assumption that we get one sample per process
+   */
   async load() {
-    const {where, account} = this.props        
+    if(!this.state.containers) {
+      this.getContainerSet()
+      return
+    }
+
+    const {account} = this.props
     const select = [
-      'cpuPercent', 'memoryResidentSizeBytes', 'entityGuid', 'hostname', 'containerId'
-    ].map(s => `latest(${s}) AS ${s}`).join(', ')
+      "sum(cpuPercent) AS cpuPercent",
+      "sum(memoryResidentSizeBytes) AS memoryResidentSizeBytes",
+      "count(*) AS processCount",
+      "latest(hostname) AS hostname",
+      "latest(entityGuid) AS entityGuid"
+    ].join(", ")
 
-    const nrql = `SELECT ${select} FROM ProcessSample WHERE ${where} AND (cpuPercent > 0 OR memoryResidentSizeBytes > 0) SINCE 1 minute ago FACET entityAndPid LIMIT max`
-    const processData = await nrdbQuery(account.id, nrql)
+    const timeWindow = "SINCE 30 seconds ago until 15 seconds ago"
+    const {containers, containerWhere} = this.state
 
-    await this.setState({processData})
+    const nrql = `SELECT ${select} FROM ProcessSample 
+      WHERE ${containerWhere}
+      ${timeWindow} FACET containerId LIMIT 2000`
+    const results = await nrdbQuery(account.id, nrql)
+    
+    results.forEach(result => {
+      const container = containers[result.facet]
+      container.cpuPercent = result.cpuPercent      
+    })    
+
+    console.log(containers)
+
+    await this.setState({containerData: Object.values(containers)})
   }
 
   render() {
-    const {processData} = this.state || {}
+    const {containerData} = this.state || {}
 
-    if(!processData) return <div/>
-    const containerData = groupProcessData(processData, 'containerId')
+    if(!containerData) return <div/>
     const defaultTab = containerData.length > 40 ? "grid" : "table"
 
     return <div>
