@@ -34,6 +34,8 @@ export default class ContainerExplorer extends React.Component {
   async componentDidMount() {
     // FIXME remove
     // await this.addFilter("containerImageName", "cf-registry.nr-ops.net/browser/browser-monitoring-service:release-373")
+    await this.addFilter("containerImageName", "cf-registry.nr-ops.net/apm/rpm-ui:release-1785")
+    
     this.countProcesses()
   }
 
