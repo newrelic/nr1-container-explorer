@@ -1,0 +1,13 @@
+{
+    "schemaType": "NERDLET",
+    "id": "service-containers",
+    "displayName": "Containers",
+    "description": "Show Docker Containers",
+    "actionCategory": "monitor",
+    "entities": [
+      {
+        "domain": "APM",
+        "type": "APPLICATION"
+      }
+    ] 
+}

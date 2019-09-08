@@ -1,0 +1,24 @@
+{
+    "private": true,
+    "name": "nr1-containers",
+    "description": "Nerdpack nr1-containers",
+    "version": "0.1.0",
+    "scripts": {
+        "start": "nr1 nerdpack:serve",
+        "test": "exit 0"
+    },
+    "nr1": {
+        "uuid": "dd253927-5aee-4ac3-bd56-702c8bcfc749"
+    },
+    "dependencies": {
+        "lodash": "^4.17.15",
+        "prop-types": "^15.6.2",
+        "react": "^16.6.3",
+        "react-dom": "^16.6.3"
+    },
+    "browserslist": [
+        "last 2 versions",
+        "not ie < 11",
+        "not dead"
+    ]
+}

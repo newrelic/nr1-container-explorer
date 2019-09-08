@@ -1,0 +1,61 @@
+.facet-name {
+  color: #888888;
+}
+
+.summary-chart {
+  height: 240px;
+}
+
+.facet-list {
+  height: 100%;
+  background-color: white;
+  h3 {
+    text-align: center;
+  }
+
+  li {
+    padding: 12px;
+    list-style-type: none;
+    font-size: 11px;
+    overflow-wrap: break-word;
+    border-bottom: rgb(244, 244, 244) solid 1px;
+  }
+  li:hover {
+    cursor: pointer;
+    background-color: rgb(248,248,248);
+  }
+
+  .selected {
+    background-color: rgb(248,248,248);
+    font-weight: 700;
+  }
+}
+
+.fillHeight {
+  height: 100%
+}
+.facet-picker-container {
+  height: 95.3%;
+  overflow: scroll;
+}
+
+.filter {
+  background-color: #d0f0ff;
+  padding: 8px;
+  margin: 8px;
+  font-size: 12px;
+
+  .name {
+    color: #888888;
+  }
+  .value {
+    font-weight: 400;
+  }
+}
+
+.counts-header {
+  padding-bottom: 12px;
+  .count {
+    text-align: center;
+  }
+}
