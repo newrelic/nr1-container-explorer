@@ -21,21 +21,31 @@ const OMIT_KEYS = {
 
 export default class ContainerExplorer extends React.Component {
   async componentDidMount() {
-    await this.reload()
-    this.interval = setInterval(() => {this.update()}, 15000)
+    await this.reload()    
   }
 
   componentWillMount() {
-    clearInterval(this.interval)
+    if(this.interval) clearInterval(this.interval)
   }
 
   async componentDidUpdate({where, account}) {
     if(where != this.props.where || account != this.props.account) {
+      console.log("Reload", {where, account}, this.props)
       await this.reload()
     }
   }
 
   async reload() {
+    clearInterval(this.interval)
+    this.interval = null
+
+    const startTime = new Date()
+    function logTime(message) {
+      const elapsed = new Date() - startTime
+      console.log("Reload", message, elapsed)
+    }
+    logTime("Start Reload")
+
     this.setState({containerData: null, containers: null})
     const {where, account, counts} = this.props
     const timeWindow = "SINCE 3 minutes ago"
@@ -46,6 +56,8 @@ export default class ContainerExplorer extends React.Component {
       where,
       timeWindow
     })
+    logTime("getCardinality")
+
     const groups = facets.filter(facet => {
       return facet.count > 1 && facet.count < counts.containers * .6 && !OMIT_KEYS[facet.name]
     })
@@ -57,8 +69,10 @@ export default class ContainerExplorer extends React.Component {
           ${select.join(', ')}
       FROM ProcessSample FACET containerId LIMIT 2000
       ${timeWindow} WHERE ${where || "true"}`
+    logTime("buildNrql")
 
     const results = await nrdbQuery(account.id, nrql)
+    logTime("getContainers")
 
     const containers = {}
     results.forEach(c => {
@@ -67,9 +81,10 @@ export default class ContainerExplorer extends React.Component {
       containers[c.facet] = c
     })
 
+    logTime("setup data")
 
     await this.setState({containers, groups: _.sortBy(groups, 'name')})
-    await this.update()
+    this.interval = setInterval(() => {this.update()}, 15000)
   }
 
   /*
@@ -78,9 +93,15 @@ export default class ContainerExplorer extends React.Component {
    */
   async update() {
     if(!this.state.containers) {
-      this.reload()
       return
     }
+    const startTime = new Date()
+    function logTime(message) {
+      const elapsed = new Date() - startTime
+      console.log("Update", message, elapsed)
+    }
+    logTime("Started at" + new Date().toLocaleTimeString())
+
     const {account, where} = this.props
     const select = [
       "sum(cpuPercent) AS cpuPercent",
@@ -97,18 +118,23 @@ export default class ContainerExplorer extends React.Component {
       WHERE ${where || "true"}
       ${timeWindow} FACET containerId LIMIT 2000`
 
+    logTime("buildNrql")
     const results = await nrdbQuery(account.id, nrql)
+
+    logTime("fetchResults")
+    logTime("I mean it!")
     
     results.forEach(result => {
       const container = containers[result.facet]
       if(!container) {
-        console.log("Missing Container", result.facet)
+        // console.log("Missing Container", result.facet)
       }
       if(container) {
         container.cpuPercent = result.cpuPercent      
         container.memoryResidentSizeBytes = result.memoryResidentSizeBytes
       }      
     })    
+    logTime("buildContainers")
 
     await this.setState({containerData: Object.values(containers)})
   }

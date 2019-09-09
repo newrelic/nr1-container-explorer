@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import { Tooltip } from 'nr1'
+import { Tooltip, Button } from 'nr1'
 import heatMapColor from '../../lib/heat-map-color'
 
 
@@ -16,16 +16,26 @@ function Node(props) {
   </Tooltip>
 }
 
+export default class ContainerGrid extends React.Component {
+  render() {
+    const { title, containerData, maxValue, addToFilter } = this.props
 
-export default function ContainerGrid({ title, containerData, maxValue }) {
-  return <div>
-    <h3>{title}</h3>
-    <div className="container-grid">
-      {containerData.map(container => {
-        const value = Math.max(container.cpuPercent, 0) / maxValue
-        return <Node key={container.containerId} value={value} {...container} />
-      })}
-    </div>    
-  </div>
-
+    return <div className="heat-map">
+      <div className="header">
+        <span className="title">{title}</span>
+        {title != "<No Value>" && <Button
+          onClick={addToFilter}
+          sizeType="slim"
+          type="plain"
+          iconType={"interface_operations_filter_a-add"}
+        />}
+      </div>
+      <div className="container-grid">
+        {containerData.map(container => {
+          const value = Math.max(container.cpuPercent, 0) / maxValue
+          return <Node key={container.containerId} value={value} {...container} />
+        })}
+      </div>
+    </div>
+  }
 }

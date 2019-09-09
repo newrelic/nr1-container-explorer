@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dropdown, DropdownItem} from 'nr1'
+import { Grid, GridItem } from 'nr1'
 import _ from 'underscore'
 
 import heatMapColor from '../../lib/heat-map-color'
@@ -27,47 +27,51 @@ function Legend({ title, max }) {
   </div>
 }
 
-function GroupByDropDown({ groups, group, selectGroup }) {
-  return <Dropdown title={group || "None"}>
-    <DropdownItem key="__none" onClick={() => selectGroup(null)}>
+
+function GroupList({ groups, group, selectGroup }) {  
+  return <ul className="facet-list">
+    <li className='facet' key="__none" onClick={() => selectGroup(null)}>
       None
-    </DropdownItem>
+    </li>
     {groups.map(g => {
-      return <DropdownItem key={g.name} onClick={() => selectGroup(g.name)}>
+      const className = `facet ${g.name == group && 'selected'}`
+      return <li className={className} key={g.name} onClick={() => selectGroup(g.name)}>
         {g.name} ({g.count})
-      </DropdownItem>
+      </li>
     })}
-  </Dropdown>
+  </ul>
 }
 
 export default class DenseContainerView extends React.Component {
   render() {
-    let {containerData, groups} = this.props
-    const {group} = this.state || {group: "kernelVersion"}
-    
+    let { containerData, groups, addFilter } = this.props
+    const { group } = this.state || {group: "containerImageName"}
+
     containerData = containerData.sort((d1, d2) => d1.containerId.localeCompare(d2.containerId))
-    const groupedData = group ? 
-      _.groupBy(containerData, (c => c[group] || "<No Value>")) : 
-      {"All": containerData}
+    const groupedData = group ?
+      _.groupBy(containerData, (c => c[group] || "<No Value>")) :
+      { "All": containerData }
 
     // calulate max CPU rounded to nearest 100%
     const values = containerData.map(d => d.cpuPercent)
-    const max = Math.floor(Math.max(...values)/100+1)*100
+    const max = Math.floor(Math.max(...values) / 100 + 1) * 100
 
-    return <div>
-      <Legend title="CPU" max={`${Math.round(max)}%`}/>
-      <div>
-        Group By: 
-        <GroupByDropDown groups={groups} group={group} 
-          selectGroup={(group) => this.setState({group})}/>
-      </div>
-      {_.keys(groupedData).map((groupName) => {
-          return <ContainerGrid 
-              containerData={groupedData[groupName]} 
-              title={groupName}
-              maxValue={max}/>
-      })}    
-    </div>
+    return <Grid>
+      <GridItem columnSpan={3}>
+        <GroupList groups={groups} group={group}
+          selectGroup={(group) => this.setState({ group })} />
+      </GridItem>
+      <GridItem columnSpan={9}>
+        <Legend title="CPU" max={`${Math.round(max)}%`} />
+        {_.keys(groupedData).map((groupName) => {
+          return <ContainerGrid
+            containerData={groupedData[groupName]}
+            title={groupName}
+            addToFilter={() => addFilter(group, groupName)}
+            maxValue={max} />
+        })}
+      </GridItem>
+    </Grid>
 
   }
 }
