@@ -84,6 +84,7 @@ export default class ContainerExplorer extends React.Component {
     logTime("setup data")
 
     await this.setState({containers, groups: _.sortBy(groups, 'name')})
+    this.update()
     this.interval = setInterval(() => {this.update()}, 15000)
   }
 

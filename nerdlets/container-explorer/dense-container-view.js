@@ -63,13 +63,15 @@ export default class DenseContainerView extends React.Component {
       </GridItem>
       <GridItem columnSpan={9}>
         <Legend title="CPU" max={`${Math.round(max)}%`} />
-        {_.keys(groupedData).map((groupName) => {
-          return <ContainerGrid
-            containerData={groupedData[groupName]}
-            title={groupName}
-            addToFilter={() => addFilter(group, groupName)}
-            maxValue={max} />
-        })}
+        <div className="heat-map-list">
+          {_.keys(groupedData).map((groupName) => {
+            return <ContainerGrid
+              containerData={groupedData[groupName]}
+              title={groupName}
+              addToFilter={() => addFilter(group, groupName)}
+              maxValue={max} />
+          })}
+        </div>
       </GridItem>
     </Grid>
 

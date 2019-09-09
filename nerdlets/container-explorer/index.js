@@ -19,12 +19,10 @@ export default class ContainerExplorerNerdlet extends React.Component {
 
     this.addFilter = this.addFilter.bind(this)
     this.removeFilter = this.removeFilter.bind(this)
-    this.showFacetPicker = this.showFacetPicker.bind(this)
 
     // TODO add an account picker
     this.state = {
       account: { id: 686435, name: "Container Fabric" },
-      showFacetPicker: true,
       filters: []
     }    
   }
@@ -34,7 +32,8 @@ export default class ContainerExplorerNerdlet extends React.Component {
     // await this.addFilter("containerImageName", "cf-registry.nr-ops.net/browser/browser-monitoring-service:release-373")
     // await this.addFilter("containerImageName", "cf-registry.nr-ops.net/apm/rpm-ui:release-1785")
     
-    this.setState({counts: this.countProcesses()})
+    const counts = await this.countProcesses()
+    this.setState({counts})
   }
 
   async addFilter(name, value) {
@@ -60,10 +59,6 @@ export default class ContainerExplorerNerdlet extends React.Component {
 
     await this.setState({filters, where, counts})
 }
-
-  showFacetPicker() {
-    this.setState({showFacetPicker: true})
-  }
 
   async countProcesses() {
     this.setState({counts: null})
