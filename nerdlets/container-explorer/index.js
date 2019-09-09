@@ -32,7 +32,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
     await this.setState({counts})
     
     // FIXME remove
-    await this.addFilter("containerImageName", "cf-registry.nr-ops.net/apm/rpm-ui:release-1785")
+    // await this.addFilter("containerImageName", "cf-registry.nr-ops.net/apm/rpm-ui:release-1785")
   }
 
   async addFilter(name, value) {
