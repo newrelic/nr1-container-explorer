@@ -158,9 +158,9 @@ export default class DenseContainerView extends React.Component {
     const values = containerData.map(d => d.cpuPercent)
     const max = Math.floor(Math.max(...values) / 100 + 1) * 100
 
-    return <>
+    return <div className="full-height">
       <Legend title="CPU" max={`${Math.round(max)}%`} />
-      <div className="heat-map-list">
+      <div className="heat-map-list full-height">
         {_.keys(groupedData).map((groupName) => {
           return <ContainerGrid
             containerData={groupedData[groupName]}
@@ -171,7 +171,7 @@ export default class DenseContainerView extends React.Component {
             maxValue={max} />
         })}
       </div>
-    </>
+    </div>
 
   }
 }

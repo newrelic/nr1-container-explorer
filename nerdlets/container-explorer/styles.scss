@@ -64,6 +64,9 @@
 .heat-map-list {
   background-color: rgb(248,248,248);
   padding-top: 4px;
+}
+
+.full-height {
   height: 100%;
 }
 
@@ -82,7 +85,7 @@
     }
   }
   
-  .container-grid {
+  .grid {
     display: flex;
     flex-wrap: wrap;
     padding-top: 12px;

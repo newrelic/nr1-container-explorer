@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {AreaChart, NrqlQuery, ChartGroup} from 'nr1'
+import {LineChart, NrqlQuery, ChartGroup, Tabs, TabsItem} from 'nr1'
 
 // roll up all of the facet data into a single summarized series.
 function summarizeFacets(data) {
@@ -32,15 +32,13 @@ function Chart({account, containerId, select, timeRange}) {
     {({loading, error, data}) => {
       if(error) console.log(error)
       if(loading) return <div className="chart"/>
-      console.log(data)
 
-      return <AreaChart data={summarizeFacets(data)} className="chart"/>
+      return <LineChart data={summarizeFacets(data)} className="chart"/>
     }}
   </NrqlQuery>
 }
 
-
-export default function ContainerPanel({containerId, account, timeRange}) {
+function Charts({containerId, account, timeRange}) {
   return <ChartGroup>
     <h3>CPU</h3>
     <Chart containerId={containerId} account={account} timeRange={timeRange} 
@@ -53,3 +51,18 @@ export default function ContainerPanel({containerId, account, timeRange}) {
       select={"average(ioReadBytesPerSecond+ioWriteBytesPerSecond) AS 'Disk I/O'"}/>
   </ChartGroup>
 }
+
+function ProcessesTab({containerId, account, timeRange}) {
+  
+}
+
+export default function ContainerPanel(props) {
+  return <Tabs>
+    <Tabs>
+      <TabsItem itemKey="charts" label="Charts">
+        <Charts {...props}/>
+      </TabsItem>
+    </Tabs>
+  </Tabs>
+}
+

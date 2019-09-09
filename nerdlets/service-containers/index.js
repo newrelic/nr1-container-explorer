@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 
 import {EntityByGuidQuery, NerdGraphQuery, Grid, GridItem, Spinner} from 'nr1'
 
-import nrdbQuery from './nrdb-query'
-import timePickerNrql from './time-picker-nrql'
+import nrdbQuery from '../../lib/nrdb-query'
+import timePickerNrql from '../../lib/time-picker-nrql'
 import ContainerTable from './container-table'
 import ContainerPanel from './container-panel'
+import ContainerHeatMap from './container-heat-map'
 
 export default class ServiceContainers extends React.Component {
     static propTypes = {
@@ -28,7 +29,12 @@ export default class ServiceContainers extends React.Component {
     }
 
     async componentDidMount() {
-      const {entityGuid} = this.props.nerdletUrlState
+      // workaround for bug
+      if(this.props.timeRange) return
+
+      const {entityGuid} = this.props.nerdletUrlState || {}
+      console.log("Guid", entityGuid, this.props)
+
       const timeRange = timePickerNrql(this.props)
 
       let result
@@ -54,11 +60,12 @@ export default class ServiceContainers extends React.Component {
       // find the accounts with SystemSample Data reporting
       const gql = `{actor {accounts {name id reportingEventTypes(filter:["ProcessSample"])}}}`
       let result = await NerdGraphQuery.query({query: gql})
+      // console.log("GQL Result", JSON.stringify(result))
       const accounts = result.data.actor.accounts.filter(a => a.reportingEventTypes.length > 0)
 
-      // run these (low impact 5 minute) queries in parallel to find
+      // run these (low impact 1 minute) queries in parallel to find
       // which account has data for this container
-      const nrql = `SELECT count(*) FROM ProcessSample WHERE containerId = '${containerId}' SINCE 5 minutes ago`
+      const nrql = `SELECT count(*) FROM ProcessSample WHERE containerId = '${containerId}' SINCE 1 minute ago`
       accounts.forEach(account => {
         return nrdbQuery(account.id, nrql).then(results => {
           if(results[0].count > 0) {
@@ -69,16 +76,18 @@ export default class ServiceContainers extends React.Component {
     }
 
     render() {
-      const {entity, infraAccount, containerId} = this.state
-      const timeRange = timePickerNrql(this.props)
+      // workaround for bug
+      if(this.props.timeRange) return <div/>
+      
+      const {infraAccount, containerId, entity, timeRange} = this.state
 
-      console.log("State", this.state)
       if(!entity) return <Spinner fillContent style={{width: "100%", height: "100%"}}/>
       return <div id="root">
         <h1>Containers</h1>        
         <Grid style={{height: "100%"}}>
           <GridItem className="content" columnSpan={7}>
-            <ContainerTable {...this.state} selectContainer={infraAccount && this._selectContainer} timeRange={timeRange}/>
+            {/* <ContainerTable {...this.state} selectContainer={this._selectContainer} timeRange={timeRange}/> */}
+            <ContainerHeatMap {...this.state} selectContainer={infraAccount && this._selectContainer} />
           </GridItem>
           <GridItem className="content" columnSpan={5}>
             {infraAccount && containerId && 

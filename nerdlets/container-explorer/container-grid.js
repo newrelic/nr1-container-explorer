@@ -32,7 +32,7 @@ export default class ContainerGrid extends React.Component {
           iconType={"interface_operations_filter_a-add"}
         />}
       </div>
-      <div className="container-grid">
+      <div className="grid">
         {containerData.map(container => {
           const value = Math.max(container.cpuPercent, 0) / maxValue
           const selected = containerId == container.containerId
