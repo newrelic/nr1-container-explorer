@@ -17,19 +17,12 @@ function Filter({ name, value, removeFilter }) {
   </StackItem>
 }
 
-function TooManyContainers() {
-  return <div className="too-many-containers">
-      Limiting to top 2000 containers by CPU.
-  </div>
-}
-
 export default function Header(props) {
   const { counts, filters, removeFilter } = props
   return <div className="header">
     <h1>
       {counts.containers} Containers running on {counts.hosts} Hosts
     </h1>
-    {counts.containers > 2000 && <TooManyContainers/>}
     <Stack className="filter-bar">
       <StackItem>
       </StackItem>

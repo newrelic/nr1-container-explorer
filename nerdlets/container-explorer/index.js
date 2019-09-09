@@ -28,12 +28,11 @@ export default class ContainerExplorerNerdlet extends React.Component {
   }
 
   async componentDidMount() {
-    // FIXME remove
-    // await this.addFilter("containerImageName", "cf-registry.nr-ops.net/browser/browser-monitoring-service:release-373")
-    // await this.addFilter("containerImageName", "cf-registry.nr-ops.net/apm/rpm-ui:release-1785")
-    
     const counts = await this.countProcesses()
-    this.setState({counts})
+    await this.setState({counts})
+    
+    // FIXME remove
+    await this.addFilter("containerImageName", "cf-registry.nr-ops.net/apm/rpm-ui:release-1785")
   }
 
   async addFilter(name, value) {
@@ -55,15 +54,14 @@ export default class ContainerExplorerNerdlet extends React.Component {
       where = filters.map(({name, value}) => `${quote(name)} = '${value}'`).join(" AND ")
     }
 
-    const counts = this.countProcesses()
-
+    const counts = await this.countProcesses(where)
     await this.setState({filters, where, counts})
 }
 
-  async countProcesses() {
+  async countProcesses(where) {
     this.setState({counts: null})
     const timeWindow = "SINCE 30 seconds ago"
-    const {where, account} = this.state
+    const {account} = this.state
     const whereClause = where ? `WHERE ${where}` : ""
     const select = `uniqueCount(entityAndPid) as processes, uniqueCount(entityGuid) as hosts, uniqueCount(containerId) AS containers`
     const nrql = `SELECT ${select} FROM ProcessSample ${whereClause} ${timeWindow}`
