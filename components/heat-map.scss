@@ -11,6 +11,14 @@
       font-size: 18px;
       font-weight: 400;
     }
+
+    .clickable {
+      color: #005054;      
+    }
+    .clickable:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
   
   .grid {

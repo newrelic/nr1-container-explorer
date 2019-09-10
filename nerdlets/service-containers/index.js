@@ -7,7 +7,7 @@ import nrdbQuery from '../../lib/nrdb-query'
 import timePickerNrql from '../../lib/time-picker-nrql'
 import ContainerTable from './container-table'
 import ContainerPanel from './container-panel'
-import ContainerHeatMap from './container-heat-map'
+import ContainerHeatMap from './heat-maps'
 
 export default class ServiceContainers extends React.Component {
     static propTypes = {

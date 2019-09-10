@@ -81,6 +81,12 @@ export default class Heatmap extends React.Component {
      * ```
      */
     formatLabel: PropTypes.func,
+
+    /**
+     * callback when a the title is clicked. Title's value is passed. If 
+     * a grouped HeatMap, the title value will be the group's name (e.g. host in the above example)
+     */
+    onSelect: PropTypes.func,
   }
 
   render() {
@@ -125,11 +131,12 @@ function Node(props) {
 }
 
 function SingleHeatmap(props) {
-  const { title, formatLabel, selection, onSelect, data, max } = props
+  const { title, formatLabel, selection, onSelect, data, max, onClickTitle } = props
 
+  const titleStyle = `title ${onClickTitle && "clickable"}`
   return <div className="heat-map">
     <div className="header">
-      <div className="title">
+      <div className={titleStyle} onClick={() => onClickTitle(title)}>
         {title}
       </div>
     </div>
