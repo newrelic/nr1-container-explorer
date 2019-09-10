@@ -42,14 +42,14 @@ export default class Heatmap extends React.Component {
      * Examples:
      *  ```js
      *  // single heatmap with one cell per hostname
-     *  nrql="SELECT count(*) FROM Transaction facet hostname"
+     *  query="SELECT count(*) FROM Transaction facet hostname"
      * 
      *  // list of heatmaps grouped by appName, then showing
      *  // one map for every appId, and one cell for each hostname
-     *  nrql="SELECT count(*) FROM Transaction facet appName, hostname"
+     *  query="SELECT count(*) FROM Transaction facet appName, hostname"
      *  ```
      */
-    nrql: PropTypes.string.isRequired,
+    query: PropTypes.string.isRequired,
 
     /**
      * title for the heatmap. If a 2 dimensional query is provided,
@@ -90,15 +90,15 @@ export default class Heatmap extends React.Component {
   }
 
   render() {
-    let { accountId, nrql, max } = this.props
+    let { accountId, query, max } = this.props
 
-    return <NrqlQuery accountId={accountId} query={nrql}
+    return <NrqlQuery accountId={accountId} query={query}
               formatType={NrqlQuery.FORMAT_TYPE.RAW}>
       {({ loading, error, data }) => {
         if (loading) return <div />
         if (error) return <pre>{error}</pre>
         if (!data.facets) {
-          console.log("Bad result", nrql, error, data)
+          console.log("Bad result", query, error, data)
           return <div/>
         }
   
@@ -193,4 +193,30 @@ function heatMapColor(value) {
   const l = 40
 
   return hsl(h, s, l)
+}
+
+
+function ValueSpectrum() {
+  const values = []
+  for (var i = 0; i < 1; i += 0.005) {
+    values.push(i)
+  }
+  return <div className="heat-map-spectrum">
+    {values.map((value, index) => {
+      const style = { backgroundColor: heatMapColor(value) }
+      return <div key={index} className="slice" style={style} />
+    })}
+  </div>
+}
+
+/**
+ * renders a Heatmap legend as a color spectrum
+ */
+export function Legend({ title, max }) {
+  return <div className="heat-map-legend">
+    <span>{title}:</span>
+    <span>0</span>
+    <ValueSpectrum />
+    <span>{max}</span>
+  </div>
 }

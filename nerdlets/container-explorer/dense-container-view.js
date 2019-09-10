@@ -13,7 +13,7 @@ function ValueSpectrum() {
   for (var i = 0; i < 1; i += 0.005) {
     values.push(i)
   }
-  return <div className="value-spectrum">
+  return <div className="heat-map-spectrum">
     {values.map((value, index) => {
       const style = { backgroundColor: heatMapColor(value) }
       return <div key={index} className="slice" style={style} />
@@ -22,7 +22,7 @@ function ValueSpectrum() {
 }
 
 function Legend({ title, max }) {
-  return <div className="legend">
+  return <div className="heat-map-legend">
     <span>{title}:</span>
     <span>0</span>
     <ValueSpectrum />
