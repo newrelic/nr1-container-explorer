@@ -40,10 +40,10 @@ const HEAT_MAPS = [
 export default class ContainerHeatMap extends React.PureComponent {
   render() {
     let {entity, infraAccount, selectContainer, containerIds, containerId} = this.props
+    if(!infraAccount) return <div/>
 
     // FIXME overriding time picker to do realtime so we can show accurate infra data
     const timeRange = "SINCE 90 seconds ago until 75 seconds ago"
-  
     return <div>
       {HEAT_MAPS.map(({title, select, formatLabel, eventType, max}) => {
         let accountId = entity.accountId
