@@ -83,9 +83,8 @@ export default class ServiceContainers extends React.Component {
 
       if(!entity) return <Spinner fillContent style={{width: "100%", height: "100%"}}/>
       return <div id="root">
-        <h1>Containers</h1>        
         <Grid style={{height: "100%"}}>
-          <GridItem className="content" columnSpan={7}>
+          <GridItem columnSpan={7}>
             {/* <ContainerTable {...this.state} selectContainer={this._selectContainer} timeRange={timeRange}/> */}
             <ContainerHeatMap {...this.state} selectContainer={infraAccount && this._selectContainer} />
           </GridItem>

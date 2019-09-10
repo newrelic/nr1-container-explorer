@@ -7,7 +7,7 @@ const HEAT_MAPS = [
   {
     title: "Response Time (ms)",
     eventType: 'Transaction',
-    select: "average(duration)",
+    select: "average(duration)*1000",
     max: Math.round,
     formatValue: (value) => `${Math.round(value)}ms`
   },
@@ -71,6 +71,7 @@ export default class ContainerHeatMap extends React.PureComponent {
               formatLabel={(label) => label.slice(0,6)}
               formatValue={formatValue} 
               selection={containerId}
+              onClickTitle={console.log}
               onSelect={selectContainer}/>
         </div>
       })}

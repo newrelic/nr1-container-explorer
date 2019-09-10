@@ -153,8 +153,10 @@ function SingleHeatmap(props) {
   return <div className="heat-map">
     <div className="header">
       <div className={titleStyle} onClick={() => onClickTitle(title)}>
+        {title}
+      </div>
+      <div>
         {showLegend && <Legend {...props}/>}
-        {!showLegend && title}
       </div>
     </div>
     <div className="grid">
@@ -240,8 +242,7 @@ function ValueSpectrum() {
 export function Legend({ title, max, formatValue }) {
   if(formatValue) max=formatValue(max)
   return <div className="heat-map-legend">
-    <span>{title}</span>
-    <span>0</span>
+    <span className="left">0</span>
     <ValueSpectrum />
     <span>{max}</span>
   </div>

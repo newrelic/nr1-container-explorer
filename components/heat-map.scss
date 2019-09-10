@@ -10,6 +10,7 @@
     .title {
       font-size: 18px;
       font-weight: 400;
+      text-align: center;
     }
 
     .clickable {
@@ -51,10 +52,16 @@
   border-bottom: 1px dotted #eeeeee;
   
   span {
+    width: 20%;
     padding-left: 8px;
-    font-size: 18px;
+    font-size: 14px;
+    font-weight: 200;
     padding-right: 8px;
     padding-top: 1px;
+  }
+  .left {
+    text-align: right;
+    width: 6%;
   }
 }
 
