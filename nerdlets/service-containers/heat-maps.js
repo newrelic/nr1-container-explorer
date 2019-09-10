@@ -5,35 +5,39 @@ import bytesToSize from '../../lib/bytes-to-size'
 
 const HEAT_MAPS = [
   {
-    title: "Response Time",
+    title: "Response Time (ms)",
     eventType: 'Transaction',
     select: "average(duration)",
-    max: 1,
-    formatLabel: ({name, value}) => `${name.slice(0, 6)}: ${Math.round(value*100)}ms`
+    max: Math.round,
+    formatValue: (value) => `${Math.round(value)}ms`
   },
   {
     title: "Throughput",
     eventType: 'Transaction',
     select: "rate(count(*), 1 minute)",
-    formatLabel: ({name, value}) => `${name.slice(0, 6)}: ${Math.round(value)} rpm`
+    max: Math.ceil,
+    formatValue: (value) => `${Math.round(value)} rpm`
   },
   {
     title: "CPU",
     eventType: 'ProcessSample',
     select: "sum(cpuPercent)",
-    formatLabel: ({name, value}) => `${name.slice(0, 6)}: ${value.toFixed(1)}%`,
+    max: (max) => Math.ceil(max/100)*100,
+    formatValue: (value) => `${Math.round(value)}%`,
   },
   {
     title: "Memory",
     eventType: 'ProcessSample',
     select: "sum(memoryResidentSizeBytes)",
-    formatLabel: ({name, value}) => `${name.slice(0, 6)}: ${bytesToSize(value)}`,
+    max: Math.round,
+    formatValue: bytesToSize
   },
   {
     title: "I/O",
     eventType: 'ProcessSample',
     select: "sum(ioReadBytesPerSecond+ioWriteBytesPerSecond)",
-    formatLabel: ({name, value}) => `${name.slice(0, 6)}: ${bytesToSize(value)}`,
+    max: Math.round,
+    formatValue: (value) => `${bytesToSize(value)}`
   }
 ]
 
@@ -45,7 +49,7 @@ export default class ContainerHeatMap extends React.PureComponent {
     // FIXME overriding time picker to do realtime so we can show accurate infra data
     const timeRange = "SINCE 90 seconds ago until 75 seconds ago"
     return <div>
-      {HEAT_MAPS.map(({title, select, formatLabel, eventType, max}) => {
+      {HEAT_MAPS.map(({title, select, formatValue, eventType, max}) => {
         let accountId = entity.accountId
   
         // infra data could come from a different account than the entity
@@ -62,8 +66,10 @@ export default class ContainerHeatMap extends React.PureComponent {
             ${timeRange} FACET containerId LIMIT 2000`
   
         return <div>
-          <HeatMap title={title} accountId={accountId} max={max}
-              nrql={nrql} formatLabel={formatLabel} 
+          <HeatMap title={title} accountId={accountId} max={max} showLegend
+              query={nrql} 
+              formatLabel={(label) => label.slice(0,6)}
+              formatValue={formatValue} 
               selection={containerId}
               onSelect={selectContainer}/>
         </div>

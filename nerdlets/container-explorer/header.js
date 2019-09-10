@@ -11,7 +11,7 @@ function Filter({ name, value, removeFilter }) {
       </StackItem>
       <StackItem>
         <Button type="plain" iconType="interface_sign_close"
-          sizeType="slim" onClick={() => removeFilter(name, value)} />
+          sizeType="small" onClick={() => removeFilter(name, value)} />
       </StackItem>
     </Stack>
   </StackItem>

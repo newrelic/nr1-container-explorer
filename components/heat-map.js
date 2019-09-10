@@ -92,8 +92,8 @@ export default class Heatmap extends React.Component {
      * formatLabel=(label) => label.slice(0..6)+"..."
      * ```
      */
+    formatLabel: PropTypes.func,
 
-    formatValue: PropTypes.func,
     /**
      * callback when a the title is clicked. Title's value is passed. If 
      * a grouped HeatMap, the title value will be the group's name (e.g. host in the above example)
@@ -130,13 +130,15 @@ export default class Heatmap extends React.Component {
 }
 
 function Node(props) {
-  const { name, value, max, selected, onClick, formatValue } = props
+  const { name, value, max, selected, onClick, formatValue, formatLabel } = props
 
   const normalizedValue = Math.max(Math.min(value / max, 1), 0)
   const color = heatMapColor(normalizedValue)
 
   const formattedValue = formatValue ? formatValue(value) : value
-  const toolTipText = `${name}: ${formattedValue}`
+  const formattedLabel = formatLabel ? formatLabel(name) : name
+
+  const toolTipText = `${formattedLabel}: ${formattedValue}`
   const className = `node ${selected && 'selected'}`
 
   return <Tooltip text={toolTipText}>
@@ -145,7 +147,7 @@ function Node(props) {
 }
 
 function SingleHeatmap(props) {
-  const { title, formatLabel, selection, onSelect, data, max, onClickTitle, showLegend } = props
+  const { title, selection, onSelect, data, max, onClickTitle, showLegend } = props
 
   const titleStyle = `title ${onClickTitle && "clickable"}`
   return <div className="heat-map">
@@ -158,8 +160,8 @@ function SingleHeatmap(props) {
     <div className="grid">
       {data.map(datum => {        
         const selected = datum.name == selection
-        return <Node key={datum.name} formatLabel={formatLabel} {...datum} selected={selected}
-          max={max} onClick={() => onSelect(datum.name)} />
+        return <Node key={datum.name} {...props} {...datum} selected={selected}
+            onClick={() => onSelect(datum.name)} />
       })}
     </div>
   </div>

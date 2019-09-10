@@ -162,7 +162,7 @@ export default class DenseContainerView extends React.Component {
       <Legend title="CPU" max={`${Math.round(max)}%`} />
       <div className="heat-map-list full-height">
         {_.keys(groupedData).map((groupName) => {
-          return <ContainerGrid
+          return <ContainerGrid key={groupName}
             containerData={groupedData[groupName]}
             containerId={containerId}
             title={groupName}

@@ -27,7 +27,7 @@ export default class ContainerGrid extends React.Component {
         <span className="title">{title}</span>
         {title != "<No Value>" && <Button
           onClick={addToFilter}
-          sizeType="slim"
+          sizeType="small"
           type="plain"
           iconType={"interface_operations_filter_a-add"}
         />}
