@@ -1,0 +1,45 @@
+
+.heat-map {
+  margin: 12px;
+  border-radius: 6px;
+  padding: 12px;
+  border: 1px dotted #aaaaaa;
+  background-color: white;
+
+  .header {
+    .title {
+      font-size: 18px;
+      font-weight: 400;
+    }
+  }
+  
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 12px;
+  
+    .node {
+      width: 12px;
+      height: 16px;
+      border: 1px solid #aaaaaa;
+      margin: 2px;
+    }
+
+    .selected {
+      border: 3px solid #222222;
+      margin: -2px;
+      width: 16px;
+      height: 20px;
+    }
+  }   
+}
+
+.value-spectrum {
+  display: flex;
+  height: 24px;
+  width: 100%;
+
+  .slice {
+    width: 0.5%
+  }
+}
