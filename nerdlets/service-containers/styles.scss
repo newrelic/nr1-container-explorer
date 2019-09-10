@@ -1,7 +1,6 @@
 @import "../../components/heat-map.scss";
 
 #root {
-  margin: 16px;
   height: 100%;
 }
 .content {
@@ -27,6 +26,8 @@
       margin-bottom: 12px;
     }
     .section {
+      margin-bottom: 4px;
+
       .title {
         font-size: 12px;
         font-weight: 150;

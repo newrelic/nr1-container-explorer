@@ -36,8 +36,8 @@ const HEAT_MAPS = [
     title: "I/O",
     eventType: 'ProcessSample',
     select: "sum(ioReadBytesPerSecond+ioWriteBytesPerSecond)",
-    max: Math.round,
-    formatValue: (value) => `${bytesToSize(value)}`
+    max: (value) => Math.round(Math.max(value, 1024)),
+    formatValue: (value) => `${bytesToSize(value)}/s`
   }
 ]
 

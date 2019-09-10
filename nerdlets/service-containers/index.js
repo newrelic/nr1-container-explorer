@@ -5,6 +5,8 @@ import {EntityByGuidQuery, NerdGraphQuery, Grid, GridItem, Spinner} from 'nr1'
 
 import nrdbQuery from '../../lib/nrdb-query'
 import timePickerNrql from '../../lib/time-picker-nrql'
+import findRelatedAccountWith from '../../lib/find-related-account-with'
+
 import ContainerTable from './container-table'
 import ContainerPanel from './container-panel'
 import ContainerHeatMap from './heat-maps'
@@ -33,8 +35,6 @@ export default class ServiceContainers extends React.Component {
       if(this.props.timeRange) return
 
       const {entityGuid} = this.props.nerdletUrlState || {}
-      console.log("Guid", entityGuid, this.props)
-
       const timeRange = timePickerNrql(this.props)
 
       let result
@@ -49,30 +49,15 @@ export default class ServiceContainers extends React.Component {
       const containerIds = result.map(r => r.member)
 
       if(containerIds && containerIds.length > 0) {
-        this.findAccountWithContainerInfraData(containerIds[0])
-      }
+        const where = `containerId = '${containerIds[0]}'`
+        find = {eventType: 'ProcessSample', where}
+        findRelatedAccountWith(find, (infraAccount) => {
+          console.log("Infra Account", infraAccount)
+          this.setState({infraAccount})
+        })
+      }      
 
       await this.setState({containerIds, entity, timeRange})      
-    }
-
-    async findAccountWithContainerInfraData(containerId) {
-
-      // find the accounts with SystemSample Data reporting
-      const gql = `{actor {accounts {name id reportingEventTypes(filter:["ProcessSample"])}}}`
-      let result = await NerdGraphQuery.query({query: gql})
-      // console.log("GQL Result", JSON.stringify(result))
-      const accounts = result.data.actor.accounts.filter(a => a.reportingEventTypes.length > 0)
-
-      // run these (low impact 1 minute) queries in parallel to find
-      // which account has data for this container
-      const nrql = `SELECT count(*) FROM ProcessSample WHERE containerId = '${containerId}' SINCE 1 minute ago`
-      accounts.forEach(account => {
-        return nrdbQuery(account.id, nrql).then(results => {
-          if(results[0].count > 0) {
-            this.setState({infraAccount: account})
-          }
-        })
-      })
     }
 
     render() {
