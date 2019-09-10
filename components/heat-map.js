@@ -1,8 +1,7 @@
 import { NrqlQuery, Tooltip } from 'nr1'
 import PropTypes from 'prop-types';
 import _ from 'underscore'
-
-import heatMapColor from '../lib/heat-map-color'
+import hsl from 'hsl-to-hex'
 
 /**
  * # Heatmap
@@ -10,7 +9,13 @@ import heatMapColor from '../lib/heat-map-color'
  * component that makes it super easy to visualize a large number data set
  * with a singler faceted NRQL query.
  * 
- * # Examples
+ * ## Required packages
+ * ```
+ *    npm install hsl-to-hex
+ *    npm install underscore
+ * ```
+ * 
+ * ## Examples
  * ```js
  * // single heatmap of Transaction throughput across all hosts
  * <HeatMap accountId={1} nrql={"SELECT count(*) FROM PageView facet host LIMIT 2000"}/>
@@ -88,6 +93,7 @@ export default class Heatmap extends React.Component {
         if (error) return <pre>{error}</pre>
         if (!data.facets) {
           console.log("Bad result", nrql, error, data)
+          return <div/>
         }
   
         const preparedData = prepare({data, max})
@@ -104,7 +110,6 @@ export default class Heatmap extends React.Component {
     </NrqlQuery>
   }
 }
-
 
 function Node(props) {
   const { name, value, max, selected, onClick, formatLabel } = props
@@ -173,3 +178,12 @@ function prepare({data, max}) {
   return {data, max, isMultiFacet}
 }
 
+function heatMapColor(value) {
+  if(value > 1) throw "heatMapColor: value must be in range (0..1)"
+
+  const h = (1 - value) * 80
+  const s = 100
+  const l = 40
+
+  return hsl(h, s, l)
+}
