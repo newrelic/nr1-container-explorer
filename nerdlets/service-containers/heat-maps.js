@@ -65,15 +65,14 @@ export default class ContainerHeatMap extends React.PureComponent {
             WHERE containerId IN (${containerIds.map(x => `'${x}'`).join(', ')})
             ${timeRange} FACET containerId LIMIT 2000`
   
-        return <div>
-          <HeatMap title={title} accountId={accountId} max={max} showLegend
+        return <HeatMap title={title} accountId={accountId} key={title}
+              max={max} showLegend
               query={nrql} 
               formatLabel={(label) => label.slice(0,6)}
               formatValue={formatValue} 
               selection={containerId}
               onClickTitle={console.log}
               onSelect={selectContainer}/>
-        </div>
       })}
     </div>
     }

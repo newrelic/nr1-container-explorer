@@ -12,3 +12,48 @@
   width: 100%;
   height: 180px;
 }
+
+.container-panel {
+  margin: 12px;
+  min-height: 400px;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 200;
+      margin-bottom: 12px;
+    }
+    .section {
+      .title {
+        font-size: 12px;
+        font-weight: 150;
+        vertical-align: sub;
+      }
+    }
+  }
+
+  ul.tags {
+    list-style: none;
+
+    li {
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+      border-bottom: 1px dotted #eeeeee;
+
+      .name {
+        color: #888888;
+        font-size: 10px;
+      }
+      .value {
+        overflow-wrap: break-word;
+        color: black;
+        font-size: 12px;
+      }
+    }
+
+  }
+}

@@ -98,7 +98,7 @@ export default class Heatmap extends React.Component {
      * callback when a the title is clicked. Title's value is passed. If 
      * a grouped HeatMap, the title value will be the group's name (e.g. host in the above example)
      */
-    onSelect: PropTypes.func,
+    onClickTitle: PropTypes.func,
   }
 
   render() {
@@ -215,7 +215,7 @@ function prepare({data, max}) {
 function heatMapColor(value) {
   if(value > 1) throw "heatMapColor: value must be in range (0..1)"
 
-  const h = (1 - value) * 80
+  const h = (1 - value) * 70+20
   const s = 100
   const l = 40
 

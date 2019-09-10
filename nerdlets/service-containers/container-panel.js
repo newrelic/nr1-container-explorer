@@ -1,68 +1,83 @@
 import React from 'react';
 
-import {LineChart, NrqlQuery, ChartGroup, Tabs, TabsItem} from 'nr1'
+import { Tabs, TabsItem, Button, navigation } from 'nr1'
 
-// roll up all of the facet data into a single summarized series.
-function summarizeFacets(data) {
-  if(!data || data.length == 0) return []
-  
-  let summary = data.shift()
-  data.forEach(series => {
-    series.data.forEach((datum, index) => {
-      summary.data[index].y += datum.y
-    })
-  })
+import ContainerAttributes from './container-attributes'
+import Charts from './container-charts'
+import nrdbQuery from '../../lib/nrdb-query'
 
-  const {metadata} = summary
-  metadata.label = metadata.alias || metadata.attribute
-  metadata.presentation.name = metadata.label
 
-  return [summary]
+function ProcessesTab({ containerId, account, timeRange }) {
+
 }
 
-function getNrql({select, timeRange, containerId}) {
-  return `SELECT ${select} FROM ProcessSample 
-    WHERE containerId='${containerId}' FACET processId 
-    TIMESERIES LIMIT MAX ${timeRange}`
+function Header(props) {
+  const {hostname, containerId, entityGuid} = props
+  const title = `${hostname}: ${containerId.slice(0, 6)}`
+
+  const entity = {
+    guid: entityGuid,
+    domain: 'INFRA',
+    type: 'HOST'
+  }
+  return <div className="header">
+    <h3>{title}</h3>
+    <div className="section">
+      <span className="title">Host</span>
+      <Button sizeType="small" type="plain" 
+          iconType="hardware-&-software_hardware_server" 
+          onClick={() => navigation.openStackedEntity(entity)}>
+        {hostname}
+      </Button>
+      <Button sizeType="small" type="plain" 
+          iconType="interface_operations_drag" 
+          onClick={() => navigation.openEntity(entity)}/>
+    </div>
+  </div>
 }
 
-function Chart({account, containerId, select, timeRange}) {
-  const nrql = getNrql({select, timeRange, containerId})
-  return <NrqlQuery accountId={account.id} query={nrql}>
-    {({loading, error, data}) => {
-      if(error) console.log(error)
-      if(loading) return <div className="chart"/>
 
-      return <LineChart data={summarizeFacets(data)} className="chart"/>
-    }}
-  </NrqlQuery>
+export default class ContainerPanel extends React.Component {
+  componentDidMount() {
+    this.load()
+  }
+
+  componentDidUpdate({ containerId }) {
+    if (containerId != this.props.containerId) {
+      this.load()
+    }
+  }
+
+  async load() {
+    this.setState({})
+    const { account, containerId } = this.props
+    const accountId = account.id
+
+    const where = `containerId = '${containerId}'`
+    const timeWindow = 'SINCE 1 minutes ago'
+    const nrql = `SELECT entityGuid, hostname from ProcessSample WHERE ${where} LIMIT 1 ${timeWindow}`
+    const results = (await nrdbQuery(accountId, nrql))[0]
+
+    this.setState({ ...results })
+  }
+
+  render() {
+    const { entityGuid } = this.state || {}
+    if (!entityGuid) return <div />
+
+    return <div className="container-panel">
+      <Header {...this.props} {...this.state} />
+      <Tabs>
+        <TabsItem value="summary" label="Tags">
+          <ContainerAttributes {...this.props} />
+        </TabsItem>
+        <TabsItem value="processes" label="Processes">
+          <h2>Processes</h2>
+        </TabsItem>
+        <TabsItem value="charts" label="Charts">
+          <Charts {...this.props} />
+        </TabsItem>
+      </Tabs>
+    </div>
+  }
 }
-
-function Charts({containerId, account, timeRange}) {
-  return <ChartGroup>
-    <h3>CPU</h3>
-    <Chart containerId={containerId} account={account} timeRange={timeRange} 
-      select={"average(cpuPercent) AS 'CPU'"}/>
-    <h3>Memory</h3>
-    <Chart containerId={containerId} account={account} timeRange={timeRange} 
-      select={"average(memoryResidentSizeBytes) AS 'Memory'"}/>
-    <h3>Disk I/O</h3>
-    <Chart containerId={containerId} account={account} timeRange={timeRange} 
-      select={"average(ioReadBytesPerSecond+ioWriteBytesPerSecond) AS 'Disk I/O'"}/>
-  </ChartGroup>
-}
-
-function ProcessesTab({containerId, account, timeRange}) {
-  
-}
-
-export default function ContainerPanel(props) {
-  return <Tabs>
-    <Tabs>
-      <TabsItem itemKey="charts" label="Charts">
-        <Charts {...props}/>
-      </TabsItem>
-    </Tabs>
-  </Tabs>
-}
-
