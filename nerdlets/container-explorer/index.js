@@ -22,7 +22,6 @@ export default class ContainerExplorerNerdlet extends React.Component {
   }
 
   async componentDidMount() {
-    console.log("MOUNT")
     const find = {eventType: "ProcessSample", where: "containerId IS NOT NULL", 
         timeWindow: "SINCE 1 minute ago"}
     const accounts = await findRelatedAccountsWith(find)
@@ -31,9 +30,6 @@ export default class ContainerExplorerNerdlet extends React.Component {
     if(accounts.length > 0) {
       this.countProcesses()      
     }
-    
-    // FIXME remove
-    // await this.addFilter("containerImageName", "cf-registry.nr-ops.net/apm/rpm-ui:release-1785")
   }
 
   async addFilter(name, value) {

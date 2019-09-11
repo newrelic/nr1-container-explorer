@@ -5,9 +5,9 @@ import _ from 'underscore'
 import getCardinality from '../../lib/get-cardinality'
 import timePickerNrql from '../../lib/time-picker-nrql'
 
-import DenseContainerView from './dense-container-view'
 import FacetTable from './facet-table'
 import ContainerPanel from '../shared/container-panel'
+import ContainerHeatMap from './container-heat-map'
 
 const OMIT_KEYS = {
   systemMemoryBytes: true,
@@ -20,10 +20,10 @@ const OMIT_KEYS = {
 
 function GroupList({ groups, group, selectGroup, showNone }) {  
   return <div className="facet-list">
-    <h3>Pick a Segment</h3>
+    <h3>Group By</h3>
     <ul>
     {showNone && <li className='facet' key="__none" onClick={() => selectGroup(null)}>
-      None
+      <em>None: Show CPU, Disk and IO</em>
     </li>}    
     {groups.map(g => {
       const className = `facet ${g.name == group && 'selected'}`
@@ -43,7 +43,6 @@ export default class ContainerExplorer extends React.Component {
   }
 
   async componentDidMount() {
-    this.setState({group: "containerImageName"})
     await this.reload()    
   }
 
@@ -96,16 +95,20 @@ export default class ContainerExplorer extends React.Component {
     const {groups, group, containerId} = this.state || {}
     const tooMany = counts.containers > 2000
 
-    if(!group || !groups) return <Spinner fillContainer/>
+    if(!groups) return <Spinner fillContainer/>
     const timeRange = timePickerNrql(this.props)
 
     return <div className='content'>
       <Grid>
         <GridItem columnSpan={8}>
-          {!tooMany && groups && <DenseContainerView {...this.props} {...this.state} 
-            selectContainer={this.selectContainer}/>}
-          {tooMany && group && <FacetTable {...this.props} {...this.state}
-            setFacetValue={(value) => addFilter(group, value)}/>}
+          {!tooMany && groups && <ContainerHeatMap {...this.props} {...this.state} 
+            selectContainer={this.selectContainer}
+            setFacetValue={(value) => addFilter(group, value)}
+            />}
+          {tooMany && <FacetTable 
+              group="containerImageName"  // if none provided, default to this. state will override.
+              {...this.props} {...this.state}
+            setFacetValue={(value) => addFilter(group || "containerImageName", value)}/>}
         </GridItem>
         <GridItem columnSpan={4}>
           {containerId && <ContainerPanel account={account} containerId={containerId} timeRange={timeRange}
