@@ -56,9 +56,15 @@
       }
       .value {
         overflow-wrap: break-word;
-        color: black;
         font-size: 12px;
       }
+    }
+    .clickable {
+      color: #003555;      
+    }
+    .clickable:hover {
+      text-decoration: underline;
+      cursor: pointer;
     }
 
   }

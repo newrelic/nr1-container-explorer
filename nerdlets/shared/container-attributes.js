@@ -24,10 +24,12 @@ const OMIT_ATTRIBUTES = {
   "entityName": true
 }
 
-function Attribute({name, value}) {
-  return <li>
+function Attribute({name, value, onSelectAttribute}) {
+  const onClick=onSelectAttribute && (() => onSelectAttribute(name, value))
+  const isClickable = onClick ? "clickable" : ""
+  return <li onClick={onClick}>
     <span className="name">{name}</span>
-    <span className="value">{value}</span>
+    <span className={`value ${isClickable}`}>{value}</span>
   </li>
 }
 
@@ -51,7 +53,8 @@ export default class ContainerAttributes extends React.Component {
     const timeWindow = 'SINCE 15 minutes ago'
     const facets = await getCardinality({accountId, where, timeWindow, eventType: 'ProcessSample'})
 
-    const attributes = facets.filter(f => f.count == 1 && !OMIT_ATTRIBUTES[f.name])
+    let attributes = facets.filter(f => f.count == 1 && !OMIT_ATTRIBUTES[f.name])
+    attributes = attributes.sort((x, y) => x.name.localeCompare(y.name))
     const nrql = `SELECT * from ProcessSample WHERE ${where} LIMIT 1 ${timeWindow}`
     const results = (await nrdbQuery(accountId, nrql))[0]
     
@@ -65,11 +68,13 @@ export default class ContainerAttributes extends React.Component {
     const {attributes} = this.state || {}
     if(!attributes) return <Spinner fillContent/>
 
+    const {onSelectAttribute} = this.props
+
     return <div className="container-summary-view">
       <h3>{name}</h3>
       <ul className='tags'>
         {attributes.map(attr => {
-          return <Attribute key={attr.name} {...attr}/>
+          return <Attribute key={attr.name} {...attr} onSelectAttribute={onSelectAttribute}/>
         })}
       </ul>
     </div>

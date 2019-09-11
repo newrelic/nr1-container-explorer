@@ -69,11 +69,13 @@ export default class ContainerPanel extends React.Component {
     const { entityGuid } = this.state || {}
     if (!entityGuid) return <div />
 
+    const {onSelectAttribute} = this.props
+
     return <div className="container-panel">
       <Header {...this.props} {...this.state} />
-      <Tabs defaultValue="processes">
+      <Tabs>
         <TabsItem value="summary" label="Tags">
-          <ContainerAttributes {...this.props} />
+          <ContainerAttributes {...this.props} onSelectAttribute={onSelectAttribute}/>
         </TabsItem>
         <TabsItem value="processes" label="Processes">
           <ProcessTable {...this.props}/>

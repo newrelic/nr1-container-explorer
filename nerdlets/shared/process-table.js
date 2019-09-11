@@ -47,8 +47,6 @@ export default class ProcessTable extends React.Component {
   }
 
   async load() {
-    console.log("Load", this.props.account)
-
     const { containerId, account } = this.props
     const nrql = `SELECT latest(cpuPercent) as cpu, 
         latest(memoryResidentSizeBytes) as memory, 
