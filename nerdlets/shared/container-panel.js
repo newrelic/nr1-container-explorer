@@ -18,7 +18,8 @@ function Header(props) {
   }
   return <div className="header">
     <Button 
-      type="small"
+      size="small"
+      type="plain"
       onClick={onClose}
       className="close-button" 
       iconType="interface_sign_times_v-alternate"/>

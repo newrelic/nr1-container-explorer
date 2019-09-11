@@ -44,13 +44,14 @@ export default class ContainerHeatMap extends React.Component {
 
   }
   renderHeatMap(plot) {
-    const {account, setFacetValue, selectContainer} = this.props
+    const {account, setFacetValue, selectContainer, containerId} = this.props
     const nrql = this.getNrql(plot.select)
 
     return <Heatmap accountId={account.id} query={nrql}
       title={plot.title}
       formatLabel={(c) => c.slice(0,6)}
       formatValue={plot.formatValue}
+      selection={containerId}
       onSelect={(containerId) => selectContainer(containerId)}
       onClickTitle={(value) => setFacetValue(value)}
     />
