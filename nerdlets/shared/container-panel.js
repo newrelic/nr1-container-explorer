@@ -7,12 +7,8 @@ import Charts from './container-charts'
 import nrdbQuery from '../../lib/nrdb-query'
 
 
-function ProcessesTab({ containerId, account, timeRange }) {
-
-}
-
 function Header(props) {
-  const {hostname, containerId, entityGuid} = props
+  const {hostname, containerId, entityGuid, onClose} = props
   const title = `${hostname}: ${containerId.slice(0, 6)}`
 
   const entity = {
@@ -21,6 +17,11 @@ function Header(props) {
     type: 'HOST'
   }
   return <div className="header">
+    <Button 
+      type="small"
+      onClick={onClose}
+      className="close-button" 
+      iconType="interface_sign_times_v-alternate"/>
     <h3>{title}</h3>
     <div className="section">
       <span className="title">Host</span>

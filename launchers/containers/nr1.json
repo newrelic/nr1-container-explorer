@@ -1,8 +1,8 @@
 {
     "schemaType": "LAUNCHER",
     "id": "containers",
-    "displayName": "Containers",
-    "description": "",
+    "displayName": "Container Explorer",
+    "description": "Explore millions of containers",
     "icon": "hardware-&-software_kubernetes_k8s-container",
     "rootNerdletId": "dd253927-5aee-4ac3-bd56-702c8bcfc749.container-explorer"
 }

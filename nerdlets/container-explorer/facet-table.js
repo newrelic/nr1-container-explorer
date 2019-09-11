@@ -15,8 +15,8 @@ export default function FacetTable(props) {
   const onClickTable = setFacetValue && function (ignored, row) {
     setFacetValue(row[group])
   }  
-  return <div style={{width: "100%", height: "100%"}}>
-    <p>Too many containers to display them all. Select a segment.</p>
+  return <div className="facet-table">
+    <p>Select a segment.</p>
     <TableChart accountId={account.id} query={nrql} onClickTable={onClickTable}/>
   </div>
 }

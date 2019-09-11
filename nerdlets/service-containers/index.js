@@ -8,7 +8,7 @@ import timePickerNrql from '../../lib/time-picker-nrql'
 import findRelatedAccountWith from '../../lib/find-related-account-with'
 
 
-import ContainerPanel from './container-panel'
+import ContainerPanel from '../shared/container-panel'
 import ContainerHeatMap from './heat-maps'
 
 export default class ServiceContainers extends React.Component {
@@ -93,9 +93,11 @@ export default class ServiceContainers extends React.Component {
             <ContainerHeatMap {...this.state} selectContainer={infraAccount && this._selectContainer} />
           </GridItem>
           <GridItem className="content" columnSpan={5}>
-            {infraAccount && containerId && 
-              <ContainerPanel account={infraAccount} containerId={containerId} timeRange={timeRange}/>
-            }
+            {infraAccount && containerId && <ContainerPanel 
+              account={infraAccount} 
+              containerId={containerId} 
+              onClose={() => this.setState({containerId: null})}
+              timeRange={timeRange}/>}
           </GridItem>
         </Grid>
       </div>

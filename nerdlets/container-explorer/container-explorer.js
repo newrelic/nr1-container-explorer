@@ -3,10 +3,11 @@ import {Grid, GridItem, Spinner} from 'nr1'
 import _ from 'underscore'
 
 import getCardinality from '../../lib/get-cardinality'
+import timePickerNrql from '../../lib/time-picker-nrql'
 
 import DenseContainerView from './dense-container-view'
 import FacetTable from './facet-table'
-import ContainerPanel from './container-panel'
+import ContainerPanel from '../shared/container-panel'
 
 const OMIT_KEYS = {
   systemMemoryBytes: true,
@@ -18,7 +19,9 @@ const OMIT_KEYS = {
 }
 
 function GroupList({ groups, group, selectGroup, showNone }) {  
-  return <ul className="facet-list">
+  return <div className="facet-list">
+    <h3>Pick a Segment</h3>
+    <ul>
     {showNone && <li className='facet' key="__none" onClick={() => selectGroup(null)}>
       None
     </li>}    
@@ -29,9 +32,8 @@ function GroupList({ groups, group, selectGroup, showNone }) {
       </li>
     })}
   </ul>
+  </div>
 }
-
-
 
 export default class ContainerExplorer extends React.Component {
   constructor(props) {
@@ -81,7 +83,9 @@ export default class ContainerExplorer extends React.Component {
       return facet.count > 1 && facet.count < counts.containers * .6 && !OMIT_KEYS[facet.name]      
     })
 
-    this.setState({groups: _.sortBy(groups, 'name')})
+    const group = "containerImageName"
+
+    this.setState({groups: _.sortBy(groups, 'name'), group})
   }
 
   selectContainer(containerId) {
@@ -89,23 +93,26 @@ export default class ContainerExplorer extends React.Component {
   }
 
   render() {
-    const {addFilter, counts} = this.props
+    const {addFilter, counts, account} = this.props
     const {groups, group, containerId} = this.state || {}
     const tooMany = counts.containers > 2000
 
     if(!groups) return <Spinner fillContainer/>
+    const timeRange = timePickerNrql(this.props)
 
     return <div className='content'>
       <Grid>
-        <GridItem columnSpan={3}>
-          <GroupList groups={groups} group={group} showNone={!tooMany}
-            selectGroup={(group)=> this.setState({group})}/>
-        </GridItem>
-        <GridItem columnSpan={9}>
+      <GridItem columnSpan={8}>
           {!tooMany && <DenseContainerView {...this.props} {...this.state} 
             selectContainer={this.selectContainer}/>}
           {tooMany && group && <FacetTable {...this.props} {...this.state}
             setFacetValue={(value) => addFilter(group, value)}/>}
+        </GridItem>
+        <GridItem columnSpan={4}>
+          {containerId && <ContainerPanel account={account} containerId={containerId} timeRange={timeRange}
+              onClose={() => this.setState({containerId: null})}/>}
+          {!containerId && <GroupList groups={groups} group={group} showNone={!tooMany}
+            selectGroup={(group)=> this.setState({group})}/>}
         </GridItem>
       </Grid>
     </div>

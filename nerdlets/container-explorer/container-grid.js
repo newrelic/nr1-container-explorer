@@ -4,7 +4,7 @@ import React from 'react';
 import { Tooltip, Button } from 'nr1'
 import heatMapColor from '../../lib/heat-map-color'
 
-import ContainerPanel from './container-panel'
+import ContainerPanel from '../shared/container-panel'
 
 function Node(props) {
   const { value, onClick, selected } = props
