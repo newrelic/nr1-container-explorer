@@ -3,7 +3,7 @@
     "id": "service-containers",
     "displayName": "Containers",
     "description": "Show Docker Containers",
-    "actionCategory": "monitor",
+    "actionCategory": "troubleshoot",
     "entities": [
       {
         "domain": "APM",

@@ -4,6 +4,8 @@ import { Tabs, TabsItem, Button, navigation } from 'nr1'
 
 import ContainerAttributes from './container-attributes'
 import Charts from './container-charts'
+import ProcessTable from './process-table'
+
 import nrdbQuery from '../../lib/nrdb-query'
 
 
@@ -69,12 +71,12 @@ export default class ContainerPanel extends React.Component {
 
     return <div className="container-panel">
       <Header {...this.props} {...this.state} />
-      <Tabs>
+      <Tabs defaultValue="processes">
         <TabsItem value="summary" label="Tags">
           <ContainerAttributes {...this.props} />
         </TabsItem>
         <TabsItem value="processes" label="Processes">
-          <h2>Processes</h2>
+          <ProcessTable {...this.props}/>
         </TabsItem>
         <TabsItem value="charts" label="Charts">
           <Charts {...this.props} />

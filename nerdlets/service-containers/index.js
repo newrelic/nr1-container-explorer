@@ -1,15 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {EntityByGuidQuery, Grid, GridItem, Spinner, EntityStorageQuery, EntityStorageMutation} from 'nr1'
+import {EntityByGuidQuery, Grid, GridItem, Spinner, NerdGraphQuery, EntityStorageQuery, EntityStorageMutation} from 'nr1'
 
 import nrdbQuery from '../../lib/nrdb-query'
 import timePickerNrql from '../../lib/time-picker-nrql'
-import findRelatedAccountWith from '../../lib/find-related-account-with'
+import findRelatedAccountsWith from '../../lib/find-related-account-with'
 
 
 import ContainerPanel from '../shared/container-panel'
 import ContainerHeatMap from './heat-maps'
+
+function NoInfrastructureData({accounts}) {
+  <div id="root">
+  <h3>No Container Data Found</h3>
+  <p>
+    No container data found after searching across all accounts that this
+    package has access to.  Be sure you've deployed the infrastructure Agent
+    and that this NerdPack has visibility into that account.
+  </p>
+  <p>
+    We searched the follwing accounts:
+  </p>
+  <ul>
+    {accounts.map(account => {
+      return <li key={account.id}>{account.name}</li>
+    })}
+  </ul>
+</div>
+}
 
 export default class ServiceContainers extends React.Component {
     static propTypes = {
@@ -31,7 +50,7 @@ export default class ServiceContainers extends React.Component {
     }
 
     async componentDidMount() {
-      // workaround for bug
+      // workaround for bug in NR1 platform
       if(this.props.timeRange) return
 
       const {entityGuid} = this.props.nerdletUrlState || {}
@@ -62,7 +81,7 @@ export default class ServiceContainers extends React.Component {
         const where = `containerId IN (${containerIds.map(cid => `'${cid}'`).join(',')})`
         find = {eventType: 'ProcessSample', where}
 
-        infraAccounts = await findRelatedAccountWith(find)
+        infraAccounts = await findRelatedAccountsWith(find)
 
         // cache in entity storage
         storageQuery.document = infraAccounts
@@ -71,9 +90,15 @@ export default class ServiceContainers extends React.Component {
         await EntityStorageMutation.mutate(storageQuery)
       }      
 
+      if(!infraAccounts || infraAccounts.lengh == 0) {
+        console.log("not found")
+        const {data} = await NerdGraphQuery.query({query: `{actor {accounts { name id }}}`}) 
+        console.log(data)
+        this.setState({accountDataNotFound: true, searchedAccounts: data.actor.accounts})
+      }
+
       // use the infra account with the most hits as the primary for this entity, and then
       // store the others otherInfraAccounts so we can show an info box.
-      console.log(infraAccounts)
       this.setState({infraAccount: infraAccounts.shift(), otherInfraAccounts: infraAccounts})
       await this.setState({containerIds, entity, timeRange})      
     }
@@ -82,7 +107,11 @@ export default class ServiceContainers extends React.Component {
       // workaround for bug
       if(this.props.timeRange) return <div/>
       
-      const {infraAccount, containerId, entity, timeRange} = this.state
+      const {infraAccount, containerId, entity, timeRange, accountDataNotFound, searchedAccounts} = this.state
+
+      if(accountDataNotFound) {
+        return <NoInfrastructureData accounts={searchedAccounts}/>
+      }
 
       if(!entity || !infraAccount) return <Spinner fillContent style={{width: "100%", height: "100%"}}/>
       
