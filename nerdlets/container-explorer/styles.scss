@@ -38,9 +38,25 @@
 .header {
   border-bottom: 1px dotted #aaaaaa;
 
-  h1 {
-    text-align: center;
+  .title-bar {
+    display: flex;
+    flex-direction: row;
+    padding-top: 12px;
+    padding-right:16px;
+    padding-left: 16px;
+
+    .account-picker {
+      font-size: 16px;
+    }
+
+    .title {
+      flex-grow: 1;
+      text-align: right;
+      font-size: 16px;
+      color: #555555;
+    }
   }
+  
   .too-many-containers {
     width: 100%;
     text-align: center;
@@ -48,11 +64,13 @@
   }
   .filter-bar {
     padding-top: 12px;
+    padding-left: 18px;
   }
 
   .filter {  
     background-color: #d0f0ff;
-    padding: 4px 2px;
+    padding-left: 6px;
+    padding-top: 3px;
     margin: 4px;
     border-radius: 3px;
   

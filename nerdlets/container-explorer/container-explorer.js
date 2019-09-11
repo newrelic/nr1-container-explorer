@@ -43,10 +43,11 @@ export default class ContainerExplorer extends React.Component {
   }
 
   async componentDidMount() {
+    this.setState({group: "containerImageName"})
     await this.reload()    
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
     if(this.interval) clearInterval(this.interval)
   }
 
@@ -83,9 +84,7 @@ export default class ContainerExplorer extends React.Component {
       return facet.count > 1 && facet.count < counts.containers * .6 && !OMIT_KEYS[facet.name]      
     })
 
-    const group = "containerImageName"
-
-    this.setState({groups: _.sortBy(groups, 'name'), group})
+    this.setState({groups: _.sortBy(groups, 'name')})
   }
 
   selectContainer(containerId) {
@@ -97,13 +96,13 @@ export default class ContainerExplorer extends React.Component {
     const {groups, group, containerId} = this.state || {}
     const tooMany = counts.containers > 2000
 
-    if(!groups) return <Spinner fillContainer/>
+    if(!group || !groups) return <Spinner fillContainer/>
     const timeRange = timePickerNrql(this.props)
 
     return <div className='content'>
       <Grid>
-      <GridItem columnSpan={8}>
-          {!tooMany && <DenseContainerView {...this.props} {...this.state} 
+        <GridItem columnSpan={8}>
+          {!tooMany && groups && <DenseContainerView {...this.props} {...this.state} 
             selectContainer={this.selectContainer}/>}
           {tooMany && group && <FacetTable {...this.props} {...this.state}
             setFacetValue={(value) => addFilter(group, value)}/>}
@@ -111,7 +110,7 @@ export default class ContainerExplorer extends React.Component {
         <GridItem columnSpan={4}>
           {containerId && <ContainerPanel account={account} containerId={containerId} timeRange={timeRange}
               onClose={() => this.setState({containerId: null})}/>}
-          {!containerId && <GroupList groups={groups} group={group} showNone={!tooMany}
+          {!containerId && groups && <GroupList groups={groups} group={group} showNone={!tooMany}
             selectGroup={(group)=> this.setState({group})}/>}
         </GridItem>
       </Grid>

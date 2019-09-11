@@ -1,4 +1,4 @@
-import { Stack, StackItem, Button } from 'nr1'
+import { Stack, StackItem, Button, Dropdown, DropdownItem } from 'nr1'
 
 function Filter({ name, value, removeFilter }) {
   return <StackItem className="filter">
@@ -17,17 +17,27 @@ function Filter({ name, value, removeFilter }) {
   </StackItem>
 }
 
+function AccountPicker({accounts, account, setAccount}) {
+  return <Dropdown className="account-picker" title={account.name}>
+    {accounts.map(account => {
+      return <DropdownItem onClick={() => setAccount(account)} key={account.id}>
+        {account.name}
+      </DropdownItem>
+    })}
+  </Dropdown>
+}
+
 export default function Header(props) {
   const { counts, filters, removeFilter } = props
   return <div className="header">
-    <h1>
-      {counts.containers} Containers running on {counts.hosts} Hosts
-    </h1>
+    <div className="title-bar">
+      <AccountPicker {...props}/>
+      {counts && <span className="title">
+        {counts.containers} Containers running on {counts.hosts} Hosts
+      </span>}      
+    </div>
     <Stack className="filter-bar">
-      <StackItem>
-      </StackItem>
       {filters.map(filterProps => {
-        console.log(filterProps)
         return <Filter key={filterProps.name} {...filterProps} removeFilter={removeFilter} />
       })}
     </Stack>
