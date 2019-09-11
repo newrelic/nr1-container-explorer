@@ -2,6 +2,7 @@ import React from 'react'
 import HeatMap from '../../components/heat-map'
 
 import bytesToSize from '../../lib/bytes-to-size'
+import nrdbQuery from '../../lib/nrdb-query'
 
 const HEAT_MAPS = [
   {
@@ -18,36 +19,63 @@ const HEAT_MAPS = [
     max: Math.ceil,
     formatValue: (value) => `${Math.round(value)} rpm`
   },
+  /* note for infra data, we are assuming 1 event per process per 15 seconds.
+   * since we are running a 1 minute query, divide the values by 4 for accuracy.*/
   {
     title: "CPU",
     eventType: 'ProcessSample',
-    select: "sum(cpuPercent)",
+    select: "sum(cpuPercent)/4",
     max: (max) => Math.ceil(max/100)*100,
     formatValue: (value) => `${Math.round(value)}%`,
   },
   {
     title: "Memory",
     eventType: 'ProcessSample',
-    select: "sum(memoryResidentSizeBytes)",
+    select: "sum(memoryResidentSizeBytes)/4",
     max: Math.round,
     formatValue: bytesToSize
   },
   {
     title: "I/O",
     eventType: 'ProcessSample',
-    select: "sum(ioReadBytesPerSecond+ioWriteBytesPerSecond)",
+    select: "sum(ioReadBytesPerSecond+ioWriteBytesPerSecond)/4",
     max: (value) => Math.round(Math.max(value, 1024)),
     formatValue: (value) => `${bytesToSize(value)}/s`
   }
 ]
 
 export default class ContainerHeatMap extends React.PureComponent {
+  componentDidMount() {
+    this.reload()
+  }
+  
+  componentDidUpdate({entity, infraAccount}) {
+    if(entity != this.props.entity || infraAccount != this.props.infraAccount) {
+      this.reload()
+    }
+  }
+
+  async reload() {
+    let {infraAccount, containerIds} = this.props
+
+    const inClause = containerIds.map(c => (`'${c}'`)).join(',')
+    const where = `WHERE containerId IN (${inClause})`
+    const nrql = `SELECT uniques(containerId) FROM ProcessSample ${where} SINCE 1 minute ago`
+    const results = await nrdbQuery(infraAccount.id, nrql)
+
+    containerIds = results.map(r => r.member)
+    this.setState({containerIds})    
+  }
+
   render() {
-    let {entity, infraAccount, selectContainer, containerIds, containerId} = this.props
-    if(!infraAccount) return <div/>
+    let {entity, infraAccount, selectContainer, containerId} = this.props
+
+    // get containerIds from state. It's only showing the containers that exist in this account
+    const {containerIds} = this.state || {}
+    if(!infraAccount || !containerIds) return <div/>
 
     // FIXME overriding time picker to do realtime so we can show accurate infra data
-    const timeRange = "SINCE 90 seconds ago until 75 seconds ago"
+    const timeRange = "SINCE 90 seconds ago until 30 seconds ago"
     return <div>
       {HEAT_MAPS.map(({title, select, formatValue, eventType, max}) => {
         let accountId = entity.accountId
