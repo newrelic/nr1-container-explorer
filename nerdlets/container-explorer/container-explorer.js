@@ -93,25 +93,27 @@ export default class ContainerExplorer extends React.Component {
   render() {
     const {addFilter, counts, account} = this.props
     const {groups, group, containerId} = this.state || {}
-    const tooMany = counts.containers > 2000
 
     if(!groups) return <Spinner fillContainer/>
+
+    const tooMany = counts.containers > 2000
     const timeRange = timePickerNrql(this.props)
+    const showFacetTable = tooMany && group
 
     return <div className='content'>
       <Grid>
         <GridItem columnSpan={8}>
-          {!tooMany && groups && <ContainerHeatMap {...this.props} {...this.state} 
+          {!showFacetTable  && <ContainerHeatMap {...this.props} {...this.state} 
             selectContainer={this.selectContainer}
             setFacetValue={(value) => addFilter(group, value)}
             />}
-          {tooMany && <FacetTable 
-              group="containerImageName"  // if none provided, default to this. state will override.
+          {showFacetTable && <FacetTable 
               {...this.props} {...this.state}
-            setFacetValue={(value) => addFilter(group || "containerImageName", value)}/>}
+            setFacetValue={(value) => addFilter(group, value)}/>}
         </GridItem>
         <GridItem columnSpan={4}>
           {containerId && <ContainerPanel account={account} containerId={containerId} timeRange={timeRange}
+              onSelectAttribute={(key, value) => addFilter(key, value)}
               showRelatedApps onClose={() => this.setState({containerId: null})}/>}
           {!containerId && groups && <GroupList groups={groups} group={group} showNone={!tooMany}
             selectGroup={(group)=> this.setState({group})}/>}
