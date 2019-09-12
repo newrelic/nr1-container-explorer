@@ -45,8 +45,12 @@ export default class ContainerHeatMap extends React.Component {
 
   }
   renderHeatMap(plot) {
-    const { account, setFacetValue, selectContainer, containerId, max } = this.props
+    const { account, setFacetValue, selectContainer, containerId, max, group } = this.props
     const nrql = this.getNrql(plot.select)
+
+    // if the uesr clicks on a title (facet value) when viewing as a group, then 
+    // add to the filter.
+    const onClickTitle = group && ((value) => setFacetValue(value))
 
     return <Heatmap accountId={account.id} query={nrql}
       title={plot.title}
@@ -55,7 +59,7 @@ export default class ContainerHeatMap extends React.Component {
       selection={containerId}
       max={max}
       onSelect={(containerId) => selectContainer(containerId)}
-      onClickTitle={(value) => setFacetValue(value)}
+      onClickTitle={onClickTitle}
     />
   }
 
