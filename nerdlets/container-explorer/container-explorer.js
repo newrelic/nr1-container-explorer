@@ -101,7 +101,7 @@ export default class ContainerExplorer extends React.Component {
     const timeRange = timePickerNrql(this.props)
     const showFacetTable = tooMany && group
 
-    return <div className='content'>
+    return <div className='container-explorer'>
       <Grid>
         <GridItem columnSpan={8}>
           {!showFacetTable  && <ContainerHeatMap {...this.props} {...this.state} 

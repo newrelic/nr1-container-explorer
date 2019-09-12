@@ -10,7 +10,7 @@ const PLOTS = [
     select: 'sum(cpuPercent) AS cpu',
     title: "CPU",
     formatValue: (value) => `${value.toFixed(1)}%`,
-    max: 100,
+    max: (max) => Math.ceil(max/100)*100,
   },
   {
     select: 'sum(memoryResidentSizeBytes) AS memory',
@@ -45,19 +45,19 @@ export default class ContainerHeatMap extends React.Component {
 
   }
   renderHeatMap(plot) {
-    const { account, setFacetValue, selectContainer, containerId, max, group } = this.props
+    const { account, setFacetValue, selectContainer, containerId, group } = this.props
     const nrql = this.getNrql(plot.select)
 
     // if the uesr clicks on a title (facet value) when viewing as a group, then 
     // add to the filter.
     const onClickTitle = group && ((value) => setFacetValue(value))
 
-    return <Heatmap accountId={account.id} query={nrql}
+    return <Heatmap accountId={account.id} query={nrql} showLegend
       title={plot.title}
       formatLabel={(c) => c.slice(0, 6)}
       formatValue={plot.formatValue}
       selection={containerId}
-      max={max}
+      max={plot.max}
       onSelect={(containerId) => selectContainer(containerId)}
       onClickTitle={onClickTitle}
     />

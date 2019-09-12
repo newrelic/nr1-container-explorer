@@ -15,6 +15,8 @@
 .container-panel {
   margin: 12px;
   min-height: 400px;
+  background: white;
+  padding: 12px;
 
   .header {
     display: flex;
@@ -22,7 +24,7 @@
 
     .close-button {
       position: absolute;
-      right: 20px;
+      right: 30px;
     }
 
     h3 {

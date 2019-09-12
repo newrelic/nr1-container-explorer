@@ -78,6 +78,11 @@ export default class Heatmap extends React.Component {
     selection: PropTypes.string,
 
     /**
+     * if true, show a legend with the color spectrum from 0 to max value
+     */
+    showLegend: PropTypes.bool,
+
+    /**
      * callback for formatting a value to appear in tooltips and in the legend
      * ```js
      * formatValue=(value) => `${Math.round(value*1000)}ms`

@@ -12,9 +12,15 @@
 }
 .facet-list {
   height: 100%;
-  background-color: white;
   h3 {
+    padding: 12px;
+    font-size: 24px;
     text-align: center;
+    border-bottom: 1px dotted #dddddd;
+  }
+
+  ul {
+    background-color: white;
   }
 
   li {
@@ -87,8 +93,9 @@
   }  
 }
 
-.content {
+.container-explorer {
   padding-top: 12px;
+  background-color: rgb(248,248,248);
 }
 
 .heat-map-list {
@@ -104,6 +111,7 @@
   width: 100%;
   display: flex;
   align-items: bottom;
+  border-bottom: 1px dotted #aaaaaa;
 
   .limit-info {
     color: #666666;
