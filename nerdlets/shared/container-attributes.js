@@ -19,6 +19,7 @@ const OMIT_ATTRIBUTES = {
   "entityAndPid": true,
   "commandLine": true,
   "commandName": true,
+  "processDisplayName": true,
 
   "entityKey": true,
   "entityName": true

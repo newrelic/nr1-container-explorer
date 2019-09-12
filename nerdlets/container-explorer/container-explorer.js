@@ -15,7 +15,8 @@ const OMIT_KEYS = {
   containerId: true,
   commandLine: true,
   commandName: true,  
-  processId: true
+  processId: true,
+  processDisplayName: true,
 }
 
 function GroupList({ groups, group, selectGroup, showNone }) {  
