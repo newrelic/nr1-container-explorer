@@ -46,8 +46,7 @@ export default class ServiceContainers extends React.Component {
     const { entityGuid } = this.props.nerdletUrlState || {}
     const timeRange = timePickerNrql(this.props)
 
-    let result
-    result = await EntityByGuidQuery.query({ entityGuid })
+    let result = await EntityByGuidQuery.query({ entityGuid })
 
     const entity = result.data.actor.entities[0]
     const nrql = `SELECT uniques(containerId) FROM Transaction 
@@ -97,7 +96,7 @@ export default class ServiceContainers extends React.Component {
     const { infraAccount, containerId, entity, timeRange, accountDataNotFound, searchedAccounts } = this.state
 
     if (accountDataNotFound) {
-      return <NoInfrastructureData accounts={searchedAccounts} />
+      return <NoInfrastructureData accounts={searchedAccounts} entity={entity} />
     }
 
     if (!entity || !infraAccount) return <Spinner fillContent style={{ width: "100%", height: "100%" }} />

@@ -55,7 +55,6 @@ export default class ProcessTable extends React.Component {
         FACET processId, processDisplayName
         SINCE 1 minute ago`
     const results = await nrdbQuery(account.id, nrql)
-    console.log(results)
     this.setState({ processData: results })
   }
 
