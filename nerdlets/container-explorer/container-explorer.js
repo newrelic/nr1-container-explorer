@@ -112,7 +112,7 @@ export default class ContainerExplorer extends React.Component {
         </GridItem>
         <GridItem columnSpan={4}>
           {containerId && <ContainerPanel account={account} containerId={containerId} timeRange={timeRange}
-              onClose={() => this.setState({containerId: null})}/>}
+              showRelatedApps onClose={() => this.setState({containerId: null})}/>}
           {!containerId && groups && <GroupList groups={groups} group={group} showNone={!tooMany}
             selectGroup={(group)=> this.setState({group})}/>}
         </GridItem>

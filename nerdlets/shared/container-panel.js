@@ -12,7 +12,7 @@ import nrdbQuery from '../../lib/nrdb-query'
 
 
 function Header(props) {
-  const {hostname, containerId, apmApplicationNames, entityGuid, onClose} = props
+  const {hostname, containerId, apmApplicationNames, entityGuid, onClose, showRelatedApps} = props
   const title = `${hostname}: ${containerId.slice(0, 6)}`
 
   const entity = {
@@ -30,7 +30,7 @@ function Header(props) {
     <h3>{title}</h3>
     <LinkedEntity title="Host" entity={entity} name={hostname}
         icon="hardware-&-software_hardware_server"/>
-    <RelatedApps apmApplicationNames={apmApplicationNames}/>
+    {showRelatedApps && <RelatedApps apmApplicationNames={apmApplicationNames}/>}
   </div>
 }
 

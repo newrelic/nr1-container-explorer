@@ -178,7 +178,7 @@ function GroupedHeatMap(props) {
   return <div>
     {groupNames.map(groupName => {
       const group = groups[groupName]
-      return <SingleHeatmap {...props} data={group} title={groupName}/>
+      return <SingleHeatmap key={groupName} {...props} data={group} title={groupName}/>
     })}
   </div>
 }
