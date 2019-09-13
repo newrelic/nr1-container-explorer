@@ -152,7 +152,7 @@ function Node(props) {
 }
 
 function SingleHeatmap(props) {
-  const { title, selection, onSelect, data, max, onClickTitle, showLegend } = props
+  const { title, selection, onSelect, data, onClickTitle, showLegend } = props
 
   const titleStyle = `title ${onClickTitle && "clickable"}`
   const onClick = onClickTitle && (() => onClickTitle(title))

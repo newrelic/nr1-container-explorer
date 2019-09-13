@@ -5,6 +5,8 @@ import quote from '../../lib/quote'
 import Heatmap from '../../components/heat-map'
 import bytesToSize from '../../lib/bytes-to-size'
 
+const MEGABYTE = 1024*1024
+const GIGABYTE = MEGABYTE*1024
 const PLOTS = [
   {
     select: 'sum(cpuPercent) AS cpu',
@@ -15,12 +17,14 @@ const PLOTS = [
   {
     select: 'sum(memoryResidentSizeBytes) AS memory',
     title: "Memory",
-    formatValue: (value) => bytesToSize(value)
+    formatValue: (value) => bytesToSize(value),
+    max: (max) => Math.ceil(max / GIGABYTE)*GIGABYTE
   },
   {
     select: 'sum(ioReadBytesPerSecond+ioWriteBytesPerSecond) AS io',
     title: "Disk I/O",
-    formatValue: (value) => `${bytesToSize(value)}/s`
+    formatValue: (value) => `${bytesToSize(value)}/s`,
+    max: (max) => Math.ceil(max / MEGABYTE)*MEGABYTE
   }
 ]
 

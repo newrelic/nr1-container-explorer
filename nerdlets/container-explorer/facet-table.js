@@ -18,6 +18,6 @@ export default function FacetTable(props) {
   console.log("Table", account, nrql)
   return <div className="facet-table">
     <p>{group}</p>
-    <TableChart accountId={account.id} query={nrql} onClickTable={onClickTable}/>
+    <TableChart fullWidth fullHeight accountId={account.id} query={nrql} onClickTable={onClickTable}/>
   </div>
 }
