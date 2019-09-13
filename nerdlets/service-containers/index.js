@@ -47,8 +47,7 @@ export default class ServiceContainers extends React.Component {
     const timeRange = timePickerNrql(this.props)
 
     let result = await EntityByGuidQuery.query({ entityGuid })
-
-    const entity = result.data.actor.entities[0]
+    const entity = result.data.entities[0]
     const nrql = `SELECT uniques(containerId) FROM Transaction 
         WHERE entityGuid = '${entityGuid}' ${timeRange}`
 
@@ -61,7 +60,9 @@ export default class ServiceContainers extends React.Component {
     // cache for performance.
     const storageQuery = { collection: "GLOBAL", entityGuid, documentId: "infraAccounts" }
     const storageResult = await EntityStorageQuery.query(storageQuery)
-    let infraAccounts = storageResult.data.actor.entity.nerdStorage.document
+
+    console.log(storageResult)
+    let infraAccounts = storageResult.data
 
     // find the account(s) that are monitoring these containers. Hopefully there's exactly
     // one, but not, take the account with the most matches.
@@ -108,6 +109,7 @@ export default class ServiceContainers extends React.Component {
           <ContainerHeatMap {...this.state} selectContainer={infraAccount && this._selectContainer} />
         </GridItem>
         <GridItem className="content" columnSpan={5}>
+          {!infraAccount && <div/>} 
           {infraAccount && containerId && <ContainerPanel
             account={infraAccount}
             containerId={containerId}
