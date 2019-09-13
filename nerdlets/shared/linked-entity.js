@@ -5,11 +5,11 @@ export default function LinkedEntity({ title, entity, name, icon }) {
     {/* <span className="title">{title}</span> */}
     <Button sizeType="small" type="plain"
       iconType={icon}
-      onClick={() => navigation.openStackedEntity(entity)}>
+      onClick={() => navigation.openStackedEntity(entity.guid)}>
       {name}
     </Button>
     <Button sizeType="small" type="plain"
       iconType="interface_operations_drag"
-      onClick={() => navigation.openEntity(entity)} />
+      onClick={() => navigation.openEntity(entity.guid)} />
   </div>
 }
