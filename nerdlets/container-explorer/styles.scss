@@ -113,13 +113,18 @@
   align-items: bottom;
   border-bottom: 1px dotted #aaaaaa;
 
+  .title {
+    padding-top: 4px;
+    font-size: 14px;
+  }
   .limit-info {
     color: #666666;
-    width: 100%;
+    flex-grow: 1;
     height: 100%;
     text-align: right;
-    padding-right: 18px2;
-    padding-top: 18px;
+    padding-right: 18px;
+    padding-top: 4px;
+    padding-left: 14px;
     font-style: italic;
   }
 }

@@ -24,7 +24,7 @@ function GroupList({ groups, group, selectGroup, showNone }) {
     <h3>Group By</h3>
     <ul>
     {showNone && <li className='facet' key="__none" onClick={() => selectGroup(null)}>
-      <em>None: Show CPU, Disk and IO</em>
+      <em>None: Show CPU, Memory and Disk I/O</em>
     </li>}    
     {groups.map(g => {
       const className = `facet ${g.name == group && 'selected'}`

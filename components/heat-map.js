@@ -155,9 +155,11 @@ function SingleHeatmap(props) {
   const { title, selection, onSelect, data, max, onClickTitle, showLegend } = props
 
   const titleStyle = `title ${onClickTitle && "clickable"}`
+  const onClick = onClickTitle && (() => onClickTitle(title))
+
   return <div className="heat-map">
     <div className="header">
-      <div className={titleStyle} onClick={() => onClickTitle(title)}>
+      <div className={titleStyle} onClick={onClick}>
         {title}
       </div>
       <div>

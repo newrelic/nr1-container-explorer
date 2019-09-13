@@ -19,14 +19,14 @@ const PLOTS = [
   },
   {
     select: 'sum(ioReadBytesPerSecond+ioWriteBytesPerSecond) AS io',
-    title: "I/O",
+    title: "Disk I/O",
     formatValue: (value) => `${bytesToSize(value)}/s`
   }
 ]
 
 function PlotPicker({ plot, setPlot }) {
 
-  return <Dropdown title={plot.title} label="Plot">
+  return <Dropdown title={plot.title}>
     {PLOTS.map(p => {
       return <DropdownItem onClick={() => setPlot(p)} key={p.title}>
         {p.title}
@@ -70,6 +70,7 @@ export default class ContainerHeatMap extends React.Component {
     if (group || counts.containers > 500) {
       return <div>
         <div className="plot-picker-container">
+          <span className="title">Plot</span>
           <PlotPicker plot={plot} setPlot={(plot) => this.setState({ plot })} />
           {counts.containers > 2000 && <span className="limit-info">
             Showing Top 2000 Containers by {plot.title}
