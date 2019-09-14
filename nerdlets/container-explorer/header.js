@@ -2,7 +2,7 @@ import { Stack, StackItem, Button, Dropdown, DropdownItem } from 'nr1'
 
 function Filter({ name, value, removeFilter }) {
   return <StackItem className="filter">
-    <Stack alignmentType="center">
+    <Stack horizontalType={Stack.ALIGNMENT_TYPE.CENTER}>
       <StackItem className="name">
         {name}:{" "}
       </StackItem>
@@ -10,15 +10,15 @@ function Filter({ name, value, removeFilter }) {
         {value}
       </StackItem>
       <StackItem>
-        <Button type="plain" iconType="interface_sign_close"
-          sizeType="small" onClick={() => removeFilter(name, value)} />
+        <Button type={Button.TYPE.PLAIN} iconType={Button.ICON_TYPE.INTERFACE__SIGN__CLOSE}
+          sizeType={Button.SIZE_TYPE.SMALL} onClick={() => removeFilter(name, value)} />
       </StackItem>
     </Stack>
   </StackItem>
 }
 
 function AccountPicker({accounts, account, setAccount}) {
-  return <Dropdown className="account-picker" title={account.name}>
+  return <Dropdown className="account-picker" label="Account" title={account.name}>
     {accounts.map(account => {
       return <DropdownItem onClick={() => setAccount(account)} key={account.id}>
         {account.name}

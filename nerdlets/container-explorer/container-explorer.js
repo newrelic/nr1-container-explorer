@@ -95,7 +95,7 @@ export default class ContainerExplorer extends React.Component {
     const {addFilter, counts, account} = this.props
     const {groups, group, containerId} = this.state || {}
 
-    if(!groups) return <Spinner fillContainer/>
+    if(!groups) return <Spinner/>
 
     const tooMany = counts.containers > 2000
     const timeRange = timePickerNrql(this.props)

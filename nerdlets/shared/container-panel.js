@@ -23,10 +23,10 @@ function Header(props) {
   return <div className="header">
     <Button 
       size="small"
-      type="plain"
+      type={Button.TYPE.PLAIN}
       onClick={onClose}
       className="close-button" 
-      iconType="interface_sign_times_v-alternate"/>
+      iconType={Button.ICON_TYPE.INTERFACE__SIGN__TIMES__V_ALTERNATE}/>
     <h3>{title}</h3>
     <LinkedEntity title="Host" entity={entity} name={hostname}
         icon="hardware-&-software_hardware_server"/>
