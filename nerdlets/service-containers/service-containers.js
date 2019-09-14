@@ -79,7 +79,7 @@ export default class ServiceContainers extends React.Component {
       await EntityStorageMutation.mutate(storageQuery)
     }
 
-    if (infraAccounts.length == 0) {
+    if (!infraAccounts || infraAccounts.length == 0) {
       const searchedAccounts = await accountsWithData("ProcessSample")
       this.setState({ accountDataNotFound: true, searchedAccounts, entity })      
     }
