@@ -84,6 +84,7 @@ export default class ContainerHeatMap extends React.Component {
     const onClickTitle = group && ((value) => setFacetValue(value))
 
     return <Heatmap accountId={account.id} query={nrql} showLegend
+      key={plot.title}
       title={plot.title}
       formatLabel={(c) => c.slice(0, 6)}
       formatValue={plot.formatValue}

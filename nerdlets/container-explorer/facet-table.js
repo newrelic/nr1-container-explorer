@@ -15,7 +15,7 @@ export default function FacetTable(props) {
   const onClickTable = setFacetValue && function (ignored, row) {
     setFacetValue(row[group])
   }  
-  console.log("Table", account, nrql)
+
   return <div className="facet-table">
     <p>{group}</p>
     <TableChart fullWidth fullHeight accountId={account.id} query={nrql} onClickTable={onClickTable}/>
