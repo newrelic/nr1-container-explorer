@@ -2,7 +2,7 @@ import { Stack, StackItem, Button, Dropdown, DropdownItem } from 'nr1'
 
 function Filter({ name, value, removeFilter }) {
   return <StackItem className="filter">
-    <Stack horizontalType={Stack.ALIGNMENT_TYPE.CENTER}>
+    <Stack horizontalType={Stack.HORIZONTAL_TYPE.CENTER}>
       <StackItem className="name">
         {name}:{" "}
       </StackItem>

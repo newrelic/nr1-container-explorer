@@ -2,7 +2,7 @@ import React from 'react'
 import HeatMap from '../../components/heat-map'
 
 import bytesToSize from '../../lib/bytes-to-size'
-import nrdbQuery from '../../lib/nrdb-query'
+import getProcessSamplePeriod from '../shared/get-process-sample-period'
 
 const HEAT_MAPS = [
   {
@@ -58,24 +58,27 @@ export default class ContainerHeatMap extends React.PureComponent {
   async reload() {
     let {infraAccount, containerIds} = this.props
 
-    const inClause = containerIds.map(c => (`'${c}'`)).join(',')
-    const where = `WHERE containerId IN (${inClause})`
-    const nrql = `SELECT uniques(containerId) FROM ProcessSample ${where} SINCE 1 minute ago`
-    const results = await nrdbQuery(infraAccount.id, nrql)
+    const inClause = containerIds.map(c => `'${c}'`).join(', ')
+    const where = `containerId IN (${inClause})`
+    const samplePeriod = await getProcessSamplePeriod(infraAccount.id, where)
 
-    containerIds = results.map(r => r.member)
-    this.setState({containerIds})    
+    // use absolute timestamps which will result in more frequente updates
+    // of the data. Give a 10 second buffer to accommodate for potential
+    // delays in data delivery 
+    const endTime = new Date().getTime() - 10000
+    const beginTime = endTime - samplePeriod * 1000
+    const timeRange = `SINCE ${beginTime} UNTIL ${endTime}`
+
+    this.setState({samplePeriod, timeRange, where})    
   }
 
   render() {
     let {entity, infraAccount, selectContainer, containerId} = this.props
+    const {timeRange, where} = this.state ||{}
 
-    // get containerIds from state. It's only showing the containers that exist in this account
-    const {containerIds} = this.state || {}
-    if(!infraAccount || !containerIds) return <div/>
+    console.log(timeRange)
 
-    // FIXME overriding time picker to do realtime so we can show accurate infra data
-    const timeRange = "SINCE 90 seconds ago until 30 seconds ago"
+    if(!infraAccount || !timeRange) return <div/>
     return <div>
       {HEAT_MAPS.map(({title, select, formatValue, eventType, max}) => {
         let accountId = entity.accountId
@@ -90,9 +93,8 @@ export default class ContainerHeatMap extends React.PureComponent {
         }
         
         const nrql = `SELECT ${select} FROM ${eventType}
-            WHERE containerId IN (${containerIds.map(x => `'${x}'`).join(', ')})
-            ${timeRange} FACET containerId LIMIT 2000`
-  
+            WHERE ${where} ${timeRange} FACET containerId LIMIT 2000`
+
         return <HeatMap title={title} accountId={accountId} key={title}
               max={max} showLegend
               query={nrql} 
