@@ -4,6 +4,7 @@ import { Dropdown, DropdownItem } from 'nr1'
 import quote from '../../lib/quote'
 import Heatmap from '../../components/heat-map'
 import bytesToSize from '../../lib/bytes-to-size'
+import getProcessSamplePeriod from '../shared/get-process-sample-period'
 
 const MEGABYTE = 1024*1024
 const GIGABYTE = MEGABYTE*1024
@@ -41,13 +42,39 @@ function PlotPicker({ plot, setPlot }) {
 }
 
 export default class ContainerHeatMap extends React.Component {
+
+  componentDidMount() {
+    this.reload()
+    this.setState({plot: PLOTS[0]})
+  }
+  
+  componentDidUpdate({group, where}) {
+    if(group != this.props.group || where != this.props.where) {
+      this.reload()
+    }
+  }
+
   getNrql(select) {
     const { group, where } = this.props
+    const {timeRange} = this.state || {
+      timeRange: "SINCE 30 seconds ago UNTIL 15 seconds ago"
+    }
+
     const facet = group ? `${quote(group)}, containerId` : "containerId"
     return `SELECT ${select} FROM ProcessSample WHERE ${where || "true"}
-          SINCE 30 seconds ago UNTIL 15 seconds ago FACET ${facet} LIMIT 2000`
+          ${timeRange} FACET ${facet} LIMIT 2000`
 
   }
+
+  async reload() {
+    let {account, where} = this.props
+
+    const samplePeriod = await getProcessSamplePeriod(account.id, where)
+    const timeRange = `SINCE ${samplePeriod+10} seconds ago UNTIL 10 seconds ago`
+
+    this.setState({samplePeriod, timeRange})    
+  }
+
   renderHeatMap(plot) {
     const { account, setFacetValue, selectContainer, containerId, group } = this.props
     const nrql = this.getNrql(plot.select)
@@ -69,7 +96,9 @@ export default class ContainerHeatMap extends React.Component {
 
   render() {
     const { group, counts } = this.props
-    const { plot } = this.state || { plot: PLOTS[0] }
+    const { plot, timeRange } = this.state || {}
+
+    if(!timeRange) return <div/>
 
     if (group || counts.containers > 500) {
       return <div>
