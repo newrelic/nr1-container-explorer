@@ -12,9 +12,9 @@ function summarizeFacets(data) {
     })
   })
 
+  console.log("Data", JSON.stringify(summary, 0, 2))
   const { metadata } = summary
-  metadata.label = metadata.alias || metadata.attribute
-  metadata.presentation.name = metadata.label
+  metadata.name = metadata.groups[0].displayName
 
   return [summary]
 }
