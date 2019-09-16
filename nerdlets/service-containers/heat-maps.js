@@ -61,13 +61,7 @@ export default class ContainerHeatMap extends React.PureComponent {
     const inClause = containerIds.map(c => `'${c}'`).join(', ')
     const where = `containerId IN (${inClause})`
     const samplePeriod = await getProcessSamplePeriod(infraAccount.id, where)
-
-    // use absolute timestamps which will result in more frequente updates
-    // of the data. Give a 10 second buffer to accommodate for potential
-    // delays in data delivery 
-    const endTime = new Date().getTime() - 10000
-    const beginTime = endTime - samplePeriod * 1000
-    const timeRange = `SINCE ${beginTime} UNTIL ${endTime}`
+    const timeRange = `SINCE ${samplePeriod+10} seconds ago until 10 seconds ago`
 
     this.setState({samplePeriod, timeRange, where})    
   }
@@ -75,8 +69,6 @@ export default class ContainerHeatMap extends React.PureComponent {
   render() {
     let {entity, infraAccount, selectContainer, containerId} = this.props
     const {timeRange, where} = this.state ||{}
-
-    console.log(timeRange)
 
     if(!infraAccount || !timeRange) return <div/>
     return <div>
