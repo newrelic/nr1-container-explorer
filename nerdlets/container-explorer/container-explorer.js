@@ -95,8 +95,6 @@ export default class ContainerExplorer extends React.Component {
     const {addFilter, counts, account} = this.props
     const {groups, group, containerId} = this.state || {}
 
-    if(!groups) return <Spinner/>
-
     const tooMany = counts.containers > 2000
     const timeRange = timePickerNrql(this.props)
     const showFacetTable = tooMany && group
@@ -118,6 +116,7 @@ export default class ContainerExplorer extends React.Component {
               showRelatedApps onClose={() => this.setState({containerId: null})}/>}
           {!containerId && groups && <GroupList groups={groups} group={group} showNone={!tooMany}
             selectGroup={(group)=> this.setState({group})}/>}
+          {!groups && <Spinner fillContent/>}
         </GridItem>
       </Grid>
     </div>
