@@ -3,6 +3,5 @@
     "id": "containers",
     "displayName": "Container Explorer",
     "description": "Explore millions of containers",
-    "icon": "hardware-&-software_kubernetes_k8s-container",
     "rootNerdletId": "container-explorer"
 }

@@ -58,11 +58,10 @@ export default class ServiceContainers extends React.Component {
 
     // look up the infrastucture account(s) that are associated with this entity.
     // cache for performance.
-    const storageQuery = { collection: "GLOBAL", entityGuid, documentId: "infraAccounts" }
+    const storageQuery = { collection: "GLOBAL", entityGuid, documentId: "infraAccountsData" }
     const storageResult = await EntityStorageQuery.query(storageQuery)
 
-    console.log(storageResult)
-    let infraAccounts = storageResult.data
+    let infraAccounts = storageResult.data && storageResult.data.infraAccounts
 
     // find the account(s) that are monitoring these containers. Hopefully there's exactly
     // one, but not, take the account with the most matches.
@@ -73,7 +72,7 @@ export default class ServiceContainers extends React.Component {
       infraAccounts = await findRelatedAccountsWith(find)
 
       // cache in entity storage
-      storageQuery.document = infraAccounts
+      storageQuery.document = { infraAccounts }
       storageQuery.actionType = EntityStorageMutation.ACTION_TYPE.WRITE_DOCUMENT
 
       await EntityStorageMutation.mutate(storageQuery)

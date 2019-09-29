@@ -1,0 +1,80 @@
+{
+  "lastUpdated": "Tue Sep 17 2019 10:28:57 GMT-0400 (Eastern Daylight Time)",
+  "projectName": "nr1-container-explorer",
+  "projectUrl": "https://github.com/newrelic/nr1-container-explorer",
+  "includeDev": true,
+  "dependencies": {
+    "hsl-to-hex@1.0.0": {
+      "name": "hsl-to-hex",
+      "version": "1.0.0",
+      "range": "^1.0.0",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/davidmarkclements/hsl-to-hex",
+      "versionedRepoUrl": "https://github.com/davidmarkclements/hsl-to-hex/tree/v1.0.0",
+      "licenseFile": "node_modules/hsl-to-hex/readme.md",
+      "licenseUrl": "https://github.com/davidmarkclements/hsl-to-hex/blob/v1.0.0/readme.md",
+      "licenseTextSource": "spdx",
+      "publisher": "David Mark Clements"
+    },
+    "lodash@4.17.15": {
+      "name": "lodash",
+      "version": "4.17.15",
+      "range": "^4.17.15",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/lodash/lodash",
+      "versionedRepoUrl": "https://github.com/lodash/lodash/tree/v4.17.15",
+      "licenseFile": "node_modules/lodash/LICENSE",
+      "licenseUrl": "https://github.com/lodash/lodash/blob/v4.17.15/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "John-David Dalton",
+      "email": "john.david.dalton@gmail.com"
+    },
+    "prop-types@15.7.2": {
+      "name": "prop-types",
+      "version": "15.7.2",
+      "range": "^15.6.2",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/facebook/prop-types",
+      "versionedRepoUrl": "https://github.com/facebook/prop-types/tree/v15.7.2",
+      "licenseFile": "node_modules/prop-types/LICENSE",
+      "licenseUrl": "https://github.com/facebook/prop-types/blob/v15.7.2/LICENSE",
+      "licenseTextSource": "file"
+    },
+    "react-dom@16.9.0": {
+      "name": "react-dom",
+      "version": "16.9.0",
+      "range": "^16.6.3",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/facebook/react",
+      "versionedRepoUrl": "https://github.com/facebook/react/tree/v16.9.0",
+      "licenseFile": "node_modules/react-dom/LICENSE",
+      "licenseUrl": "https://github.com/facebook/react/blob/v16.9.0/LICENSE",
+      "licenseTextSource": "file"
+    },
+    "react@16.9.0": {
+      "name": "react",
+      "version": "16.9.0",
+      "range": "^16.6.3",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/facebook/react",
+      "versionedRepoUrl": "https://github.com/facebook/react/tree/v16.9.0",
+      "licenseFile": "node_modules/react/LICENSE",
+      "licenseUrl": "https://github.com/facebook/react/blob/v16.9.0/LICENSE",
+      "licenseTextSource": "file"
+    },
+    "underscore@1.9.1": {
+      "name": "underscore",
+      "version": "1.9.1",
+      "range": "^1.9.1",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/jashkenas/underscore",
+      "versionedRepoUrl": "https://github.com/jashkenas/underscore/tree/v1.9.1",
+      "licenseFile": "node_modules/underscore/LICENSE",
+      "licenseUrl": "https://github.com/jashkenas/underscore/blob/v1.9.1/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "Jeremy Ashkenas",
+      "email": "jeremy@documentcloud.org"
+    }
+  },
+  "devDependencies": {}
+}
