@@ -1,5 +1,5 @@
 import React from 'React'
-import {Grid, GridItem, Spinner} from 'nr1' 
+import {Grid, GridItem, Spinner} from 'nr1'
 import _ from 'underscore'
 
 import getCardinality from '../../lib/get-cardinality'
@@ -14,22 +14,23 @@ const OMIT_KEYS = {
   apmApplicationIds: true,
   containerId: true,
   commandLine: true,
-  commandName: true,  
+  commandName: true,
   processId: true,
   processDisplayName: true,
 }
 
-function GroupList({ groups, group, selectGroup, showNone }) {  
-  return <div className="facet-list">
-    <h3>Group By</h3>
-    <ul>
-    {showNone && <li className='facet' key="__none" onClick={() => selectGroup(null)}>
+function GroupList({ groups, group, selectGroup, showNone }) {
+  return <div className="facet-list-container">
+    <h3 className="facet-list-header">Group By</h3>
+    <ul className="face-list">
+    {showNone && <li className={`facet ${group === null || group === undefined ? 'selected' : ''}`} key="__none" onClick={() => selectGroup(null)}>
       <em>None: Show CPU, Memory and Disk I/O</em>
-    </li>}    
+    </li>}
     {groups.map(g => {
       const className = `facet ${g.name == group && 'selected'}`
       return <li className={className} key={g.name} onClick={() => selectGroup(g.name)}>
-        {g.name} ({g.count})
+        <span className="facet-name">{g.name}</span>
+        <span className="facet-count">{g.count}</span>
       </li>
     })}
   </ul>
@@ -44,7 +45,7 @@ export default class ContainerExplorer extends React.Component {
   }
 
   async componentDidMount() {
-    await this.reload()    
+    await this.reload()
   }
 
   componentWillUnmount() {
@@ -81,7 +82,7 @@ export default class ContainerExplorer extends React.Component {
     logTime("getCardinality")
 
     const groups = facets.filter(facet => {
-      return facet.count > 1 && facet.count < counts.containers * .6 && !OMIT_KEYS[facet.name]      
+      return facet.count > 1 && facet.count < counts.containers * .6 && !OMIT_KEYS[facet.name]
     })
 
     this.setState({groups: _.sortBy(groups, 'name')})
@@ -102,22 +103,22 @@ export default class ContainerExplorer extends React.Component {
     const showFacetTable = tooMany && group
 
     return <div className='container-explorer'>
-      <Grid>
-        <GridItem columnSpan={8}>
-          {!showFacetTable  && <ContainerHeatMap {...this.props} {...this.state} 
-            selectContainer={this.selectContainer}
-            setFacetValue={(value) => addFilter(group, value)}
-            />}
-          {showFacetTable && <FacetTable 
-              {...this.props} {...this.state}
-            setFacetValue={(value) => addFilter(group, value)}/>}
-        </GridItem>
-        <GridItem columnSpan={4}>
+      <Grid spacingType={[Grid.SPACING_TYPE.NONE]}>
+        <GridItem columnSpan={3}>
           {containerId && <ContainerPanel account={account} containerId={containerId} timeRange={timeRange}
               onSelectAttribute={(key, value) => addFilter(key, value)}
               showRelatedApps onClose={() => this.setState({containerId: null})}/>}
           {!containerId && groups && <GroupList groups={groups} group={group} showNone={!tooMany}
             selectGroup={(group)=> this.setState({group})}/>}
+        </GridItem>
+        <GridItem columnSpan={9}>
+          {!showFacetTable  && <ContainerHeatMap {...this.props} {...this.state}
+            selectContainer={this.selectContainer}
+            setFacetValue={(value) => addFilter(group, value)}
+            />}
+          {showFacetTable && <FacetTable
+              {...this.props} {...this.state}
+            setFacetValue={(value) => addFilter(group, value)}/>}
         </GridItem>
       </Grid>
     </div>
