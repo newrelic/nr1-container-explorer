@@ -177,15 +177,19 @@ function SingleHeatmap(props) {
 }
 
 function GroupedHeatMap(props) {
-  const { data } = props
+  const { data, showLegend } = props
 
   const groups = _.groupBy(data, 'group')
   const groupNames = _.keys(groups).sort()
 
   return <div>
+    {showLegend && <div className="heat-map">      
+      <Legend {...props}/>
+    </div>}
+
     {groupNames.map(groupName => {
       const group = groups[groupName]
-      return <SingleHeatmap key={groupName} {...props} data={group} title={groupName}/>
+      return <SingleHeatmap key={groupName} {...props} showLegend={false} data={group} title={groupName}/>
     })}
   </div>
 }
