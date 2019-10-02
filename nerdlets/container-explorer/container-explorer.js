@@ -103,15 +103,15 @@ export default class ContainerExplorer extends React.Component {
     const showFacetTable = tooMany && group
 
     return <div className='container-explorer'>
-      <Grid spacingType={[Grid.SPACING_TYPE.NONE]}>
-        <GridItem columnSpan={3}>
+      <Grid className='container-explorer-grid' spacingType={[Grid.SPACING_TYPE.NONE]}>
+        <GridItem className='facet-list-container-grid' columnSpan={3}>
           {containerId && <ContainerPanel account={account} containerId={containerId} timeRange={timeRange}
               onSelectAttribute={(key, value) => addFilter(key, value)}
               showRelatedApps onClose={() => this.setState({containerId: null})}/>}
           {!containerId && groups && <GroupList groups={groups} group={group} showNone={!tooMany}
             selectGroup={(group)=> this.setState({group})}/>}
         </GridItem>
-        <GridItem columnSpan={9}>
+        <GridItem className='container-explorer-container' columnSpan={9}>
           {!showFacetTable  && <ContainerHeatMap {...this.props} {...this.state}
             selectContainer={this.selectContainer}
             setFacetValue={(value) => addFilter(group, value)}

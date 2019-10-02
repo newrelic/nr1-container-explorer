@@ -39,13 +39,14 @@ export default function Header(props) {
     <div className="header">
       <Stack fullWidth className="options-bar" verticalType={Stack.VERTICAL_TYPE.CENTER}>
         <StackItem><AccountPicker {...props} /></StackItem>
-        <StackItem>
+        
         {counts && (
-          <span className="title">
-            {counts.containers} Containers running on {counts.hosts} Hosts
-          </span>
+          <StackItem>
+            <span className="title">
+              {counts.containers} Containers running on {counts.hosts} Hosts
+            </span>
+          </StackItem>
         )}
-        </StackItem>
       </Stack>
       <Stack className="filter-bar">
         {filters.map(filterProps => {

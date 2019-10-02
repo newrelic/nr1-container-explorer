@@ -10,16 +10,23 @@
     text-align: center;
   }
 }
+
+.facet-list-container-grid {
+  height: 100%;
+  overflow: hidden;
+  border-right: 1px solid #EEEEEE;
+}
+
 .facet-list-container {
   height: 100%;
   width: 100%;
+  overflow: scroll;
   background-color: #fff;
-  border-right: 1px solid #EEEEEE;
 
   h3 {
     padding: 12px 16px;
     font-size: 16px;
-    border-bottom: 2px solid #f4f5f5;
+    border-bottom: 1px dotted #edeeee;
     color: #2A3434;
     font-weight: 600;
   }
@@ -114,8 +121,17 @@
   }
 }
 
+.container-explorer-container {
+  overflow: scroll;
+}
+
 .container-explorer {
+  height: calc(100% - 50px);
   background-color: rgb(248, 248, 248);
+}
+
+.container-explorer-grid {
+  height: 100%;
 }
 
 .heat-map-list {
