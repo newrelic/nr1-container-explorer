@@ -11,31 +11,37 @@ import LinkedEntity from './linked-entity'
 import nrdbQuery from '../../lib/nrdb-query'
 
 
-function Header(props) {
-  const {hostname, containerId, apmApplicationNames, entityGuid, onClose, showRelatedApps} = props
-  const title = `${hostname}: ${containerId.slice(0, 6)}`
-
-  const entity = {
-    guid: entityGuid,
-    domain: 'INFRA',
-    type: 'HOST'
+class Header extends React.Component {
+  constructor(props) {
+    super(props)
   }
-  return <div className="header">
-    <Button 
-      size="small"
-      type={Button.TYPE.PLAIN}
-      onClick={onClose}
-      className="close-button" 
-      iconType={Button.ICON_TYPE.INTERFACE__SIGN__TIMES__V_ALTERNATE}/>
-    <h3>{title}</h3>
-    <LinkedEntity title="Host" entity={entity} name={hostname}
-        icon="hardware-&-software_hardware_server"/>
-    {showRelatedApps && <RelatedApps apmApplicationNames={apmApplicationNames}/>}
 
-    <span className="minimize-button">
-      <Icon type={Icon.TYPE.INTERFACE__CHEVRON__CHEVRON_RIGHT__WEIGHT_BOLD} color="#000E0E" sizeType={Icon.SIZE_TYPE.SMALL}></Icon>
-    </span>
-  </div>
+  render() {
+    const {hostname, containerId, apmApplicationNames, entityGuid, onClose, showRelatedApps} = this.props
+    const title = `${hostname}: ${containerId.slice(0, 6)}`
+  
+    const entity = {
+      guid: entityGuid,
+      domain: 'INFRA',
+      type: 'HOST'
+    }
+    return <div className="header">
+      <Button 
+        size="small"
+        type={Button.TYPE.PLAIN}
+        onClick={onClose}
+        className="close-button" 
+        iconType={Button.ICON_TYPE.INTERFACE__SIGN__TIMES__V_ALTERNATE}/>
+      <h3>{title}</h3>
+      <LinkedEntity title="Host" entity={entity} name={hostname}
+          icon="hardware-&-software_hardware_server"/>
+      {showRelatedApps && <RelatedApps apmApplicationNames={apmApplicationNames}/>}
+  
+      <span className="minimize-button" onClick={this.props.toggleDetailPanel()}>
+        <Icon type={Icon.TYPE.INTERFACE__CHEVRON__CHEVRON_RIGHT__WEIGHT_BOLD} color="#000E0E" sizeType={Icon.SIZE_TYPE.SMALL}></Icon>
+      </span>
+    </div>
+  }
 }
 
 

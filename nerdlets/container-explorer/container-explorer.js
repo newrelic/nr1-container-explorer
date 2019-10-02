@@ -43,6 +43,15 @@ export default class ContainerExplorer extends React.Component {
     super(props)
 
     this.selectContainer = this.selectContainer.bind(this)
+    this.toggleDetailPanel = this.toggleDetailPanel.bind(this)
+
+    this.state = {
+      detailPanelExpanded: false
+    }
+  }
+
+  toggleDetailPanel() {
+    // this.setState({detailPanelExpanded: !this.state.detailPanelExpanded})
   }
 
   async componentDidMount() {
@@ -131,13 +140,14 @@ export default class ContainerExplorer extends React.Component {
             setFacetValue={(value) => addFilter(group, value)}/>}
         </GridItem>
         {containerId &&
-          <GridItem className='detail-pane-grid-item' columnSpan={3}>
+          <GridItem className='detail-pane-grid-item'  columnSpan={3}>
             <ContainerPanel 
               account={account} 
               containerId={containerId} 
               timeRange={timeRange}
               onSelectAttribute={(key, value) => addFilter(key, value)}
               showRelatedApps onClose={() => this.setState({containerId: null})}
+              toggleDetailPanel={this.toggleDetailPanel}
             />
           </GridItem>
         }
