@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Tabs, TabsItem, Button, navigation } from 'nr1'
+import { Tabs, TabsItem, Button, navigation, Icon } from 'nr1'
 
 import ContainerAttributes from './container-attributes'
 import Charts from './container-charts'
@@ -31,6 +31,10 @@ function Header(props) {
     <LinkedEntity title="Host" entity={entity} name={hostname}
         icon="hardware-&-software_hardware_server"/>
     {showRelatedApps && <RelatedApps apmApplicationNames={apmApplicationNames}/>}
+
+    <span className="minimize-button">
+      <Icon type={Icon.TYPE.INTERFACE__CHEVRON__CHEVRON_RIGHT__WEIGHT_BOLD} color="#000E0E" sizeType={Icon.SIZE_TYPE.SMALL}></Icon>
+    </span>
   </div>
 }
 
@@ -63,7 +67,7 @@ export default class ContainerPanel extends React.Component {
   render() {
     const { entityGuid } = this.state || {}
     if (!entityGuid) return <div />
-
+    
     const {onSelectAttribute} = this.props
 
     return <div className="container-panel">
@@ -72,10 +76,10 @@ export default class ContainerPanel extends React.Component {
         <TabsItem value="summary" label="Tags">
           <ContainerAttributes {...this.props} onSelectAttribute={onSelectAttribute}/>
         </TabsItem>
-        <TabsItem value="processes" label="Processes">
+        <TabsItem className="process-table-tab" value="processes" label="Processes">
           <ProcessTable {...this.props}/>
         </TabsItem>
-        <TabsItem value="charts" label="Charts">
+        <TabsItem className="charts-tab" value="charts" label="Charts">
           <Charts {...this.props} />
         </TabsItem>
       </Tabs>

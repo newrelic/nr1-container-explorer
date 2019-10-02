@@ -6,6 +6,7 @@ import getCardinality from '../../lib/get-cardinality'
 import timePickerNrql from '../../lib/time-picker-nrql'
 
 import FacetTable from './facet-table'
+import Filter from './filter'
 import ContainerPanel from '../shared/container-panel'
 import ContainerHeatMap from './container-heat-map'
 
@@ -93,8 +94,8 @@ export default class ContainerExplorer extends React.Component {
   }
 
   render() {
-    const {addFilter, counts, account} = this.props
-    const {groups, group, containerId} = this.state || {}
+    const {addFilter, counts, account, filters, removeFilter} = this.props
+    const {groups, group, containerId } = this.state || {}
 
     if(!groups) return <Spinner/>
 
@@ -105,13 +106,22 @@ export default class ContainerExplorer extends React.Component {
     return <div className='container-explorer'>
       <Grid className='container-explorer-grid' spacingType={[Grid.SPACING_TYPE.NONE]}>
         <GridItem className='facet-list-container-grid' columnSpan={3}>
-          {containerId && <ContainerPanel account={account} containerId={containerId} timeRange={timeRange}
-              onSelectAttribute={(key, value) => addFilter(key, value)}
-              showRelatedApps onClose={() => this.setState({containerId: null})}/>}
-          {!containerId && groups && <GroupList groups={groups} group={group} showNone={!tooMany}
+          {groups && <GroupList groups={groups} group={group} showNone={!tooMany}
             selectGroup={(group)=> this.setState({group})}/>}
         </GridItem>
-        <GridItem className='container-explorer-container' columnSpan={9}>
+        <GridItem className='container-explorer-container' columnSpan={containerId ? 6 : 9}>
+          <div className="filters-container">
+            {filters.map(filterProps => {
+              return (
+                <Filter
+                  key={filterProps.name}
+                  {...filterProps}
+                  removeFilter={removeFilter}
+                />
+              )
+            })}
+          </div>
+
           {!showFacetTable  && <ContainerHeatMap {...this.props} {...this.state}
             selectContainer={this.selectContainer}
             setFacetValue={(value) => addFilter(group, value)}
@@ -120,6 +130,17 @@ export default class ContainerExplorer extends React.Component {
               {...this.props} {...this.state}
             setFacetValue={(value) => addFilter(group, value)}/>}
         </GridItem>
+        {containerId &&
+          <GridItem className='detail-pane-grid-item' columnSpan={3}>
+            <ContainerPanel 
+              account={account} 
+              containerId={containerId} 
+              timeRange={timeRange}
+              onSelectAttribute={(key, value) => addFilter(key, value)}
+              showRelatedApps onClose={() => this.setState({containerId: null})}
+            />
+          </GridItem>
+        }
       </Grid>
     </div>
   }

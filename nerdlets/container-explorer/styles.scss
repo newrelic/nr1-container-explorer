@@ -11,6 +11,12 @@
   }
 }
 
+.detail-pane-grid-item {
+  height: 100%;
+  overflow: hidden;
+  border-left: 1px solid #eee;
+}
+
 .facet-list-container-grid {
   height: 100%;
   overflow: hidden;
@@ -100,25 +106,59 @@
       display :none;
     }
   }
+}
 
-  .filter {
-    background-color: #d0f0ff;
-    padding-left: 6px;
-    padding-top: 3px;
-    margin: 4px;
-    border-radius: 3px;
+.filters-container {
+  padding: 16px 8px 0;
+  margin-bottom: -8px;
 
-    p {
-      font-size: 12px;
-      margin-bottom: 3px;
-    }
-    .name {
-      color: #666666;
-    }
-    .value {
-      font-weight: 400;
-    }
+  &:empty {
+    display: none;
   }
+
+  &:before {
+    content: "Filters:";
+    margin-right: 4px;
+    font-size: 10px;
+    color: #8E9494;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+}
+
+.filter {
+  background-color: #D0F0FF;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 4px 30px 4px 8px;
+  line-height: 15px;
+  border-radius: 3px;
+  color: #003555;
+  display: inline-block;
+  position: relative;
+}
+.filter-value {
+  font-weight: 600;
+}
+
+.filter-remove-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 3px;
+  border-radius:0 3px 3px 0;
+  border-left:1px solid rgba(0, 53,85, .09);
+}
+
+.filter-remove-btn .ic-Icon {
+  transform:scale(.75)
+}
+
+.filter-remove-btn:hover {
+  background-color: #66ccfe;
+  cursor: pointer;
+  border-color: transparent;
 }
 
 .container-explorer-container {
@@ -168,3 +208,4 @@
 .container-table {
   font-size: 12px;
 }
+

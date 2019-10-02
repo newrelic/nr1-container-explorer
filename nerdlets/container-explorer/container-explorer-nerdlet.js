@@ -89,7 +89,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
     return <div style={{height: "100%"}}>
       <Header {...this.state} setAccount={this.setAccount} 
           showFacetPicker={this.showFacetPicker} removeFilter={this.removeFilter}/>
-      {counts && <ContainerExplorer {...this.state} addFilter={this.addFilter}/>}
+      {counts && <ContainerExplorer {...this.state} addFilter={this.addFilter} removeFilter={this.removeFilter}/>}
     </div>
   }
 }

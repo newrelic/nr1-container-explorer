@@ -13,13 +13,17 @@
 }
 
 .container-panel {
-  margin: 12px;
+  overflow: scroll;
+  height: 100%;
   min-height: 400px;
   background: white;
-  padding: 12px;
 
   .header {
     display: flex;
+    width: calc(100% - 16px);
+    padding: 16px;
+    position: relative;
+    box-sizing: border-box;
     flex-direction: column;
 
     .close-button {
@@ -29,8 +33,9 @@
 
     h3 {
       font-size: 16px;
-      font-weight: 200;
+      font-weight: 600;
       margin-bottom: 12px;
+      color: #000E0E;
     }
     .section {
       margin-bottom: 4px;
@@ -50,8 +55,8 @@
     li {
       display: flex;
       flex-direction: column;
-      padding: 8px;
-      border-bottom: 1px dotted #eeeeee;
+      padding: 8px 16px;
+      border-bottom: 1px solid #f4f4f4;
 
       .name {
         color: #888888;
@@ -63,7 +68,7 @@
       }
     }
     .clickable {
-      color: #003555;      
+      color: #0079bf;      
     }
     .clickable:hover {
       text-decoration: underline;
@@ -73,9 +78,40 @@
   }
 }
 
+.minimize-button {
+  position: absolute;
+  right: -16px;
+  background-color: #F4F5F5;
+  width:  24px;
+  border-radius: 3px 0 0 3px;
+  height: 24px;
+
+  &:hover {
+    background-color: #edeeee;
+    cursor: pointer;
+  }
+}
+
+.minimize-button .ic-Icon {
+  position: relative;
+  top: 3px;
+  left: 9px;
+}
+
+.entity-explorer-link {
+  font-size: 11px;
+}
+
+.charts-tab,
+.process-table-tab {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
 .process-table {
   width: 100%;
   font-size: 12px;
+  padding: 16px;
   
   .left {
     text-align: left
@@ -83,4 +119,8 @@
   .right {
     text-align: right
   }
+}
+
+.chart-header:not(:first-child) {
+  margin-top: 16px;
 }

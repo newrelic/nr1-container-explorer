@@ -167,7 +167,7 @@ function SingleHeatmap(props) {
       </StackItem>
     </Stack>
     <div className="heat-map-grid">
-      {data.map(datum => {        
+      {data.map(datum => {
         const selected = datum.name == selection
         return <Node key={datum.name} {...props} {...datum} selected={selected}
             onClick={() => onSelect(datum.name)} />
