@@ -40,13 +40,22 @@
       width: 14px;
       height: 14px;
       margin: 2px;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.125);
+      }
     }
 
     .selected {
-      border: 3px solid #222222;
-      margin: -2px;
-      width: 16px;
-      height: 20px;
+      transform: scale(1.75);
+      box-shadow: inset 0 0 0 1.75px #fff, 0 0 0 1.75px #2a3434bd, 0 1px 4px rgba(0, 0, 0, 0.38);
+      position: relative;
+      border-radius: 2px;
+
+      &:hover {
+        transform: scale(1.75);
+      }
     }
   }
 }
