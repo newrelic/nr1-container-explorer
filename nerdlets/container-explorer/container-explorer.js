@@ -116,7 +116,7 @@ export default class ContainerExplorer extends React.Component {
     const { detailPanelExpanded } = this.state
 
     return <div className='container-explorer'>
-      <Grid className='container-explorer-grid' spacingType={[Grid.SPACING_TYPE.NONE]}>
+      <Grid className={`container-explorer-grid ${detailPanelExpanded ? 'detail-pane-grid-minimized' : 'detail-pane-grid-expanded'}`} spacingType={[Grid.SPACING_TYPE.NONE, Grid.SPACING_TYPE.NONE]}>
         <GridItem className='facet-list-container-grid' columnSpan={3}>
           {groups && <GroupList groups={groups} group={group} showNone={!tooMany}
             selectGroup={this.setGroup}/>}
@@ -145,7 +145,7 @@ export default class ContainerExplorer extends React.Component {
         </GridItem>
         {containerId &&
           <GridItem 
-            className={`detail-pane-grid-item ${detailPanelExpanded ? `detail-pane-grid-minimized` : `detail-pane-grid-expanded`}`}  
+            className='detail-pane-grid-item'  
             columnSpan={detailPanelExpanded ? 0 : 3}
           >
             <ContainerPanel

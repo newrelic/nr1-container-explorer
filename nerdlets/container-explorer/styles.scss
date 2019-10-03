@@ -163,6 +163,10 @@
 
 .container-explorer-container {
   overflow: scroll;
+
+  .detail-pane-grid-minimized & {
+    padding-right: 18px;
+  }
 }
 
 .container-explorer {
@@ -171,6 +175,7 @@
 }
 
 .container-explorer-grid {
+  grid-gap: 0;
   overflow: hidden;
   position: relative;
   height: 100%;
