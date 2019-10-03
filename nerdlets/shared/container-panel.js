@@ -19,25 +19,25 @@ class Header extends React.Component {
   render() {
     const {hostname, containerId, apmApplicationNames, entityGuid, onClose, showRelatedApps} = this.props
     const title = `${hostname}: ${containerId.slice(0, 6)}`
-  
+
     const entity = {
       guid: entityGuid,
       domain: 'INFRA',
       type: 'HOST'
     }
     return <div className="header">
-      <Button 
+      <Button
         size="small"
         type={Button.TYPE.PLAIN}
         onClick={onClose}
-        className="close-button" 
+        className="close-button"
         iconType={Button.ICON_TYPE.INTERFACE__SIGN__TIMES__V_ALTERNATE}/>
       <h3>{title}</h3>
       <LinkedEntity title="Host" entity={entity} name={hostname}
           icon="hardware-&-software_hardware_server"/>
       {showRelatedApps && <RelatedApps apmApplicationNames={apmApplicationNames}/>}
-  
-      <span className="minimize-button" onClick={this.props.toggleDetailPanel()}>
+
+      <span className="minimize-button" onClick={() => this.props.toggleDetailPanel()}>
         <Icon type={Icon.TYPE.INTERFACE__CHEVRON__CHEVRON_RIGHT__WEIGHT_BOLD} color="#000E0E" sizeType={Icon.SIZE_TYPE.SMALL}></Icon>
       </span>
     </div>
@@ -64,7 +64,7 @@ export default class ContainerPanel extends React.Component {
     const where = `containerId = '${containerId}'`
     const timeWindow = 'SINCE 1 minutes ago'
     const nrql = `SELECT entityGuid, hostname, apmApplicationNames from ProcessSample WHERE ${where} LIMIT 1 ${timeWindow}`
-    
+
     const results = (await nrdbQuery(accountId, nrql))[0]
 
     this.setState({ ...results })
@@ -73,7 +73,7 @@ export default class ContainerPanel extends React.Component {
   render() {
     const { entityGuid } = this.state || {}
     if (!entityGuid) return <div />
-    
+
     const {onSelectAttribute} = this.props
 
     return <div className="container-panel">

@@ -51,7 +51,7 @@ export default class ContainerExplorer extends React.Component {
   }
 
   toggleDetailPanel() {
-    // this.setState({detailPanelExpanded: !this.state.detailPanelExpanded})
+    this.setState({detailPanelExpanded: !this.state.detailPanelExpanded})
   }
 
   async componentDidMount() {
@@ -111,6 +111,7 @@ export default class ContainerExplorer extends React.Component {
     const tooMany = counts.containers > 2000
     const timeRange = timePickerNrql(this.props)
     const showFacetTable = tooMany && group
+    const { detailPanelExpanded } = this.state
 
     return <div className='container-explorer'>
       <Grid className='container-explorer-grid' spacingType={[Grid.SPACING_TYPE.NONE]}>
@@ -118,7 +119,7 @@ export default class ContainerExplorer extends React.Component {
           {groups && <GroupList groups={groups} group={group} showNone={!tooMany}
             selectGroup={(group)=> this.setState({group})}/>}
         </GridItem>
-        <GridItem className='container-explorer-container' columnSpan={containerId ? 6 : 9}>
+        <GridItem className='container-explorer-container' columnSpan={containerId && !detailPanelExpanded ? 6 : 9}>
           <div className="filters-container">
             {filters.map(filterProps => {
               return (
@@ -140,10 +141,13 @@ export default class ContainerExplorer extends React.Component {
             setFacetValue={(value) => addFilter(group, value)}/>}
         </GridItem>
         {containerId &&
-          <GridItem className='detail-pane-grid-item'  columnSpan={3}>
-            <ContainerPanel 
-              account={account} 
-              containerId={containerId} 
+          <GridItem 
+            className={`detail-pane-grid-item ${detailPanelExpanded ? `detail-pane-grid-minimized` : `detail-pane-grid-expanded`}`}  
+            columnSpan={detailPanelExpanded ? 0 : 3}
+          >
+            <ContainerPanel
+              account={account}
+              containerId={containerId}
               timeRange={timeRange}
               onSelectAttribute={(key, value) => addFilter(key, value)}
               showRelatedApps onClose={() => this.setState({containerId: null})}

@@ -78,6 +78,36 @@
   }
 }
 
+.detail-pane-grid-minimized {
+  width: 200px;
+  position: absolute;
+  right: 0;
+  overflow: visible;
+  transform: translateX(100%);
+
+  .container-panel {
+    overflow: visible;
+  }
+
+  [class*="wnd-Tabs"] {
+    display: none;
+  }
+
+  .minimize-button {
+    right: auto;
+    left: -24px;
+    background-color: #d5d7d7;
+
+    &:hover {
+      background-color: #e3e4e4;
+    }
+
+    .ic-Icon {
+      transform: rotate(180deg) translateX(1px);
+    }
+  }
+}
+
 .minimize-button {
   position: absolute;
   right: -16px;
