@@ -35,9 +35,12 @@ export default function Header(props) {
   return (
     <div className="header">
       <Stack fullWidth className="options-bar" verticalType={Stack.VERTICAL_TYPE.CENTER}>
-        <StackItem><AccountPicker {...props} /></StackItem>
-        
-        <StackItem><PlotPicker {...props}></PlotPicker></StackItem>
+        <StackItem>
+          <Stack verticalType={Stack.VERTICAL_TYPE.CENTER}>
+            <StackItem><AccountPicker {...props} /></StackItem>
+            <StackItem className="plot-picker-stack-item"><PlotPicker {...props}></PlotPicker></StackItem>
+          </Stack>
+        </StackItem>
 
         {counts && (
           <StackItem>
