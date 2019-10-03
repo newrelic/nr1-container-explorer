@@ -11,7 +11,7 @@ export default function Filter(props) {
             <span className="filter-name">{name}: </span>
             <span className="filter-value">{value}</span>
             <span className="filter-remove-btn" onClick={() => removeFilter(name, value)}>
-                <Icon type={Icon.TYPE.INTERFACE__SIGN__CLOSE} sizeType={Button.SIZE_TYPE.SMALL}></Icon>
+                <Icon type={Icon.TYPE.INTERFACE__SIGN__CLOSE}></Icon>
             </span>
         </div>
     )
