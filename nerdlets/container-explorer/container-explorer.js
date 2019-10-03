@@ -105,8 +105,8 @@ export default class ContainerExplorer extends React.Component {
   }
   
   render() {
-    const {addFilter, counts, account, filters, removeFilter} = this.props
-    const {groups, group, containerId } = this.state || {}
+    const {addFilter, counts, account, filters, group, removeFilter} = this.props
+    const {groups, containerId } = this.state || {}
 
     if(!groups) return <Spinner/>
 
