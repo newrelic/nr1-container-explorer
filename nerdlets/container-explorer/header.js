@@ -1,4 +1,5 @@
 import { Stack, StackItem, Dropdown, DropdownItem } from "nr1"
+import PLOTS from '../../lib/plots'
 
 
 function AccountPicker({ accounts, account, setAccount }) {
@@ -15,12 +16,28 @@ function AccountPicker({ accounts, account, setAccount }) {
   )
 }
 
+function PlotPicker({ group, counts, plot, setPlot }) {
+  if (group || ( counts && counts.containers > 500) ) {
+    return <Dropdown label="Plot" title={plot.title}>
+      {PLOTS.map(p => {
+        return <DropdownItem onClick={() => setPlot(p)} key={p.title}>
+          {p.title}
+        </DropdownItem>
+      })}
+
+    </Dropdown>
+  }
+  return null;
+}
+
 export default function Header(props) {
-  const { counts, removeFilter } = props
+  const { counts } = props
   return (
     <div className="header">
       <Stack fullWidth className="options-bar" verticalType={Stack.VERTICAL_TYPE.CENTER}>
         <StackItem><AccountPicker {...props} /></StackItem>
+        
+        <StackItem><PlotPicker {...props}></PlotPicker></StackItem>
 
         {counts && (
           <StackItem>

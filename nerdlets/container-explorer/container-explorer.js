@@ -44,6 +44,8 @@ export default class ContainerExplorer extends React.Component {
 
     this.selectContainer = this.selectContainer.bind(this)
     this.toggleDetailPanel = this.toggleDetailPanel.bind(this)
+    this.setPlot = props.setPlot.bind(this);
+    this.setGroup = props.setGroup.bind(this);
 
     this.state = {
       detailPanelExpanded: false
@@ -101,7 +103,7 @@ export default class ContainerExplorer extends React.Component {
   selectContainer(containerId) {
     this.setState({containerId})
   }
-
+  
   render() {
     const {addFilter, counts, account, filters, removeFilter} = this.props
     const {groups, group, containerId } = this.state || {}
@@ -117,7 +119,7 @@ export default class ContainerExplorer extends React.Component {
       <Grid className='container-explorer-grid' spacingType={[Grid.SPACING_TYPE.NONE]}>
         <GridItem className='facet-list-container-grid' columnSpan={3}>
           {groups && <GroupList groups={groups} group={group} showNone={!tooMany}
-            selectGroup={(group)=> this.setState({group})}/>}
+            selectGroup={this.setGroup}/>}
         </GridItem>
         <GridItem className='container-explorer-container' columnSpan={containerId && !detailPanelExpanded ? 6 : 9}>
           <div className="filters-container">
@@ -135,6 +137,7 @@ export default class ContainerExplorer extends React.Component {
           {!showFacetTable  && <ContainerHeatMap {...this.props} {...this.state}
             selectContainer={this.selectContainer}
             setFacetValue={(value) => addFilter(group, value)}
+            setPlot={this.setPlot}
             />}
           {showFacetTable && <FacetTable
               {...this.props} {...this.state}

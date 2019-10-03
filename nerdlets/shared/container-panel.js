@@ -36,7 +36,6 @@ class Header extends React.Component {
       <LinkedEntity title="Host" entity={entity} name={hostname}
           icon="hardware-&-software_hardware_server"/>
       {showRelatedApps && <RelatedApps apmApplicationNames={apmApplicationNames}/>}
-
       <span className="minimize-button" onClick={() => this.props.toggleDetailPanel()}>
         <Icon type={Icon.TYPE.INTERFACE__CHEVRON__CHEVRON_RIGHT__WEIGHT_BOLD} color="#000E0E" sizeType={Icon.SIZE_TYPE.SMALL}></Icon>
       </span>
