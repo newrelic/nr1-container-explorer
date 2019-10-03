@@ -160,7 +160,7 @@ function SingleHeatmap(props) {
   return <div className="heat-map">
     <Stack className="heat-map-header" verticalType={Stack.VERTICAL_TYPE.CENTER} fullWidth>
       <StackItem className={titleStyle} onClick={onClick}>
-        {title}
+        <span title={title}>{title}</span>
       </StackItem>
       <StackItem>
         {showLegend && <Legend {...props}/>}

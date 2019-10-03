@@ -66,6 +66,12 @@
   }
 }
 
+.facet-name {
+  width: 100%;
+  overflow: hidden;
+  padding-right: 8px;
+}
+
 .facet-count {
   color: #8E9494;
   text-align: right;

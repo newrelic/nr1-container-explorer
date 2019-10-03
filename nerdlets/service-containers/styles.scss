@@ -13,7 +13,7 @@
 }
 
 .container-panel {
-  overflow: scroll;
+  overflow: hidden;;
   height: 100%;
   min-height: 400px;
   background: white;
@@ -48,6 +48,19 @@
       }
     }
   }
+
+[class*="wnd-Tabs-navigation"] {
+  box-shadow: 0 2px 0 rgba(0,0,0, .02);
+}
+
+[class$="wnd-Tabs"] {
+  height: 100%;
+}
+
+[class*="Tabs-pane"] {
+  height: calc(100% - 117px);
+  overflow: scroll;
+}
 
   ul.tags {
     list-style: none;

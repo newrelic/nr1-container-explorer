@@ -30,7 +30,10 @@
     font-size: 16px;
     font-weight: 600;
     color: #000E0E;
-    text-align: center;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .heat-map-grid {
