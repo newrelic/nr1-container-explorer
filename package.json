@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "nr1-containers",
-  "description": "Nerdpack nr1-containers",
-  "version": "0.2.0",
+  "name": "nr1-container-explorer",
+  "description": "Nerdpack nr1-container-explorer",
+  "version": "0.2.1",
   "scripts": {
     "start": "nr1 nerdpack:serve",
     "test": "exit 0"
