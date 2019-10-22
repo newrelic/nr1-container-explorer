@@ -18,10 +18,10 @@ import hsl from 'hsl-to-hex'
  * ## Examples
  * ```js
  * // single heatmap of Transaction throughput across all hosts
- * <HeatMap accountId={1} nrql={"SELECT count(*) FROM PageView facet host LIMIT 2000"}/>
+ * <HeatMap accountId={1} query={"SELECT count(*) FROM PageView facet host LIMIT 2000"}/>
  *
  * // list of heatmaps of Transaction throughput for all hosts grouped by appName
- * <HeatMap accountId={1} nrql={"SELECT count(*) FROM PageView facet host, appName LIMIT 2000"}/>
+ * <HeatMap accountId={1} query={"SELECT count(*) FROM PageView facet host, appName LIMIT 2000"}/>
  * ```
  * 
  * If 2 facets are provided, a list of grouped heatmaps will be rendered.
@@ -177,15 +177,19 @@ function SingleHeatmap(props) {
 }
 
 function GroupedHeatMap(props) {
-  const { data } = props
+  const { data, showLegend } = props
 
   const groups = _.groupBy(data, 'group')
   const groupNames = _.keys(groups).sort()
 
   return <div>
+    {showLegend && <div className="heat-map">      
+      <Legend {...props}/>
+    </div>}
+
     {groupNames.map(groupName => {
       const group = groups[groupName]
-      return <SingleHeatmap key={groupName} {...props} data={group} title={groupName}/>
+      return <SingleHeatmap key={groupName} {...props} showLegend={false} data={group} title={groupName}/>
     })}
   </div>
 }

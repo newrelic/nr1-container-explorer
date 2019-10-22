@@ -1,7 +1,11 @@
 # nr1-container-explorer
+
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/newrelic/nr1-container-explorer?include_prereleases) [![Snyk](https://snyk.io/test/github/newrelic/nr1-container-explorer/badge.svg)](https://snyk.io/test/github/newrelic/nr1-container-explorer)
+
 View and manage millions of containers in context - in New Relic One.
 
 ## Usage
+
 Requires New Relic infrastructure agent to deployed on hosts that are running
 Docker containers.
 
@@ -48,10 +52,16 @@ an agent's reporting rate. But the reported absolute values may be off.
 The infrastructure team is working on agent changes that will properly report by container, at which point
 we can convert to using that data.
 
-
 ## Getting started
 
-Clone this repository and run the following scripts:
+First, ensure that you have [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [NPM](https://www.npmjs.com/get-npm) installed. If you're unsure whether you have one or both of them installed, run the following command(s) (If you have them installed these commands will return a version number, if not, the commands won't be recognized):
+
+```bash
+git --version
+npm -v
+```
+
+Next, clone this repository and run the following scripts:
 
 ```bash
 git clone https://github.com/newrelic/nr1-container-explorer.git

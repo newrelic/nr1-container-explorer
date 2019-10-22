@@ -108,8 +108,6 @@ export default class ContainerExplorer extends React.Component {
     const {addFilter, counts, account, filters, group, removeFilter} = this.props
     const {groups, containerId } = this.state || {}
 
-    if(!groups) return <Spinner/>
-
     const tooMany = counts.containers > 2000
     const timeRange = timePickerNrql(this.props)
     const showFacetTable = tooMany && group
@@ -153,11 +151,19 @@ export default class ContainerExplorer extends React.Component {
               containerId={containerId}
               timeRange={timeRange}
               onSelectAttribute={(key, value) => addFilter(key, value)}
+<<<<<<< HEAD
               showRelatedApps onClose={() => this.setState({containerId: null})}
               toggleDetailPanel={this.toggleDetailPanel}
             />
           </GridItem>
         }
+=======
+              showRelatedApps onClose={() => this.setState({containerId: null})}/>}
+          {!containerId && groups && <GroupList groups={groups} group={group} showNone={!tooMany}
+            selectGroup={(group)=> this.setState({group})}/>}
+          {!groups && <Spinner fillContent/>}
+        </GridItem>
+>>>>>>> master
       </Grid>
     </div>
   }
