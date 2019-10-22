@@ -103,7 +103,7 @@ export default class ContainerExplorer extends React.Component {
   selectContainer(containerId) {
     this.setState({containerId})
   }
-  
+
   render() {
     const {addFilter, counts, account, filters, group, removeFilter} = this.props
     const {groups, containerId } = this.state || {}
@@ -141,29 +141,22 @@ export default class ContainerExplorer extends React.Component {
               {...this.props} {...this.state}
             setFacetValue={(value) => addFilter(group, value)}/>}
         </GridItem>
-        {containerId &&
-          <GridItem 
-            className='detail-pane-grid-item'  
+        <GridItem
+            className='detail-pane-grid-item'
             columnSpan={detailPanelExpanded ? 0 : 3}
           >
+        {containerId &&
             <ContainerPanel
               account={account}
               containerId={containerId}
               timeRange={timeRange}
               onSelectAttribute={(key, value) => addFilter(key, value)}
-<<<<<<< HEAD
-              showRelatedApps onClose={() => this.setState({containerId: null})}
               toggleDetailPanel={this.toggleDetailPanel}
-            />
-          </GridItem>
-        }
-=======
               showRelatedApps onClose={() => this.setState({containerId: null})}/>}
           {!containerId && groups && <GroupList groups={groups} group={group} showNone={!tooMany}
             selectGroup={(group)=> this.setState({group})}/>}
           {!groups && <Spinner fillContent/>}
         </GridItem>
->>>>>>> master
       </Grid>
     </div>
   }

@@ -8,7 +8,7 @@
     "test": "exit 0"
   },
   "nr1": {
-    "uuid": "36242aa2-2963-4fb2-87ef-7eb2b419ec48"
+    "uuid": "5d0e41c6-12e0-4768-b3dd-b0bacd695a29"
   },
   "dependencies": {
     "hsl-to-hex": "^1.0.0",
