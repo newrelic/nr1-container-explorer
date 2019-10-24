@@ -88,7 +88,7 @@ export default class ContainerHeatMap extends React.PureComponent {
             WHERE ${where} ${timeRange} FACET containerId LIMIT 2000`
 
         return <HeatMap title={title} accountId={accountId} key={title}
-              max={max} showLegend
+              max={max}
               query={nrql} 
               formatLabel={(label) => label.slice(0,6)}
               formatValue={formatValue} 

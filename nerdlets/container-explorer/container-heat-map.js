@@ -47,7 +47,7 @@ export default class ContainerHeatMap extends React.Component {
     // add to the filter.
     const onClickTitle = group && ((value) => setFacetValue(value))
 
-    return <Heatmap accountId={account.id} query={nrql} showLegend
+    return <Heatmap accountId={account.id} query={nrql}
       key={plot.title}
       title={plot.title}
       formatLabel={(c) => c.slice(0, 6)}

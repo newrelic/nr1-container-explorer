@@ -78,11 +78,6 @@ export default class Heatmap extends React.Component {
     selection: PropTypes.string,
 
     /**
-     * if true, show a legend with the color spectrum from 0 to max value
-     */
-    showLegend: PropTypes.bool,
-
-    /**
      * callback for formatting a value to appear in tooltips and in the legend
      * ```js
      * formatValue=(value) => `${Math.round(value*1000)}ms`
@@ -152,7 +147,7 @@ function Node(props) {
 }
 
 function SingleHeatmap(props) {
-  const { title, selection, onSelect, data, onClickTitle, showLegend } = props
+  const { title, selection, onSelect, data, onClickTitle } = props
 
   const titleStyle = `heat-map-title ${onClickTitle && "clickable"}`
   const onClick = onClickTitle && (() => onClickTitle(title))
@@ -163,7 +158,7 @@ function SingleHeatmap(props) {
         <span title={title} onClick={onClick}>{title}</span>
       </StackItem>
       <StackItem>
-        {showLegend && <Legend {...props}/>}
+        <Legend {...props}/>
       </StackItem>
     </Stack>
     <div className="heat-map-grid">
@@ -177,19 +172,15 @@ function SingleHeatmap(props) {
 }
 
 function GroupedHeatMap(props) {
-  const { data, showLegend } = props
+  const { data } = props
 
   const groups = _.groupBy(data, 'group')
   const groupNames = _.keys(groups).sort()
 
   return <div>
-    {showLegend && <div className="heat-map">      
-      <Legend {...props}/>
-    </div>}
-
     {groupNames.map(groupName => {
       const group = groups[groupName]
-      return <SingleHeatmap key={groupName} {...props} showLegend={false} data={group} title={groupName}/>
+      return <SingleHeatmap key={groupName} {...props} data={group} title={groupName}/>
     })}
   </div>
 }
