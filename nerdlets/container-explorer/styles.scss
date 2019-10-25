@@ -10,48 +10,82 @@
     text-align: center;
   }
 }
-.facet-list {
+
+.detail-pane-grid-item {
+  height: 100%;
+  overflow: hidden;
+  border-left: 1px solid #eee;
+}
+
+.facet-list-container-grid {
+  height: 100%;
+  overflow: hidden;
+  border-right: 1px solid #EEEEEE;
+}
+
+.facet-list-container {
   height: 100%;
   width: 100%;
+  overflow: scroll;
+  background-color: #fff;
 
   h3 {
-    padding: 12px;
-    font-size: 24px;
-    text-align: center;
-    border-bottom: 1px dotted #dddddd;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-bottom: 1px dotted #edeeee;
+    color: #2A3434;
+    font-weight: 600;
   }
 
-  ul {
+  .facet-list {
     background-color: white;
   }
 
-  li {
-    padding: 12px;
+  .facet {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
     list-style-type: none;
+    color: #2A3434;
     font-size: 11px;
     overflow-wrap: break-word;
     border-bottom: rgb(244, 244, 244) solid 1px;
   }
-  li:hover {
+
+  .facet:hover {
     cursor: pointer;
-    background-color: rgb(248,248,248);
+    background-color: #FAFBFB;
   }
 
   .selected {
-    background-color: rgb(248,248,248);
-    font-weight: 700;
+    background-color: #FAFBFB;
+    box-shadow: inset 4px 0 0 #007E8A;
+    font-weight: 600;
+    color: #007E8A;
   }
 }
 
-.header {
-  border-bottom: 1px dotted #aaaaaa;
+.facet-name {
+  width: 100%;
+  overflow: hidden;
+  padding-right: 8px;
+}
 
-  .title-bar {
-    display: flex;
-    flex-direction: row;
-    padding-top: 12px;
-    padding-right:16px;
-    padding-left: 16px;
+.facet-count {
+  color: #8E9494;
+  text-align: right;
+}
+
+.header {
+  .options-bar {
+    height: 50px;
+    justify-content: space-between;
+    background-color: #EDEEEE;
+    border-top: 1px solid #E3E4E4;
+    border-bottom: 1px solid #E3E4E4;
+    box-sizing: border-box;
+    padding: 0 16px 0;
 
     .account-picker {
       font-size: 16px;
@@ -60,11 +94,11 @@
     .title {
       flex-grow: 1;
       text-align: right;
-      font-size: 16px;
-      color: #555555;
+      font-size: 12px;
+      color: #8E9494;
     }
   }
-  
+
   .too-many-containers {
     width: 100%;
     text-align: center;
@@ -73,35 +107,93 @@
   .filter-bar {
     padding-top: 12px;
     padding-left: 18px;
+
+    &:empty {
+      display :none;
+    }
+  }
+}
+
+.plot-picker-stack-item {
+  border-left: 1px dotted #b9bdbd;
+  padding-left: 16px;
+}
+
+.filters-container {
+  padding: 16px 8px 0;
+  margin-bottom: -8px;
+
+  &:empty {
+    display: none;
   }
 
-  .filter {  
-    background-color: #d0f0ff;
-    padding-left: 6px;
-    padding-top: 3px;
-    margin: 4px;
-    border-radius: 3px;
-  
-    p {
-      font-size: 12px;
-      margin-bottom: 3px;
-    }
-    .name {
-      color: #666666;
-    }
-    .value {
-      font-weight: 400;
-    }
-  }  
+  &:before {
+    content: "Filters:";
+    margin-right: 4px;
+    font-size: 10px;
+    color: #8E9494;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+}
+
+.filter {
+  background-color: #D0F0FF;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 4px 30px 4px 8px;
+  line-height: 15px;
+  border-radius: 3px;
+  color: #003555;
+  display: inline-block;
+  position: relative;
+}
+.filter-value {
+  font-weight: 600;
+}
+
+.filter-remove-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 3px;
+  border-radius:0 3px 3px 0;
+  border-left:1px solid rgba(0, 53,85, .09);
+}
+
+.filter-remove-btn .ic-Icon {
+  transform:scale(.75)
+}
+
+.filter-remove-btn:hover {
+  background-color: #66ccfe;
+  cursor: pointer;
+  border-color: transparent;
+}
+
+.container-explorer-container {
+  overflow: scroll;
+
+  .detail-pane-grid-minimized & {
+    padding-right: 18px;
+  }
 }
 
 .container-explorer {
-  padding-top: 12px;
-  background-color: rgb(248,248,248);
+  height: calc(100% - 50px);
+  background-color: rgb(248, 248, 248);
+}
+
+.container-explorer-grid {
+  grid-gap: 0;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
 }
 
 .heat-map-list {
-  background-color: rgb(248,248,248);
+  background-color: rgb(248, 248, 248);
   padding-top: 4px;
 }
 
@@ -113,7 +205,11 @@
   width: 100%;
   display: flex;
   align-items: bottom;
-  border-bottom: 1px dotted #aaaaaa;
+  border-bottom: 1px solid #edeeee;
+
+  &:empty {
+    display: none;
+  }
 
   .title {
     padding-top: 1px;
@@ -134,3 +230,4 @@
 .container-table {
   font-size: 12px;
 }
+

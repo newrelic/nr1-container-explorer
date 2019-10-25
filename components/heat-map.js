@@ -1,4 +1,4 @@
-import { NrqlQuery, Tooltip } from 'nr1'
+import { NrqlQuery, Tooltip, Stack, StackItem } from 'nr1'
 import PropTypes from 'prop-types';
 import _ from 'underscore'
 import hsl from 'hsl-to-hex'
@@ -78,11 +78,6 @@ export default class Heatmap extends React.Component {
     selection: PropTypes.string,
 
     /**
-     * if true, show a legend with the color spectrum from 0 to max value
-     */
-    showLegend: PropTypes.bool,
-
-    /**
      * callback for formatting a value to appear in tooltips and in the legend
      * ```js
      * formatValue=(value) => `${Math.round(value*1000)}ms`
@@ -152,22 +147,22 @@ function Node(props) {
 }
 
 function SingleHeatmap(props) {
-  const { title, selection, onSelect, data, onClickTitle, showLegend } = props
+  const { title, selection, onSelect, data, onClickTitle } = props
 
-  const titleStyle = `title ${onClickTitle && "clickable"}`
+  const titleStyle = `heat-map-title ${onClickTitle && "clickable"}`
   const onClick = onClickTitle && (() => onClickTitle(title))
 
   return <div className="heat-map">
-    <div className="header">
-      <div className={titleStyle} onClick={onClick}>
-        {title}
-      </div>
-      <div>
-        {showLegend && <Legend {...props}/>}
-      </div>
-    </div>
-    <div className="grid">
-      {data.map(datum => {        
+    <Stack className="heat-map-header" verticalType={Stack.VERTICAL_TYPE.CENTER} fullWidth>
+      <StackItem className={titleStyle}>
+        <span title={title} onClick={onClick}>{title}</span>
+      </StackItem>
+      <StackItem>
+        <Legend {...props}/>
+      </StackItem>
+    </Stack>
+    <div className="heat-map-grid">
+      {data.map(datum => {
         const selected = datum.name == selection
         return <Node key={datum.name} {...props} {...datum} selected={selected}
             onClick={() => onSelect(datum.name)} />
@@ -177,19 +172,15 @@ function SingleHeatmap(props) {
 }
 
 function GroupedHeatMap(props) {
-  const { data, showLegend } = props
+  const { data } = props
 
   const groups = _.groupBy(data, 'group')
   const groupNames = _.keys(groups).sort()
 
   return <div>
-    {showLegend && <div className="heat-map">      
-      <Legend {...props}/>
-    </div>}
-
     {groupNames.map(groupName => {
       const group = groups[groupName]
-      return <SingleHeatmap key={groupName} {...props} showLegend={false} data={group} title={groupName}/>
+      return <SingleHeatmap key={groupName} {...props} data={group} title={groupName}/>
     })}
   </div>
 }

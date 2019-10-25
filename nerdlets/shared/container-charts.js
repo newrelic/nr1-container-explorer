@@ -12,7 +12,7 @@ function summarizeFacets(data) {
     })
   })
 
-  console.log("Data", JSON.stringify(summary, 0, 2))
+  // console.log("Data", JSON.stringify(summary, 0, 2))
   const { metadata } = summary
   metadata.name = metadata.groups[0].displayName
 
@@ -39,13 +39,13 @@ function Chart({ account, containerId, select, timeRange }) {
 
 export default function Charts({ containerId, account, timeRange }) {
   return <ChartGroup>
-    <h3>CPU</h3>
+    <h4 className="chart-header">CPU</h4>
     <Chart containerId={containerId} account={account} timeRange={timeRange}
       select={"average(cpuPercent) AS 'CPU'"} />
-    <h3>Memory</h3>
+    <h4 className="chart-header">Memory</h4>
     <Chart containerId={containerId} account={account} timeRange={timeRange}
       select={"average(memoryResidentSizeBytes) AS 'Memory'"} />
-    <h3>Disk I/O</h3>
+    <h4 className="chart-header">Disk I/O</h4>
     <Chart containerId={containerId} account={account} timeRange={timeRange}
       select={"average(ioReadBytesPerSecond+ioWriteBytesPerSecond) AS 'Disk I/O'"} />
   </ChartGroup>

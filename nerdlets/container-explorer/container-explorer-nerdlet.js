@@ -8,6 +8,8 @@ import findRelatedAccountsWith from '../../lib/find-related-account-with'
 import ContainerExplorer from './container-explorer'
 import Header from './header'
 
+import PLOTS from '../../lib/plots'
+
 export default class ContainerExplorerNerdlet extends React.Component {
   constructor(props) {
     super(props)
@@ -15,9 +17,12 @@ export default class ContainerExplorerNerdlet extends React.Component {
     this.addFilter = this.addFilter.bind(this)
     this.removeFilter = this.removeFilter.bind(this)
     this.setAccount = this.setAccount.bind(this)
+    this.setPlot = this.setPlot.bind(this);
+    this.setGroup = this.setGroup.bind(this);
 
     this.state = {
-      filters: []
+      filters: [],
+      plot: PLOTS[0],
     }    
   }
 
@@ -60,6 +65,14 @@ export default class ContainerExplorerNerdlet extends React.Component {
     this.countProcesses()
   }
 
+  async setPlot(plot) {
+    await this.setState({ plot })
+  }
+
+  async setGroup(group) {
+    await this.setState({ group })
+  }
+  
   async countProcesses() {
     this.setState({counts: null})
 
@@ -88,8 +101,8 @@ export default class ContainerExplorerNerdlet extends React.Component {
 
     return <div style={{height: "100%"}}>
       <Header {...this.state} setAccount={this.setAccount} 
-          showFacetPicker={this.showFacetPicker} removeFilter={this.removeFilter}/>
-      {counts && <ContainerExplorer {...this.state} addFilter={this.addFilter}/>}
+          showFacetPicker={this.showFacetPicker} removeFilter={this.removeFilter} setPlot={this.setPlot}/>
+      {counts && <ContainerExplorer {...this.state} addFilter={this.addFilter} removeFilter={this.removeFilter} setPlot={this.setPlot} setGroup={this.setGroup} />}
     </div>
   }
 }

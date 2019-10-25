@@ -1,46 +1,55 @@
-import { Stack, StackItem, Button, Dropdown, DropdownItem } from 'nr1'
+import { Stack, StackItem, Dropdown, DropdownItem } from "nr1"
+import PLOTS from '../../lib/plots'
 
-function Filter({ name, value, removeFilter }) {
-  return <StackItem className="filter">
-    <Stack horizontalType={Stack.HORIZONTAL_TYPE.CENTER}>
-      <StackItem className="name">
-        {name}:{" "}
-      </StackItem>
-      <StackItem className="value">
-        {value}
-      </StackItem>
-      <StackItem>
-        <Button type={Button.TYPE.PLAIN} iconType={Button.ICON_TYPE.INTERFACE__SIGN__CLOSE}
-          sizeType={Button.SIZE_TYPE.SMALL} onClick={() => removeFilter(name, value)} />
-      </StackItem>
-    </Stack>
-  </StackItem>
+
+function AccountPicker({ accounts, account, setAccount }) {
+  return (
+    <Dropdown className="account-picker" label="Account" title={account.name}>
+      {accounts.map(account => {
+        return (
+          <DropdownItem onClick={() => setAccount(account)} key={account.id}>
+            {account.name}
+          </DropdownItem>
+        )
+      })}
+    </Dropdown>
+  )
 }
 
-function AccountPicker({accounts, account, setAccount}) {
-  return <Dropdown className="account-picker" label="Account" title={account.name}>
-    {accounts.map(account => {
-      return <DropdownItem onClick={() => setAccount(account)} key={account.id}>
-        {account.name}
-      </DropdownItem>
-    })}
-  </Dropdown>
+function PlotPicker({ group, counts, plot, setPlot }) {
+  if (group || ( counts && counts.containers > 500) ) {
+    return <Dropdown label="Plot" title={plot.title}>
+      {PLOTS.map(p => {
+        return <DropdownItem onClick={() => setPlot(p)} key={p.title}>
+          {p.title}
+        </DropdownItem>
+      })}
+
+    </Dropdown>
+  }
+  return null;
 }
 
 export default function Header(props) {
-  const { counts, filters, removeFilter } = props
-  return <div className="header">
-    <div className="title-bar">
-      <AccountPicker {...props}/>
-      {counts && <span className="title">
-        {counts.containers} Containers running on {counts.hosts} Hosts
-      </span>}      
-    </div>
-    <Stack className="filter-bar">
-      {filters.map(filterProps => {
-        return <Filter key={filterProps.name} {...filterProps} removeFilter={removeFilter} />
-      })}
-    </Stack>
-  </div>
+  const { counts } = props
+  return (
+    <div className="header">
+      <Stack fullWidth className="options-bar" verticalType={Stack.VERTICAL_TYPE.CENTER}>
+        <StackItem>
+          <Stack verticalType={Stack.VERTICAL_TYPE.CENTER}>
+            <StackItem><AccountPicker {...props} /></StackItem>
+            <StackItem className="plot-picker-stack-item"><PlotPicker {...props}></PlotPicker></StackItem>
+          </Stack>
+        </StackItem>
 
+        {counts && (
+          <StackItem>
+            <span className="title">
+              {counts.containers} Containers running on {counts.hosts} Hosts
+            </span>
+          </StackItem>
+        )}
+      </Stack>
+    </div>
+  )
 }

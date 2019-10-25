@@ -1,77 +1,100 @@
 
 .heat-map {
-  margin: 12px;
-  border-radius: 6px;
-  padding: 12px;
-  border: 1px dotted #aaaaaa;
+  margin: 16px;
+  border-radius: 3px;
+  background: #FFFFFF;
+  box-shadow:
+    0 11px 15px -10px rgba(31, 75, 116, 0.25),
+    0 1px 3px 1px rgba(0, 134, 148, 0.03),
+    0 3px 0 0 rgba(0, 49, 54, 0.04),
+    0 1px 0 0 rgba(0, 75, 82, 0.11);
   background-color: white;
 
-  .header {
-    .title {
-      font-size: 18px;
-      font-weight: 400;
-      text-align: center;
-    }
+  .heat-map-header {
+    box-sizing: border-box;
+    padding: 0 16px;
+    height: 40px;
+    justify-content: space-between;
+    border-bottom: 1px solid #EDEEEE;
 
     .clickable {
-      color: #005054;      
+      color: #005054;
     }
     .clickable:hover {
       text-decoration: underline;
       cursor: pointer;
     }
   }
-  
-  .grid {
+
+  .heat-map-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000E0E;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .heat-map-grid {
     display: flex;
     flex-wrap: wrap;
-    padding-top: 12px;
-    
-  
+    padding: 14px;
+
+
     .node {
-      width: 12px;
-      height: 16px;
-      border: 1px solid #aaaaaa;
+      width: 14px;
+      height: 14px;
       margin: 2px;
+      background-color: #EDEEEE;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.125);
+      }
     }
 
     .selected {
-      border: 3px solid #222222;
-      margin: -2px;
-      width: 16px;
-      height: 20px;
+      transform: scale(1.75);
+      box-shadow: inset 0 0 0 1.75px #fff, 0 0 0 1.75px #2a3434bd, 0 1px 4px rgba(0, 0, 0, 0.38);
+      position: relative;
+      border-radius: 1px;
+
+      &:hover {
+        transform: scale(1.75);
+      }
     }
-  }   
+  }
 }
 
 .heat-map-legend {
-  width: 100%;
+  width: 250px;
   display: flex;
+  justify-content: flex-end;
+  align-items: center;
   padding-top: 0px;
-  padding-bottom: 4px;
-  border-bottom: 1px dotted #eeeeee;
-  
+
   span {
-    width: 10%;
-    padding-left: 8px;
     font-size: 12px;
     font-weight: 200;
-    padding-top: 3px;
+    white-space: nowrap;
+    color: #8E9494;
   }
   .left {
-    padding-right: 8px;
     text-align: right;
   }
 }
 
 .heat-map-spectrum {
   display: flex;
-  height: 24px;
-  width: 100%;
+  height: 8px;
+  width: 170px;
+  box-sizing: border-box;
+  margin: 0 8px;
+  border-radius: 9px;
+  overflow: hidden;
 
   .slice {
     width: 0.5%;
-    margin-top: 6px;
-    margin-bottom: 7px;
   }
 }
