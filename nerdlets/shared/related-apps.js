@@ -16,7 +16,7 @@ export default function RelatedApps({apmApplicationNames}) {
             name guid domain type
             ... on ApmApplicationEntityOutline {
               alertSeverity reporting
-            }            
+            }
           }
         }
       }
@@ -27,10 +27,9 @@ export default function RelatedApps({apmApplicationNames}) {
   return <NerdGraphQuery query={gql}>
     {({loading, error, data}) => {
       if(loading) return <div/>
-      const {entities} = data.actor.entitySearch.results      
+      const {entities} = data.actor.entitySearch.results
       return entities.map(entity => {
-        return <LinkedEntity key={entity.guid} title="App" entity={entity} name={entity.name}
-            icon="hardware-&-software_software_service"/>
+        return <LinkedEntity key={entity.guid} title="App" entity={entity} name={entity.name} />
       })
     }}
   </NerdGraphQuery>
