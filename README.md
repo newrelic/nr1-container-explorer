@@ -20,8 +20,6 @@ that are running for a selected APM application (service).  If the infrastructur
 is coming from a different account, we automatically detect that and present the container
 telemetry in-context.
 
-![Screenshot](./screenshots/screenshot-3.png)
-
 Click on a node in the heatmap to see details about that container, and jump to its host
 in the entity explorer.
 
