@@ -18,10 +18,10 @@ import hsl from 'hsl-to-hex'
  * ## Examples
  * ```js
  * // single heatmap of Transaction throughput across all hosts
- * <HeatMap accountId={1} query={"SELECT count(*) FROM PageView facet host LIMIT 2000"}/>
+ * <HeatMap accountId={1} query={"SELECT count(*) FROM Transaction facet host LIMIT 2000"}/>
  *
  * // list of heatmaps of Transaction throughput for all hosts grouped by appName
- * <HeatMap accountId={1} query={"SELECT count(*) FROM PageView facet host, appName LIMIT 2000"}/>
+ * <HeatMap accountId={1} query={"SELECT count(*) FROM Transaction facet host, appName LIMIT 2000"}/>
  * ```
  * 
  * If 2 facets are provided, a list of grouped heatmaps will be rendered.
