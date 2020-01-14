@@ -1,5 +1,5 @@
-import React from 'React'
-import {Grid, GridItem, Spinner} from 'nr1'
+import React from 'react'
+import { Grid, GridItem } from 'nr1'
 import _ from 'underscore'
 
 import getCardinality from '../../lib/get-cardinality'
