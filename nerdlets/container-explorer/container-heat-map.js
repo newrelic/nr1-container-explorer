@@ -24,8 +24,9 @@ export default class ContainerHeatMap extends React.Component {
       timeRange: "SINCE 30 seconds ago UNTIL 15 seconds ago"
     }
 
+    const whereClause = where ? ' WHERE ${where} ' : '';
     const facet = group ? `${quote(group)}, containerId` : "containerId"
-    return `SELECT ${select} FROM ProcessSample WHERE ${where || "true"}
+    return `SELECT ${select} FROM ProcessSample ${whereClause}
           ${timeRange} FACET ${facet} LIMIT 2000`
 
   }

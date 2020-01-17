@@ -84,8 +84,9 @@ export default class ContainerHeatMap extends React.PureComponent {
           accountId = infraAccount.id
         }
         
+        const whereClause = where ? ' WHERE ${where} ' : '';
         const nrql = `SELECT ${select} FROM ${eventType}
-            WHERE ${where} ${timeRange} FACET containerId LIMIT 2000`
+             ${timeRange} ${whereClause} FACET containerId LIMIT 2000`
 
         return <HeatMap title={title} accountId={accountId} key={title}
               max={max}
