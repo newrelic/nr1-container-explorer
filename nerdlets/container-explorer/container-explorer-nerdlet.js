@@ -90,7 +90,6 @@ export default class ContainerExplorerNerdlet extends React.Component {
 
   render() {
     const {account, counts, accounts} = this.state
-    if(!account) return <Spinner/>
     if(accounts.length == 0) return <div>
       <h1>No Data</h1>
       <p>
@@ -98,6 +97,9 @@ export default class ContainerExplorerNerdlet extends React.Component {
         Install New Relic Infrastructure today!
       </p>
     </div>
+    if(!accounts) {
+      return <Spinner/>
+    }
 
     return <div style={{height: "100%"}}>
       <Header {...this.state} setAccount={this.setAccount} 
