@@ -1,3 +1,10 @@
+## [0.5.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.5.0...v0.5.1) (2020-01-24)
+
+
+### Bug Fixes
+
+* spinner should stop after accounts query returns ([#27](https://github.com/newrelic/nr1-container-explorer/issues/27)) ([2e6ae83](https://github.com/newrelic/nr1-container-explorer/commit/2e6ae8336f9abadf0a667322d16e633c4aeb79b5))
+
 # [0.5.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.4.1...v0.5.0) (2020-01-24)
 
 
