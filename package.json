@@ -11,6 +11,7 @@
     "uuid": "22a1b934-d915-45d8-b7ed-9a30e0f325e9"
   },
   "dependencies": {
+    "@newrelic/nr1-community": "0.0.1-alpha.7",
     "hsl-to-hex": "^1.0.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.6.2",
