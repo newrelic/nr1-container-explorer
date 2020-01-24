@@ -96,7 +96,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
       return <Spinner/>
     }
 
-    if(accounts.length == 0) {
+    if(accounts.length === 0) {
       return (
         <EmptyState
           heading="No Data"
