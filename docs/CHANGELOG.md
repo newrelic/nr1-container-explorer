@@ -1,3 +1,15 @@
+# [0.5.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.4.1...v0.5.0) (2020-01-24)
+
+
+### Bug Fixes
+
+* replace empty GridItem with a Spinner until we have data ([#26](https://github.com/newrelic/nr1-container-explorer/issues/26)) ([cccef9b](https://github.com/newrelic/nr1-container-explorer/commit/cccef9b7b3651fe27740eeaac1a528ca9b8401db))
+
+
+### Features
+
+* dynamic linked entity icons ([#25](https://github.com/newrelic/nr1-container-explorer/issues/25)) ([343af17](https://github.com/newrelic/nr1-container-explorer/commit/343af174e138c8186b8460cdfe413d5985fe417a))
+
 ## [0.4.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.4.0...v0.4.1) (2020-01-14)
 
 
