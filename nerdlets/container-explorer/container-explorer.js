@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, GridItem } from 'nr1'
+import { Grid, GridItem, Spinner } from 'nr1'
 import _ from 'underscore'
 
 import getCardinality from '../../lib/get-cardinality'
@@ -115,10 +115,17 @@ export default class ContainerExplorer extends React.Component {
 
     return <div className='container-explorer'>
       <Grid className={`container-explorer-grid ${detailPanelExpanded ? 'detail-pane-grid-minimized' : 'detail-pane-grid-expanded'}`} spacingType={[Grid.SPACING_TYPE.NONE, Grid.SPACING_TYPE.NONE]}>
-        <GridItem className='facet-list-container-grid' columnSpan={3}>
-          {groups && <GroupList groups={groups} group={group} showNone={!tooMany}
-            selectGroup={this.setGroup}/>}
-        </GridItem>
+        {!groups && <GridItem className='facet-list-container-grid' columnSpan={3}><Spinner /></GridItem>}
+        {groups &&
+          <GridItem className='facet-list-container-grid' columnSpan={3}>
+            <GroupList
+              groups={groups}
+              group={group}
+              showNone={!tooMany}
+              selectGroup={this.setGroup}
+            />
+          </GridItem>
+        }
         <GridItem className='container-explorer-container' columnSpan={containerId && !detailPanelExpanded ? 6 : 9}>
           <div className="filters-container">
             {filters.map(filterProps => {
