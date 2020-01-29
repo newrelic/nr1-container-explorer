@@ -20,6 +20,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
     this.setAccount = this.setAccount.bind(this)
     this.setPlot = this.setPlot.bind(this);
     this.setGroup = this.setGroup.bind(this);
+    this.removeAllFilters = this.removeAllFilters.bind(this);
 
     this.state = {
       filters: [],
@@ -49,6 +50,10 @@ export default class ContainerExplorerNerdlet extends React.Component {
     
     filters = filters.filter(f => !(f.name == name && f.value == value))
     this.setFilters(filters)
+  }
+
+  removeAllFilters() {
+    this.setFilters([])
   }
 
   async setFilters(filters) {
@@ -112,7 +117,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
 
     return <div style={{height: "100%"}}>
       <Header {...this.state} setAccount={this.setAccount} 
-          showFacetPicker={this.showFacetPicker} removeFilter={this.removeFilter} setPlot={this.setPlot}/>
+          showFacetPicker={this.showFacetPicker} removeFilter={this.removeFilter} removeAllFilters={this.removeAllFilters} setPlot={this.setPlot}/>
       {counts && <ContainerExplorer {...this.state} addFilter={this.addFilter} removeFilter={this.removeFilter} setPlot={this.setPlot} setGroup={this.setGroup} />}
     </div>
   }
