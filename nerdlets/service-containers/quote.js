@@ -14,17 +14,17 @@ const KEYWORDS = {
   order: true,
   by: true,
   nocache: true,
-  end: true,
-}
+  end: true
+};
 
 export default function quote(s) {
-  if(!s) return ''
-  
+  if (!s) return '';
+
   if (s.match(/[\.\s:-@#\!\\\/]/)) {
-    return "`"+s+"`"
+    return `\`${s}\``;
   }
-  if(KEYWORDS[s.toLowerCase()]) {
-    return "`"+s+"`"
+  if (KEYWORDS[s.toLowerCase()]) {
+    return `\`${s}\``;
   }
-  return s
+  return s;
 }
