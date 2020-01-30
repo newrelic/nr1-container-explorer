@@ -11,7 +11,7 @@ import {
 } from 'nr1';
 
 import nrdbQuery from '../../lib/nrdb-query';
-import timePickerNrql from '../../lib/time-picker-nrql';
+import { timeRangeToNrql } from '@newrelic/nr1-community'
 import findRelatedAccountsWith from '../../lib/find-related-account-with';
 import accountsWithData from '../../lib/accounts-with-data';
 
