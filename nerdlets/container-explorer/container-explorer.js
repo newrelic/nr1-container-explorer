@@ -3,7 +3,7 @@ import { Grid, GridItem, Spinner } from 'nr1'
 import _ from 'underscore'
 
 import getCardinality from '../../lib/get-cardinality'
-import timePickerNrql from '../../lib/time-picker-nrql'
+import { timeRangeToNrql } from '@newrelic/nr1-community'
 
 import FacetTable from './facet-table'
 import Filter from './filter'
@@ -105,11 +105,11 @@ export default class ContainerExplorer extends React.Component {
   }
 
   render() {
-    const {addFilter, counts, account, filters, group, removeFilter} = this.props
+    const {addFilter, counts, account, filters, group, removeFilter, launcherUrlState} = this.props
     const {groups, containerId } = this.state || {}
 
     const tooMany = counts.containers > 2000
-    const timeRange = timePickerNrql(this.props)
+    const timeRange = timeRangeToNrql(launcherUrlState)
     const showFacetTable = tooMany && group
     const { detailPanelExpanded } = this.state
 

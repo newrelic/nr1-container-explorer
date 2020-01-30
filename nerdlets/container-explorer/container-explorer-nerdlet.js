@@ -113,7 +113,16 @@ export default class ContainerExplorerNerdlet extends React.Component {
     return <div style={{height: "100%"}}>
       <Header {...this.state} setAccount={this.setAccount} 
           showFacetPicker={this.showFacetPicker} removeFilter={this.removeFilter} setPlot={this.setPlot}/>
-      {counts && <ContainerExplorer {...this.state} addFilter={this.addFilter} removeFilter={this.removeFilter} setPlot={this.setPlot} setGroup={this.setGroup} />}
+      {counts &&
+        <ContainerExplorer
+          launcherUrlState={this.props.launcherUrlState}
+          {...this.state}
+          addFilter={this.addFilter}
+          removeFilter={this.removeFilter}
+          setPlot={this.setPlot}
+          setGroup={this.setGroup}
+        />
+      }
     </div>
   }
 }
