@@ -5,13 +5,15 @@
   "version": "0.5.1",
   "scripts": {
     "start": "nr1 nerdpack:serve",
-    "test": "exit 0"
+    "test": "exit 0",
+    "eslint-check": "eslint nerdlets/",
+    "eslint-fix": "eslint nerdlets/ --fix"
   },
   "nr1": {
     "uuid": "22a1b934-d915-45d8-b7ed-9a30e0f325e9"
   },
   "dependencies": {
-    "@newrelic/nr1-community": "0.0.1-alpha.7",
+    "@newrelic/nr1-community": "1.0.1",
     "hsl-to-hex": "^1.0.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.6.2",
@@ -26,6 +28,12 @@
   ],
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.5",
-    "@semantic-release/git": "^7.0.18"
+    "@semantic-release/git": "^7.0.18",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "prettier": "^1.18.2"
   }
 }

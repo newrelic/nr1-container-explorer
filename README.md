@@ -15,6 +15,8 @@ tags. CPU, Memory and Disk I/O is presented in a space efficient heat map:
 
 ![Screenshot](./screenshots/screenshot-1.png)
 
+![Screenshot](./screenshots/screenshot-2.png)
+
 In the entity explorer, we provide a nerdlet that will show all of the containers
 that are running for a selected APM application (service).  If the infrastructure data
 is coming from a different account, we automatically detect that and present the container
@@ -33,16 +35,16 @@ New Relic Infrastructure agent deployed on any host you want to monitor.
 
 ## Caveats
 
-We generate per-container CPU etc by summarizing all processes in a given containerId. For example, this query 
+We generate per-container CPU etc by summarizing all processes in a given containerId. For example, this query
 will report CPU for a single container for the last minute:
 ```sql
 SELECT sum(cpuPercent) FROM ProcessSample WHERE containerId = '${containerId}'
     SINCE 1 minute ago UNTIL 30 seconds ago
 ```
-**However:** This will report an accurate value _only if the agent reports one ProcessSample_ per process 
+**However:** This will report an accurate value _only if the agent reports one ProcessSample_ per process
 every 30 seconds. If the agent reports once every 15 second, then we would get 2x the value for this query.
 I'm looking to add a capability to estimate the reporting rate per process per container, but note that this
-reporting rate can vary by host depending on agent config. 
+reporting rate can vary by host depending on agent config.
 
 If a set of viewed containers all report a the same rate heatmap colorization will be consistent irrespective of
 an agent's reporting rate. But the reported absolute values may be off.
