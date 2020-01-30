@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.6.0...v0.7.0) (2020-01-30)
+
+
+### Features
+
+* add "remove all filters" button in header ([#33](https://github.com/newrelic/nr1-container-explorer/issues/33)) ([00f270b](https://github.com/newrelic/nr1-container-explorer/commit/00f270b03be86ebeee532552b5e62ec304a8a8e7)), closes [#1](https://github.com/newrelic/nr1-container-explorer/issues/1) [#29](https://github.com/newrelic/nr1-container-explorer/issues/29)
+
 # [0.6.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.5.1...v0.6.0) (2020-01-30)
 
 
