@@ -1,4 +1,4 @@
-import { Stack, StackItem, Dropdown, DropdownItem } from 'nr1';
+import { Stack, StackItem, Dropdown, DropdownItem, Button } from 'nr1';
 import PLOTS from '../../lib/plots';
 
 function AccountPicker({ accounts, account, setAccount }) {
@@ -33,7 +33,7 @@ function PlotPicker({ group, counts, plot, setPlot }) {
 }
 
 export default function Header(props) {
-  const { counts } = props;
+  const { counts, removeAllFilters, filters } = props;
   return (
     <div className="header">
       <Stack
@@ -52,13 +52,30 @@ export default function Header(props) {
           </Stack>
         </StackItem>
 
-        {counts && (
-          <StackItem>
-            <span className="title">
-              {counts.containers} Containers running on {counts.hosts} Hosts
-            </span>
-          </StackItem>
-        )}
+        <StackItem className="header-right-side">
+          <Stack verticalType={Stack.VERTICAL_TYPE.CENTER}>
+            {counts && (
+              <StackItem>
+                <span className="title">
+                  {counts.containers} Containers running on {counts.hosts} Hosts
+                </span>
+              </StackItem>
+            )}
+            {filters.length > 0 && (
+              <StackItem className="remove-filters-stack-item">
+                <Button
+                  iconType={
+                    Button.ICON_TYPE.INTERFACE__OPERATIONS__FILTER__A_REMOVE
+                  }
+                  type={Button.TYPE.PRIMARY}
+                  onClick={removeAllFilters}
+                >
+                  Clear all filters
+                </Button>
+              </StackItem>
+            )}
+          </Stack>
+        </StackItem>
       </Stack>
     </div>
   );
