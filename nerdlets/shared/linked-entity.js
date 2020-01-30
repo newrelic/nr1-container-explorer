@@ -1,11 +1,11 @@
-import { Button, navigation, Tooltip } from 'nr1'
+import { Button, navigation, Tooltip } from 'nr1';
 
-const entityTypeToIcon = function (entityType) {
+const entityTypeToIcon = function(entityType) {
   const map = {
     APPLICATION: Button.ICON_TYPE.HARDWARE_AND_SOFTWARE__SOFTWARE__APPLICATION,
     HOST: Button.ICON_TYPE.HARDWARE_AND_SOFTWARE__HARDWARE__SERVER,
-    SERVICE: Button.ICON_TYPE.HARDWARE_AND_SOFTWARE__SOFTWARE__SERVICE
-  }
+    SERVICE: Button.ICON_TYPE.HARDWARE_AND_SOFTWARE__SOFTWARE__SERVICE,
+  };
 
   const defaultIcon = map.HOST;
   const icon = map[entityType] || defaultIcon;
@@ -15,7 +15,7 @@ const entityTypeToIcon = function (entityType) {
   }
 
   return icon;
-}
+};
 
 export default function LinkedEntity({ entity, name, title, icon }) {
   return (
@@ -36,9 +36,8 @@ export default function LinkedEntity({ entity, name, title, icon }) {
           iconType={Button.ICON_TYPE.INTERFACE__OPERATIONS__DRAG}
           onClick={() => navigation.openEntity(entity.guid)}
           className="entity-explorer-ee-link"
-        >
-        </Button>
+        ></Button>
       </Tooltip>
     </div>
-  )
+  );
 }

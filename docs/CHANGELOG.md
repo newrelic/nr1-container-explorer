@@ -1,3 +1,16 @@
+# [0.6.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.5.1...v0.6.0) (2020-01-30)
+
+
+### Bug Fixes
+
+* eslint fixes. ([100676d](https://github.com/newrelic/nr1-container-explorer/commit/100676dff5f91edcb23200d27eadd97633331fbe))
+* License file file was somehow removed. ([23df89c](https://github.com/newrelic/nr1-container-explorer/commit/23df89c7df9401b52fb909c7f4cae85a4aea26a6))
+
+
+### Features
+
+* add EmptyState component from nr1-community with CTA ([#28](https://github.com/newrelic/nr1-container-explorer/issues/28)) ([f098b7a](https://github.com/newrelic/nr1-container-explorer/commit/f098b7a408fc64bd025ea0c44317148329ec6e07))
+
 ## [0.5.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.5.0...v0.5.1) (2020-01-24)
 
 
