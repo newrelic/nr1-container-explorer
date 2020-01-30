@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 import bytesToSize from '../../lib/bytes-to-size'
 
 export default function ContainerTable(props) {

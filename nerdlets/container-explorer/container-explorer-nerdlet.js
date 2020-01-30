@@ -1,5 +1,6 @@
 import React from 'react';
 import { Spinner } from 'nr1'
+import { EmptyState } from '@newrelic/nr1-community';
 
 import quote from '../../lib/quote'
 import nrdbQuery from '../../lib/nrdb-query'
@@ -89,15 +90,25 @@ export default class ContainerExplorerNerdlet extends React.Component {
   }
 
   render() {
-    const {account, counts, accounts} = this.state
-    if(!account) return <Spinner/>
-    if(accounts.length == 0) return <div>
-      <h1>No Data</h1>
-      <p>
-        Could not find any infrastructure data with container instrumentation. 
-        Install New Relic Infrastructure today!
-      </p>
-    </div>
+    const { account, counts, accounts } = this.state
+
+    if(!accounts) {
+      return <Spinner/>
+    }
+
+    if(accounts.length === 0) {
+      return (
+        <EmptyState
+          heading="No Data"
+          description="Could not find any infrastructure data with container instrumentation."
+          buttonText="Install New Relic Infrastructure today!"
+          buttonOnClick={() => {
+            const url ="https://newrelic.com/products/infrastructure";
+            window.open(url);
+          }}
+        />
+      );
+    }
 
     return <div style={{height: "100%"}}>
       <Header {...this.state} setAccount={this.setAccount} 

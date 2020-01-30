@@ -1,9 +1,21 @@
 {
-  "lastUpdated": "Fri Nov 15 2019 15:57:54 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Fri Jan 24 2020 20:55:21 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nr1-container-explorer",
   "projectUrl": "https://github.com/newrelic/nr1-container-explorer",
   "includeDev": true,
   "dependencies": {
+    "@newrelic/nr1-community@0.0.1-alpha.7": {
+      "name": "@newrelic/nr1-community",
+      "version": "0.0.1-alpha.7",
+      "range": "0.0.1-alpha.7",
+      "licenses": "Apache-2.0",
+      "repoUrl": "https://github.com/newrelic/nr1-community",
+      "versionedRepoUrl": "https://github.com/newrelic/nr1-community/tree/v0.0.1-alpha.7",
+      "licenseFile": "node_modules/@newrelic/nr1-community/LICENSE",
+      "licenseUrl": "https://github.com/newrelic/nr1-community/blob/v0.0.1-alpha.7/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "newrelic"
+    },
     "hsl-to-hex@1.0.0": {
       "name": "hsl-to-hex",
       "version": "1.0.0",
