@@ -93,6 +93,9 @@
     }
 
     .title {
+      height: 100%;
+      display: inline-block;
+      line-height: 48px;
       flex-grow: 1;
       text-align: right;
       font-size: 12px;
@@ -113,6 +116,25 @@
       display :none;
     }
   }
+}
+
+.header-right-side {
+  height: 100%;
+
+  [class*='wnd-Stack'] {
+    height: 100%;
+  }
+  
+  [class*='wnd-Button--medium'] {
+    position: relative;
+    top: 8px;
+  }
+}
+
+div.header-right-side .remove-filters-stack-item {
+  border-left: 1px dotted #d5d7d7;
+  padding-left: 16px;
+  margin-left: 16px;
 }
 
 .plot-picker-stack-item {
