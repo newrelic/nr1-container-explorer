@@ -132,6 +132,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
         />
         {counts && (
           <ContainerExplorer
+            launcherUrlState={this.props.launcherUrlState}
             {...this.state}
             addFilter={this.addFilter}
             removeFilter={this.removeFilter}

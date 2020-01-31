@@ -11,7 +11,7 @@ import {
 } from 'nr1';
 
 import nrdbQuery from '../../lib/nrdb-query';
-import timePickerNrql from '../../lib/time-picker-nrql';
+import { timeRangeToNrql } from '@newrelic/nr1-community';
 import findRelatedAccountsWith from '../../lib/find-related-account-with';
 import accountsWithData from '../../lib/accounts-with-data';
 
@@ -50,7 +50,7 @@ export default class ServiceContainers extends React.Component {
 
   async findInfraAcount() {
     const { entityGuid } = this.props.nerdletUrlState || {};
-    const timeRange = timePickerNrql(this.props);
+    const timeRange = timeRangeToNrql(this.props.launcherUrlState);
 
     let result = await EntityByGuidQuery.query({ entityGuid });
     const entity = result.data.entities[0];
