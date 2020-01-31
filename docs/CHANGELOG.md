@@ -1,3 +1,10 @@
+## [0.7.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.7.0...v0.7.1) (2020-01-31)
+
+
+### Bug Fixes
+
+* refactor to use nr1-community timeRangeToNrql ([#34](https://github.com/newrelic/nr1-container-explorer/issues/34)) ([bca7a47](https://github.com/newrelic/nr1-container-explorer/commit/bca7a472e45bd90313d7eb6fe31fd1611a9bbc01)), closes [#31](https://github.com/newrelic/nr1-container-explorer/issues/31)
+
 # [0.7.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.6.0...v0.7.0) (2020-01-30)
 
 
