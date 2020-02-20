@@ -20,7 +20,7 @@ Clicking on a node in the heatmap displays details about that container, and jum
 
 This project is distributed under the [Apache 2 license](./LICENSE).
 
-## Depencencies
+## Dependencies
 
 Requires [`New Relic Infrastructure`](https://newrelic.com/products/infrastructure) agent deployed on hosts running Docker containers.
 
