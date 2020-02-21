@@ -6,41 +6,34 @@ View and manage millions of containers in context - in New Relic One.
 
 ## Usage
 
-Requires New Relic infrastructure agent to deployed on hosts that are running
-Docker containers.
+Container Explorer displays a global view of all of the containers in an account.
 
-This Nerdpack provides a launcher that gives you a global view of all of the
-containers in an account, which you can easily segment and drill down by
-tags. CPU, Memory and Disk I/O is presented in a space efficient heat map:
+CPU, Memory and Disk I/O is presented in a space efficient heat map.
+
+Clicking on a node in the heatmap displays details about that container, and jumps to its host in the entity explorer.
 
 ![Screenshot](./screenshots/screenshot-1.png)
 
 ![Screenshot](./screenshots/screenshot-2.png)
 
-In the entity explorer, we provide a nerdlet that will show all of the containers
-that are running for a selected APM application (service).  If the infrastructure data
-is coming from a different account, we automatically detect that and present the container
-telemetry in-context.
-
-Click on a node in the heatmap to see details about that container, and jump to its host
-in the entity explorer.
-
 ## Open Source License
 
 This project is distributed under the [Apache 2 license](./LICENSE).
 
-## What do you need to make this work?
+## Dependencies
 
-New Relic Infrastructure agent deployed on any host you want to monitor.
+Requires [`New Relic Infrastructure`](https://newrelic.com/products/infrastructure) agent deployed on hosts running Docker containers.
 
 ## Caveats
 
 We generate per-container CPU etc by summarizing all processes in a given containerId. For example, this query
 will report CPU for a single container for the last minute:
+
 ```sql
 SELECT sum(cpuPercent) FROM ProcessSample WHERE containerId = '${containerId}'
     SINCE 1 minute ago UNTIL 30 seconds ago
 ```
+
 **However:** This will report an accurate value _only if the agent reports one ProcessSample_ per process
 every 30 seconds. If the agent reports once every 15 second, then we would get 2x the value for this query.
 I'm looking to add a capability to estimate the reporting rate per process per container, but note that this
@@ -87,20 +80,15 @@ nr1 nerdpack:subscribe [-c [DEV|BETA|STABLE]] [--profile=your_profile_name]
 
 Visit [https://one.newrelic.com](https://one.newrelic.com), navigate to the Nerdpack, and :sparkles:
 
-## Support
+## Community Support
 
-New Relic has open-sourced this project. This project is provided AS-IS WITHOUT WARRANTY OR SUPPORT, although you can report issues and contribute to the project here on GitHub.
+New Relic hosts and moderates an online forum where you can interact with New Relic employees as well as other customers to get help and share best practices. Like all New Relic open source community projects, there's a related topic in the New Relic Explorers Hub. You can find this project's topic/threads here:
 
-_Please do not report issues with this software to New Relic Global Technical Support._
+[https://discuss.newrelic.com/t/container-explorer-nerdpack/90565](https://discuss.newrelic.com/t/container-explorer-nerdpack/90565)
 
-### Community
+Please do not report issues with Container Explorer to New Relic Global Technical Support. Instead, visit the [`Explorers Hub`](https://discuss.newrelic.com/c/build-on-new-relic) for troubleshooting and best-practices.
 
-New Relic hosts and moderates an online forum where customers can interact with New Relic employees as well as other customers to get help and share best practices. Like all official New Relic open source projects, there's a related Community topic in the New Relic Explorers Hub. You can find this project's topic/threads here:
-
-[https://discuss.newrelic.com/c/build-on-new-relic/nr1-container-explorer](https://discuss.newrelic.com/c/build-on-new-relic/nr1-container-explorer)
-*(Note: URL subject to change before GA)*
-
-### Issues / Enhancement Requests
+## Issues / Enhancement Requests
 
 Issues and enhancement requests can be submitted in the [Issues tab of this repository](../../issues). Please search for and review the existing open issues before submitting a new issue.
 
