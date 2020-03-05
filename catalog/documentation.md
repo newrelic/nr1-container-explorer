@@ -1,6 +1,6 @@
-[![New Relic One Catalog Project header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/New_Relic_One_Catalog_Project.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#nr1-catalog)
+# Documentation
 
-# nr1-container-explorer
+[![New Relic One Catalog Project header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/New_Relic_One_Catalog_Project.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#nr1-catalog)
 
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/newrelic/nr1-container-explorer?include_prereleases) [![Snyk](https://snyk.io/test/github/newrelic/nr1-container-explorer/badge.svg)](https://snyk.io/test/github/newrelic/nr1-container-explorer)
 
@@ -14,13 +14,13 @@ CPU, Memory and Disk I/O is presented in a space efficient heat map.
 
 Clicking on a node in the heatmap displays details about that container, and jumps to its host in the entity explorer.
 
-![Screenshot](./catalog/screenshots/nr1-container-explorer-1.png)
+![Screenshot](https://github.com/newrelic/nr1-container-explorer/blob/master/catalog/screenshots/nr1-container-explorer-1.png)
 
-![Screenshot](./catalog/screenshots/nr1-container-explorer-2.png)
+![Screenshot](https://github.com/newrelic/nr1-container-explorer/blob/master/catalog/screenshots/nr1-container-explorer-2.png)
 
 ## Open Source License
 
-This project is distributed under the [Apache 2 license](./LICENSE).
+This project is distributed under the [Apache 2 license](https://github.com/newrelic/nr1-container-explorer/blob/master/LICENSE).
 
 ## Dependencies
 
@@ -72,9 +72,12 @@ Visit [https://one.newrelic.com/?nerdpacks=local](https://one.newrelic.com/?nerd
 Open a command prompt in the nerdpack's directory and run the following commands.
 
 ```bash
-# this is to create a new uuid for the nerdpack so that you can deploy it to your account
-nr1 nerdpack:uuid -g [--profile=your_profile_name]
-# to see a list of APIkeys / profiles available in your development environment, run nr1 credentials:list
+# To create a new uuid for the nerdpack so that you can deploy it to your account:
+# nr1 nerdpack:uuid -g [--profile=your_profile_name]
+
+# To see a list of APIkeys / profiles available in your development environment:
+# nr1 profiles:list
+
 nr1 nerdpack:publish [--profile=your_profile_name]
 nr1 nerdpack:deploy [-c [DEV|BETA|STABLE]] [--profile=your_profile_name]
 nr1 nerdpack:subscribe [-c [DEV|BETA|STABLE]] [--profile=your_profile_name]
@@ -92,10 +95,10 @@ Please do not report issues with Container Explorer to New Relic Global Technica
 
 ## Issues / Enhancement Requests
 
-Issues and enhancement requests can be submitted in the [Issues tab of this repository](../../issues). Please search for and review the existing open issues before submitting a new issue.
+Issues and enhancement requests can be submitted in the [Issues tab of this repository](https://github.com/newrelic/nr1-container-explorer/issues). Please search for and review the existing open issues before submitting a new issue.
 
 ## Contributing
 
-Contributions are welcome (and if you submit a Enhancement Request, expect to be invited to contribute it yourself :grin:). Please review our [Contributors Guide](CONTRIBUTING.md).
+Contributions are welcome (and if you submit a Enhancement Request, expect to be invited to contribute it yourself :grin:). Please review our [Contributors Guide](https://github.com/newrelic/nr1-container-explorer/blob/master/CONTRIBUTING.md).
 
 Keep in mind that when you submit your pull request, you'll need to sign the CLA via the click-through using CLA-Assistant. If you'd like to execute our corporate CLA, or if you have any questions, please drop us an email at opensource@newrelic.com.
