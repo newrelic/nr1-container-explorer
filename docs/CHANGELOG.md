@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.7.1...v0.8.0) (2020-03-06)
+
+
+### Features
+
+* **catalog:** add app icon into root directory ([77360f6](https://github.com/newrelic/nr1-container-explorer/commit/77360f618fdca3c28291d2c4dacfa492baf88d2b))
+
 ## [0.7.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.7.0...v0.7.1) (2020-01-31)
 
 
