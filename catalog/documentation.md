@@ -1,9 +1,5 @@
 # Documentation
 
-[![New Relic One Catalog Project header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/New_Relic_One_Catalog_Project.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#nr1-catalog)
-
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/newrelic/nr1-container-explorer?include_prereleases) [![Snyk](https://snyk.io/test/github/newrelic/nr1-container-explorer/badge.svg)](https://snyk.io/test/github/newrelic/nr1-container-explorer)
-
 View and manage millions of containers in context - in New Relic One.
 
 ## Usage
@@ -13,10 +9,6 @@ Container Explorer displays a global view of all of the containers in an account
 CPU, Memory and Disk I/O is presented in a space efficient heat map.
 
 Clicking on a node in the heatmap displays details about that container, and jumps to its host in the entity explorer.
-
-![Screenshot](https://github.com/newrelic/nr1-container-explorer/blob/master/catalog/screenshots/nr1-container-explorer-1.png)
-
-![Screenshot](https://github.com/newrelic/nr1-container-explorer/blob/master/catalog/screenshots/nr1-container-explorer-2.png)
 
 ## Open Source License
 
