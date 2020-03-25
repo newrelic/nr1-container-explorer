@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { NrqlQuery, Tooltip, Stack, StackItem } from 'nr1'
 import PropTypes from 'prop-types';
 import { groupBy, keys, sortBy } from 'lodash';
