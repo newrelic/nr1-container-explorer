@@ -1,6 +1,7 @@
+/* eslint-disable */
 import { NrqlQuery, Tooltip, Stack, StackItem } from 'nr1'
 import PropTypes from 'prop-types';
-import _ from 'underscore'
+import { groupBy, keys, sortBy } from 'lodash';
 import hsl from 'hsl-to-hex'
 
 /**
@@ -12,7 +13,7 @@ import hsl from 'hsl-to-hex'
  * ## Required packages
  * ```
  *    npm install hsl-to-hex
- *    npm install underscore
+ *    npm install lodash
  * ```
  * 
  * ## Examples
@@ -174,8 +175,8 @@ function SingleHeatmap(props) {
 function GroupedHeatMap(props) {
   const { data } = props
 
-  const groups = _.groupBy(data, 'group')
-  const groupNames = _.keys(groups).sort()
+  const groups = groupBy(data, 'group')
+  const groupNames = keys(groups).sort()
 
   return <div>
     {groupNames.map(groupName => {
@@ -210,7 +211,8 @@ function prepare({data, max}) {
     maxValue = Math.max(max, maxValue)
   }
 
-  data = _.sortBy(data, "name")
+  data = sortBy(data, "name");
+
   return {data, max: maxValue, isMultiFacet}
 }
 
