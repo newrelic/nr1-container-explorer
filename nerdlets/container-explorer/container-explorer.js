@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, GridItem, Spinner } from 'nr1';
-import _ from 'underscore';
+import { sortBy } from 'lodash';
 
 import getCardinality from '../../lib/get-cardinality';
 import { timeRangeToNrql } from '@newrelic/nr1-community';
@@ -117,7 +117,7 @@ export default class ContainerExplorer extends React.Component {
       );
     });
 
-    this.setState({ groups: _.sortBy(groups, 'name') });
+    this.setState({ groups: sortBy(groups, 'name') });
   }
 
   selectContainer(containerId) {
