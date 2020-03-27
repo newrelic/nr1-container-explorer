@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Fri Mar 06 2020 14:47:24 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Fri Mar 27 2020 10:48:02 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nr1-container-explorer",
   "projectUrl": "https://github.com/newrelic/nr1-container-explorer",
   "includeDev": true,
@@ -73,19 +73,6 @@
       "licenseFile": "node_modules/react/LICENSE",
       "licenseUrl": "https://github.com/facebook/react/blob/v16.9.0/LICENSE",
       "licenseTextSource": "file"
-    },
-    "underscore@1.9.1": {
-      "name": "underscore",
-      "version": "1.9.1",
-      "range": "^1.9.1",
-      "licenses": "MIT",
-      "repoUrl": "https://github.com/jashkenas/underscore",
-      "versionedRepoUrl": "https://github.com/jashkenas/underscore/tree/v1.9.1",
-      "licenseFile": "node_modules/underscore/LICENSE",
-      "licenseUrl": "https://github.com/jashkenas/underscore/blob/v1.9.1/LICENSE",
-      "licenseTextSource": "file",
-      "publisher": "Jeremy Ashkenas",
-      "email": "jeremy@documentcloud.org"
     }
   },
   "devDependencies": {
