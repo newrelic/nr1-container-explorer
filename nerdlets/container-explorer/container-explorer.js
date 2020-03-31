@@ -21,22 +21,23 @@ const OMIT_KEYS = {
   processDisplayName: true,
 };
 
-function GroupList({ groups, group, selectGroup, showNone }) {
+function GroupList({ groups, group, selectGroup, tooMany }) {
+  const message = tooMany
+    ? 'None: Show CPU, Memory and Disk I/O for top 2000 containers'
+    : 'None: Show CPU, Memory and Disk I/O';
   return (
     <div className="facet-list-container">
       <h3 className="facet-list-header">Group By</h3>
       <ul className="face-list">
-        {showNone && (
-          <li
-            className={`facet ${
-              group === null || group === undefined ? 'selected' : ''
-            }`}
-            key="__none"
-            onClick={() => selectGroup(null)}
-          >
-            <em>None: Show CPU, Memory and Disk I/O</em>
-          </li>
-        )}
+        <li
+          className={`facet ${
+            group === null || group === undefined ? 'selected' : ''
+          }`}
+          key="__none"
+          onClick={() => selectGroup(null)}
+        >
+          <em>{message}</em>
+        </li>
         {groups.map((g) => {
           const className = `facet ${g.name === group && 'selected'}`;
           return (
@@ -58,7 +59,7 @@ GroupList.propTypes = {
   groups: PropTypes.array,
   group: PropTypes.string,
   selectGroup: PropTypes.func,
-  showNone: PropTypes.bool,
+  tooMany: PropTypes.bool,
 };
 
 export default class ContainerExplorer extends React.Component {
@@ -184,7 +185,7 @@ export default class ContainerExplorer extends React.Component {
               <GroupList
                 groups={groups}
                 group={group}
-                showNone={!tooMany}
+                tooMany={tooMany}
                 selectGroup={this.setGroup}
               />
             </GridItem>
