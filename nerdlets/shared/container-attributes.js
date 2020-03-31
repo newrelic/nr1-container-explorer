@@ -47,6 +47,13 @@ export default class ContainerAttributes extends React.Component {
     onSelectAttribute: PropTypes.func,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      attributes: [],
+    };
+  }
+
   componentDidMount() {
     this.load();
   }
@@ -58,7 +65,7 @@ export default class ContainerAttributes extends React.Component {
   }
 
   async load() {
-    this.setState({ attributes: null });
+    this.setState({ attributes: [] });
     const { account, containerId } = this.props;
     const accountId = account.id;
 
@@ -86,7 +93,7 @@ export default class ContainerAttributes extends React.Component {
 
   render() {
     const { attributes } = this.state;
-    if (!attributes) return <Spinner fillContent />;
+    if (attributes.length === 0) return <Spinner fillContent />;
 
     const { onSelectAttribute } = this.props;
 
