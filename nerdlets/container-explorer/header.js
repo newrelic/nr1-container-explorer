@@ -39,8 +39,7 @@ function PlotPicker({ group, counts, plot, setPlot }) {
   return null;
 }
 PlotPicker.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  group: PropTypes.any,
+  group: PropTypes.string,
   counts: PropTypes.object,
   plot: PropTypes.object,
   setPlot: PropTypes.func,

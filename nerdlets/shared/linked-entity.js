@@ -46,6 +46,6 @@ export default function LinkedEntity({ entity, name }) {
 }
 
 LinkedEntity.propTypes = {
-  entity: PropTypes.string,
+  entity: PropTypes.object,
   name: PropTypes.string,
 };
