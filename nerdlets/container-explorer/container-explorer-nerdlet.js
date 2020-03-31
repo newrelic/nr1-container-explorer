@@ -72,21 +72,22 @@ export default class ContainerExplorerNerdlet extends React.Component {
         .join(' AND ');
     }
 
-    await this.setState({ filters, where });
-    this.countProcesses();
+    this.setState({ filters, where }, this.countProcesses);
   }
 
   async setAccount(account) {
-    await this.setState({ account, filters: [], where: null, counts: null });
-    this.countProcesses();
+    this.setState(
+      { account, filters: [], where: null, counts: null },
+      this.countProcesses
+    );
   }
 
   async setPlot(plot) {
-    await this.setState({ plot });
+    this.setState({ plot });
   }
 
   async setGroup(group) {
-    await this.setState({ group });
+    this.setState({ group });
   }
 
   async countProcesses() {
