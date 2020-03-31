@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, navigation, Tooltip } from 'nr1';
 
 const entityTypeToIcon = function (entityType) {
@@ -11,13 +13,14 @@ const entityTypeToIcon = function (entityType) {
   const icon = map[entityType] || defaultIcon;
 
   if (!map[entityType]) {
+    // eslint-disable-next-line no-console
     console.warn(`No icon found for Entity Type: ${entityType}`);
   }
 
   return icon;
 };
 
-export default function LinkedEntity({ entity, name, title, icon }) {
+export default function LinkedEntity({ entity, name }) {
   return (
     <div className="section">
       <Tooltip text="View in Modal">
@@ -41,3 +44,8 @@ export default function LinkedEntity({ entity, name, title, icon }) {
     </div>
   );
 }
+
+LinkedEntity.propTypes = {
+  entity: PropTypes.string,
+  name: PropTypes.string,
+};

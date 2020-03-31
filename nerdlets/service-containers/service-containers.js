@@ -25,6 +25,7 @@ export default class ServiceContainers extends React.Component {
     launcherUrlState: PropTypes.object,
     width: PropTypes.number,
     height: PropTypes.number,
+    timeRange: PropTypes.object,
   };
 
   constructor(props) {
@@ -39,7 +40,7 @@ export default class ServiceContainers extends React.Component {
   }
 
   componentDidUpdate({ nerdletUrlState }) {
-    if (nerdletUrlState.entityGuid != this.props.nerdletUrlState.entityGuid) {
+    if (nerdletUrlState.entityGuid !== this.props.nerdletUrlState.entityGuid) {
       this.findInfraAcount();
     }
   }
@@ -79,7 +80,7 @@ export default class ServiceContainers extends React.Component {
       const where = `containerId IN (${containerIds
         .map((cid) => `'${cid}'`)
         .join(',')})`;
-      find = { eventType: 'ProcessSample', where };
+      const find = { eventType: 'ProcessSample', where };
 
       infraAccounts = await findRelatedAccountsWith(find);
 
@@ -91,7 +92,7 @@ export default class ServiceContainers extends React.Component {
       await EntityStorageMutation.mutate(storageQuery);
     }
 
-    if (!infraAccounts || infraAccounts.length == 0) {
+    if (!infraAccounts || infraAccounts.length === 0) {
       const searchedAccounts = await accountsWithData('ProcessSample');
       this.setState({ accountDataNotFound: true, searchedAccounts, entity });
     } else {
@@ -117,13 +118,10 @@ export default class ServiceContainers extends React.Component {
       entity,
       timeRange,
       accountDataNotFound,
-      searchedAccounts,
     } = this.state;
 
     if (accountDataNotFound) {
-      return (
-        <NoInfrastructureData accounts={searchedAccounts} entity={entity} />
-      );
+      return <NoInfrastructureData entity={entity} />;
     }
 
     if (!entity || !infraAccount)

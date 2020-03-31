@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { NrqlQuery, TableChart } from 'nr1';
+import { TableChart } from 'nr1';
 
 export default function ContainerTable(props) {
   const { entity, timeRange, selectContainer } = props;
@@ -27,3 +28,8 @@ export default function ContainerTable(props) {
     />
   );
 }
+ContainerTable.propTypes = {
+  entity: PropTypes.object,
+  timeRange: PropTypes.string,
+  selectContainer: PropTypes.func,
+};

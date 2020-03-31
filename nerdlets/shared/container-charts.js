@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { LineChart, NrqlQuery, ChartGroup } from 'nr1';
 
 // roll up all of the facet data into a single summarized series.
 function summarizeFacets(data) {
-  if (!data || data.length == 0) return [];
+  if (!data || data.length === 0) return [];
 
   const summary = data.shift();
   data.forEach((series) => {
@@ -30,6 +31,7 @@ function Chart({ account, containerId, select, timeRange }) {
   return (
     <NrqlQuery accountId={account.id} query={nrql}>
       {({ loading, error, data }) => {
+        // eslint-disable-next-line no-console
         if (error) console.log(error);
         if (loading) return <div className="chart" />;
 
@@ -38,6 +40,12 @@ function Chart({ account, containerId, select, timeRange }) {
     </NrqlQuery>
   );
 }
+Chart.propTypes = {
+  account: PropTypes.object,
+  containerId: PropTypes.string,
+  select: PropTypes.string,
+  timeRange: PropTypes.string,
+};
 
 export default function Charts({ containerId, account, timeRange }) {
   return (
@@ -68,3 +76,8 @@ export default function Charts({ containerId, account, timeRange }) {
     </ChartGroup>
   );
 }
+Charts.propTypes = {
+  account: PropTypes.object,
+  containerId: PropTypes.string,
+  timeRange: PropTypes.string,
+};

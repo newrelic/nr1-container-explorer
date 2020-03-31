@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NerdGraphQuery } from 'nr1';
 
 import LinkedEntity from './linked-entity';
@@ -26,7 +27,7 @@ export default function RelatedApps({ apmApplicationNames }) {
 
   return (
     <NerdGraphQuery query={gql}>
-      {({ loading, error, data }) => {
+      {({ loading, data }) => {
         if (loading) return <div />;
         const { entities } = data.actor.entitySearch.results;
         return entities.map((entity) => {
@@ -43,3 +44,7 @@ export default function RelatedApps({ apmApplicationNames }) {
     </NerdGraphQuery>
   );
 }
+
+RelatedApps.propTypes = {
+  apmApplicationNames: PropTypes.array,
+};

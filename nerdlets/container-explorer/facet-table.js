@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import quote from '../../lib/quote';
 
 import { TableChart } from 'nr1';
@@ -30,3 +31,9 @@ export default function FacetTable(props) {
     </div>
   );
 }
+FacetTable.propTypes = {
+  account: PropTypes.object,
+  group: PropTypes.string,
+  setFacetValue: PropTypes.func,
+  where: PropTypes.string,
+};

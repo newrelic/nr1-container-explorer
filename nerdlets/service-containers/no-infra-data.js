@@ -1,7 +1,8 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { BlockText } from 'nr1';
 
-export default function NoInfrastructureData({ accounts, entity }) {
-  console.log(entity);
+export default function NoInfrastructureData({ entity }) {
   return (
     <div style={{ marginLeft: '12px', marginTop: '12px' }}>
       <h2>No Container Data</h2>
@@ -15,3 +16,6 @@ export default function NoInfrastructureData({ accounts, entity }) {
     </div>
   );
 }
+NoInfrastructureData.propTypes = {
+  entity: PropTypes.object,
+};

@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Icon, Button } from 'nr1';
+import { Icon } from 'nr1';
 
 export default function Filter(props) {
   const { name, value, removeFilter } = props;
@@ -18,3 +19,8 @@ export default function Filter(props) {
     </div>
   );
 }
+Filter.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+  removeFilter: PropTypes.func,
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import HeatMap from '../../components/heat-map';
 
 import bytesToSize from '../../lib/bytes-to-size';
@@ -45,14 +46,30 @@ const HEAT_MAPS = [
 ];
 
 export default class ContainerHeatMap extends React.PureComponent {
+  static propTypes = {
+    entity: PropTypes.object,
+    infraAccount: PropTypes.object,
+    containerIds: PropTypes.array,
+    selectContainer: PropTypes.func,
+    containerId: PropTypes.string,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      timeRange: PropTypes.string,
+      where: PropTypes.string,
+    };
+  }
+
   componentDidMount() {
     this.reload();
   }
 
   componentDidUpdate({ entity, infraAccount }) {
     if (
-      entity != this.props.entity ||
-      infraAccount != this.props.infraAccount
+      entity !== this.props.entity ||
+      infraAccount !== this.props.infraAccount
     ) {
       this.reload();
     }
@@ -68,12 +85,12 @@ export default class ContainerHeatMap extends React.PureComponent {
       samplePeriod + 10
     } seconds ago until 10 seconds ago`;
 
-    this.setState({ samplePeriod, timeRange, where });
+    this.setState({ timeRange, where });
   }
 
   render() {
     const { entity, infraAccount, selectContainer, containerId } = this.props;
-    const { timeRange, where } = this.state || {};
+    const { timeRange, where } = this.state;
 
     if (!infraAccount || !timeRange) return <div />;
     return (
@@ -85,7 +102,7 @@ export default class ContainerHeatMap extends React.PureComponent {
           // note: infraAccount may not be found in which case, don't show
           // a heatmap for infra metrics
           // ALSO need a different time window to get accurate values
-          if (eventType == 'ProcessSample') {
+          if (eventType === 'ProcessSample') {
             if (!infraAccount) return <div />;
             accountId = infraAccount.id;
           }
@@ -103,7 +120,7 @@ export default class ContainerHeatMap extends React.PureComponent {
               formatLabel={(label) => label.slice(0, 6)}
               formatValue={formatValue}
               selection={containerId}
-              onClickTitle={console.log}
+              // onClickTitle={console.log}
               onSelect={selectContainer}
             />
           );

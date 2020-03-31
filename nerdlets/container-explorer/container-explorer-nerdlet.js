@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Spinner } from 'nr1';
 import { EmptyState } from '@newrelic/nr1-community';
 
@@ -12,6 +13,10 @@ import Header from './header';
 import PLOTS from '../../lib/plots';
 
 export default class ContainerExplorerNerdlet extends React.Component {
+  static propTypes = {
+    launcherUrlState: PropTypes.object,
+  };
+
   constructor(props) {
     super(props);
 
@@ -51,7 +56,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
   async removeFilter(name, value) {
     let { filters } = this.state;
 
-    filters = filters.filter((f) => !(f.name == name && f.value == value));
+    filters = filters.filter((f) => !(f.name === name && f.value === value));
     this.setFilters(filters);
   }
 
@@ -100,7 +105,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
   }
 
   render() {
-    const { account, counts, accounts } = this.state;
+    const { counts, accounts } = this.state;
 
     if (!accounts) {
       return <Spinner />;

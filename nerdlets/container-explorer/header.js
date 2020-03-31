@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Stack, StackItem, Dropdown, DropdownItem, Button } from 'nr1';
 import PLOTS from '../../lib/plots';
 
@@ -14,6 +16,11 @@ function AccountPicker({ accounts, account, setAccount }) {
     </Dropdown>
   );
 }
+AccountPicker.propTypes = {
+  accounts: PropTypes.array,
+  account: PropTypes.object,
+  setAccount: PropTypes.func,
+};
 
 function PlotPicker({ group, counts, plot, setPlot }) {
   if (group || (counts && counts.containers > 500)) {
@@ -31,6 +38,13 @@ function PlotPicker({ group, counts, plot, setPlot }) {
   }
   return null;
 }
+PlotPicker.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  group: PropTypes.any,
+  counts: PropTypes.object,
+  plot: PropTypes.object,
+  setPlot: PropTypes.func,
+};
 
 export default function Header(props) {
   const { counts, removeAllFilters, filters } = props;
@@ -80,3 +94,8 @@ export default function Header(props) {
     </div>
   );
 }
+Header.propTypes = {
+  counts: PropTypes.object,
+  removeAllFilters: PropTypes.func,
+  filters: PropTypes.array,
+};

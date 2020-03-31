@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid, GridItem } from 'nr1';
 
 function Count({ title, count }) {
@@ -9,6 +11,10 @@ function Count({ title, count }) {
     </GridItem>
   );
 }
+Count.propTypes = {
+  title: PropTypes.string,
+  count: PropTypes.number,
+};
 export default function CountsHeader({ containers, hosts, processes }) {
   return (
     <Grid className="counts-header">
@@ -18,3 +24,8 @@ export default function CountsHeader({ containers, hosts, processes }) {
     </Grid>
   );
 }
+CountsHeader.propTypes = {
+  containers: PropTypes.array,
+  hosts: PropTypes.array,
+  processes: PropTypes.array,
+};

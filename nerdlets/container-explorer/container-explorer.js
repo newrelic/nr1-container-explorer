@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid, GridItem, Spinner } from 'nr1';
 import { sortBy } from 'lodash';
 
@@ -37,7 +38,7 @@ function GroupList({ groups, group, selectGroup, showNone }) {
           </li>
         )}
         {groups.map((g) => {
-          const className = `facet ${g.name == group && 'selected'}`;
+          const className = `facet ${g.name === group && 'selected'}`;
           return (
             <li
               className={className}
@@ -53,8 +54,27 @@ function GroupList({ groups, group, selectGroup, showNone }) {
     </div>
   );
 }
+GroupList.propTypes = {
+  groups: PropTypes.array,
+  group: PropTypes.string,
+  selectGroup: PropTypes.func,
+  showNone: PropTypes.bool,
+};
 
 export default class ContainerExplorer extends React.Component {
+  static propTypes = {
+    setPlot: PropTypes.func,
+    setGroup: PropTypes.func,
+    where: PropTypes.string,
+    account: PropTypes.object,
+    counts: PropTypes.object,
+    addFilter: PropTypes.func,
+    filters: PropTypes.array,
+    group: PropTypes.string,
+    removeFilter: PropTypes.func,
+    launcherUrlState: PropTypes.object,
+  };
+
   constructor(props) {
     super(props);
 
@@ -68,34 +88,37 @@ export default class ContainerExplorer extends React.Component {
     };
   }
 
-  toggleDetailPanel() {
-    this.setState({ detailPanelExpanded: !this.state.detailPanelExpanded });
-  }
-
   async componentDidMount() {
     await this.reload();
+  }
+
+  async componentDidUpdate({ where, account }) {
+    if (where !== this.props.where || account !== this.props.account) {
+      await this.reload();
+    }
   }
 
   componentWillUnmount() {
     if (this.interval) clearInterval(this.interval);
   }
 
-  async componentDidUpdate({ where, account }) {
-    if (where != this.props.where || account != this.props.account) {
-      await this.reload();
-    }
+  toggleDetailPanel() {
+    this.setState((prevState) => {
+      return { detailPanelExpanded: !prevState.detailPanelExpanded };
+    });
   }
 
   async reload() {
     clearInterval(this.interval);
     this.interval = null;
 
-    const startTime = new Date();
-    function logTime(message) {
-      const elapsed = new Date() - startTime;
-      // console.log("Reload", message, elapsed)
-    }
-    logTime('Start Reload');
+    // const startTime = new Date();
+    // function logTime(message) {
+    //   const elapsed = new Date() - startTime;
+    //   console.log("Reload", message, elapsed)
+    // }
+
+    // logTime('Start Reload');
 
     this.setState({ groups: null });
     const { where, account, counts } = this.props;
@@ -107,7 +130,7 @@ export default class ContainerExplorer extends React.Component {
       where,
       timeWindow,
     });
-    logTime('getCardinality');
+    // logTime('getCardinality');
 
     const groups = facets.filter((facet) => {
       return (

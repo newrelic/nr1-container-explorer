@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Tabs, TabsItem, Button, navigation, Icon } from 'nr1';
+import { Tabs, TabsItem, Button, Icon } from 'nr1';
 
 import ContainerAttributes from './container-attributes';
 import Charts from './container-charts';
@@ -11,6 +12,16 @@ import LinkedEntity from './linked-entity';
 import nrdbQuery from '../../lib/nrdb-query';
 
 class Header extends React.Component {
+  static propTypes = {
+    hostname: PropTypes.string,
+    containerId: PropTypes.string,
+    apmApplicationNames: PropTypes.array,
+    entityGuid: PropTypes.string,
+    onClose: PropTypes.func,
+    showRelatedApps: PropTypes.bool,
+    toggleDetailPanel: PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
   }
@@ -61,12 +72,18 @@ class Header extends React.Component {
 }
 
 export default class ContainerPanel extends React.Component {
+  static propTypes = {
+    account: PropTypes.object,
+    containerId: PropTypes.string,
+    onSelectAttribute: PropTypes.func,
+  };
+
   componentDidMount() {
     this.load();
   }
 
   componentDidUpdate({ containerId }) {
-    if (containerId != this.props.containerId) {
+    if (containerId !== this.props.containerId) {
       this.load();
     }
   }

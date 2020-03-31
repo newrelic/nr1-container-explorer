@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import quote from '../../lib/quote';
 import Heatmap from '../../components/heat-map';
 import getProcessSamplePeriod from '../shared/get-process-sample-period';
@@ -7,12 +7,31 @@ import getProcessSamplePeriod from '../shared/get-process-sample-period';
 import PLOTS from '../../lib/plots';
 
 export default class ContainerHeatMap extends React.Component {
+  static propTypes = {
+    group: PropTypes.string,
+    where: PropTypes.string,
+    account: PropTypes.object,
+    counts: PropTypes.object,
+    plot: PropTypes.object,
+    setFacetValue: PropTypes.func,
+    selectContainer: PropTypes.func,
+    containerId: PropTypes.string,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      // samplePeriod: '',
+      // timeRange: '',
+    };
+  }
+
   componentDidMount() {
     this.reload();
   }
 
   componentDidUpdate({ group, where }) {
-    if (group != this.props.group || where != this.props.where) {
+    if (group !== this.props.group || where !== this.props.where) {
       this.reload();
     }
   }
@@ -36,7 +55,7 @@ export default class ContainerHeatMap extends React.Component {
       samplePeriod + 10
     } seconds ago UNTIL 10 seconds ago`;
 
-    this.setState({ samplePeriod, timeRange });
+    this.setState({ timeRange });
   }
 
   renderHeatMap(plot) {
@@ -71,7 +90,7 @@ export default class ContainerHeatMap extends React.Component {
 
   render() {
     const { group, counts, plot } = this.props;
-    const { timeRange } = this.state || {};
+    const { timeRange } = this.state;
 
     if (!timeRange) return <div />;
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import { PlatformStateContext, NerdletStateContext, AutoSizer } from 'nr1';
 import ServiceContainers from './service-containers';
 
