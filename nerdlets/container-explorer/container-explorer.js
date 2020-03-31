@@ -4,7 +4,6 @@ import { Grid, GridItem, Spinner } from 'nr1';
 import { sortBy } from 'lodash';
 
 import getCardinality from '../../lib/get-cardinality';
-import { timeRangeToNrql } from '@newrelic/nr1-community';
 
 import FacetTable from './facet-table';
 import Filter from './filter';
