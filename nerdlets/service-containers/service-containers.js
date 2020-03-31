@@ -36,12 +36,12 @@ export default class ServiceContainers extends React.Component {
   }
 
   componentDidMount() {
-    this.findInfraAcount();
+    this.findInfraAccount();
   }
 
   componentDidUpdate({ nerdletUrlState }) {
     if (nerdletUrlState.entityGuid !== this.props.nerdletUrlState.entityGuid) {
-      this.findInfraAcount();
+      this.findInfraAccount();
     }
   }
 
@@ -49,7 +49,7 @@ export default class ServiceContainers extends React.Component {
     this.setState({ containerId });
   }
 
-  async findInfraAcount() {
+  async findInfraAccount() {
     const { entityGuid } = this.props.nerdletUrlState || {};
     const timeRange = timeRangeToNrql(this.props.launcherUrlState);
 
