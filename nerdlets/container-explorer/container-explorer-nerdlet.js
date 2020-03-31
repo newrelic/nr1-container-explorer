@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Spinner } from 'nr1';
 import { EmptyState } from '@newrelic/nr1-community';
 
@@ -13,10 +12,6 @@ import Header from './header';
 import PLOTS from '../../lib/plots';
 
 export default class ContainerExplorerNerdlet extends React.Component {
-  static propTypes = {
-    launcherUrlState: PropTypes.object,
-  };
-
   constructor(props) {
     super(props);
 
@@ -138,7 +133,6 @@ export default class ContainerExplorerNerdlet extends React.Component {
         />
         {counts && (
           <ContainerExplorer
-            launcherUrlState={this.props.launcherUrlState}
             {...this.state}
             addFilter={this.addFilter}
             removeFilter={this.removeFilter}

@@ -23,7 +23,6 @@ export default class ServiceContainers extends React.Component {
   static propTypes = {
     nerdletUrlState: PropTypes.object,
     launcherUrlState: PropTypes.object,
-    timeRange: PropTypes.object,
   };
 
   constructor(props) {
@@ -107,9 +106,6 @@ export default class ServiceContainers extends React.Component {
   }
 
   render() {
-    // workaround for bug
-    if (this.props.timeRange) return <div />;
-
     const {
       infraAccount,
       containerId,

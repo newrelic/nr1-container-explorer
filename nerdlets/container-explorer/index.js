@@ -1,22 +1,14 @@
 import React from 'react';
-import { PlatformStateContext, NerdletStateContext } from 'nr1';
+import { nerdlet } from 'nr1';
 import ContainerExplorerNerdlet from './container-explorer-nerdlet';
 
 export default class Wrapper extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    nerdlet.setConfig({ timePicker: false });
+  }
+
   render() {
-    return (
-      <PlatformStateContext.Consumer>
-        {(launcherUrlState) => (
-          <NerdletStateContext.Consumer>
-            {(nerdletUrlState) => (
-              <ContainerExplorerNerdlet
-                launcherUrlState={launcherUrlState}
-                nerdletUrlState={nerdletUrlState}
-              />
-            )}
-          </NerdletStateContext.Consumer>
-        )}
-      </PlatformStateContext.Consumer>
-    );
+    return <ContainerExplorerNerdlet />;
   }
 }

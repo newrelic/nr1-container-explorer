@@ -56,10 +56,7 @@ export default class ContainerHeatMap extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = {
-      timeRange: PropTypes.string,
-      where: PropTypes.string,
-    };
+    this.state = {};
   }
 
   componentDidMount() {

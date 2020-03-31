@@ -73,7 +73,6 @@ export default class ContainerExplorer extends React.Component {
     filters: PropTypes.array,
     group: PropTypes.string,
     removeFilter: PropTypes.func,
-    launcherUrlState: PropTypes.object,
   };
 
   constructor(props) {
@@ -156,12 +155,10 @@ export default class ContainerExplorer extends React.Component {
       filters,
       group,
       removeFilter,
-      launcherUrlState,
     } = this.props;
     const { groups, containerId } = this.state || {};
 
     const tooMany = counts.containers > 2000;
-    const timeRange = timeRangeToNrql(launcherUrlState);
     const showFacetTable = tooMany && group;
     const { detailPanelExpanded } = this.state;
 
@@ -231,7 +228,6 @@ export default class ContainerExplorer extends React.Component {
               <ContainerPanel
                 account={account}
                 containerId={containerId}
-                timeRange={timeRange}
                 onSelectAttribute={(key, value) => addFilter(key, value)}
                 toggleDetailPanel={this.toggleDetailPanel}
                 showRelatedApps
