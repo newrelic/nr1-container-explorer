@@ -419,18 +419,18 @@ jobs:
               echo "No change in package.json, not regenerating third-party notices"
             fi
 
-  job-deploy:
-    executor: node10browsers
+  # job-deploy:
+  #   executor: node10browsers
 
-    environment:
-      NR1_NERDPACK_UUID: *nr1-nerdpack-uuid
+  #   environment:
+  #     NR1_NERDPACK_UUID: *nr1-nerdpack-uuid
 
-    steps:
-      - command-restore-source
-      - command-restore-npm
-      - command-install-json-cli
-      - command-install-nr1-cli
-      - command-deploy
+  #   steps:
+  #     - command-restore-source
+  #     - command-restore-npm
+  #     - command-install-json-cli
+  #     - command-install-nr1-cli
+  #     - command-deploy
 
 workflows:
   # A merge or commit to the master branch
@@ -462,24 +462,24 @@ workflows:
                 - master
 
   # Deploy on tag creation
-  deploy-to:
-    jobs:
-      - job-checkout-and-build:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v.*/
+  # deploy-to:
+  #   jobs:
+  #     - job-checkout-and-build:
+  #         filters:
+  #           branches:
+  #             ignore: /.*/
+  #           tags:
+  #             only: /v.*/
 
-      - job-deploy:
-          requires:
-            - job-checkout-and-build
+  #     - job-deploy:
+  #         requires:
+  #           - job-checkout-and-build
 
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v.*/
+  #         filters:
+  #           branches:
+  #             ignore: /.*/
+  #           tags:
+  #             only: /v.*/
 
   # Test and Analyze a branch (other than master)
   # Our Advanced Settings of "Only build pull requests" will limit this to branches with open pull requests
