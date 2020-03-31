@@ -23,8 +23,6 @@ export default class ServiceContainers extends React.Component {
   static propTypes = {
     nerdletUrlState: PropTypes.object,
     launcherUrlState: PropTypes.object,
-    width: PropTypes.number,
-    height: PropTypes.number,
     timeRange: PropTypes.object,
   };
 

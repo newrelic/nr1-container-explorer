@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlatformStateContext, NerdletStateContext, AutoSizer } from 'nr1';
+import { PlatformStateContext, NerdletStateContext } from 'nr1';
 import ContainerExplorerNerdlet from './container-explorer-nerdlet';
 
 export default class Wrapper extends React.PureComponent {
@@ -9,16 +9,10 @@ export default class Wrapper extends React.PureComponent {
         {(launcherUrlState) => (
           <NerdletStateContext.Consumer>
             {(nerdletUrlState) => (
-              <AutoSizer>
-                {({ width, height }) => (
-                  <ContainerExplorerNerdlet
-                    launcherUrlState={launcherUrlState}
-                    nerdletUrlState={nerdletUrlState}
-                    width={width}
-                    height={height}
-                  />
-                )}
-              </AutoSizer>
+              <ContainerExplorerNerdlet
+                launcherUrlState={launcherUrlState}
+                nerdletUrlState={nerdletUrlState}
+              />
             )}
           </NerdletStateContext.Consumer>
         )}
