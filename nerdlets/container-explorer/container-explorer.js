@@ -36,7 +36,7 @@ function GroupList({ groups, group, selectGroup, showNone }) {
             <em>None: Show CPU, Memory and Disk I/O</em>
           </li>
         )}
-        {groups.map(g => {
+        {groups.map((g) => {
           const className = `facet ${g.name == group && 'selected'}`;
           return (
             <li
@@ -109,7 +109,7 @@ export default class ContainerExplorer extends React.Component {
     });
     logTime('getCardinality');
 
-    const groups = facets.filter(facet => {
+    const groups = facets.filter((facet) => {
       return (
         facet.count > 1 &&
         facet.count < counts.containers * 0.6 &&
@@ -171,7 +171,7 @@ export default class ContainerExplorer extends React.Component {
             columnSpan={containerId && !detailPanelExpanded ? 6 : 9}
           >
             <div className="filters-container">
-              {filters.map(filterProps => {
+              {filters.map((filterProps) => {
                 return (
                   <Filter
                     key={filterProps.name}
@@ -187,7 +187,7 @@ export default class ContainerExplorer extends React.Component {
                 {...this.props}
                 {...this.state}
                 selectContainer={this.selectContainer}
-                setFacetValue={value => addFilter(group, value)}
+                setFacetValue={(value) => addFilter(group, value)}
                 setPlot={this.setPlot}
               />
             )}
@@ -195,7 +195,7 @@ export default class ContainerExplorer extends React.Component {
               <FacetTable
                 {...this.props}
                 {...this.state}
-                setFacetValue={value => addFilter(group, value)}
+                setFacetValue={(value) => addFilter(group, value)}
               />
             )}
           </GridItem>

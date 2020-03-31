@@ -13,7 +13,7 @@ export default function Filter(props) {
         className="filter-remove-btn"
         onClick={() => removeFilter(name, value)}
       >
-        <Icon type={Icon.TYPE.INTERFACE__SIGN__CLOSE}></Icon>
+        <Icon type={Icon.TYPE.INTERFACE__SIGN__CLOSE} />
       </span>
     </div>
   );

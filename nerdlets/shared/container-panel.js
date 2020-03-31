@@ -53,7 +53,7 @@ class Header extends React.Component {
             type={Icon.TYPE.INTERFACE__CHEVRON__CHEVRON_RIGHT__WEIGHT_BOLD}
             color="#000E0E"
             sizeType={Icon.SIZE_TYPE.SMALL}
-          ></Icon>
+          />
         </span>
       </div>
     );

@@ -5,8 +5,8 @@ import { LineChart, NrqlQuery, ChartGroup } from 'nr1';
 function summarizeFacets(data) {
   if (!data || data.length == 0) return [];
 
-  let summary = data.shift();
-  data.forEach(series => {
+  const summary = data.shift();
+  data.forEach((series) => {
     series.data.forEach((datum, index) => {
       summary.data[index].y += datum.y;
     });

@@ -15,7 +15,7 @@ export default function ContainerTable(props) {
   // to find the infrastructure account which is required for a drillDown)
   const onClickTable =
     selectContainer &&
-    function(ignored, row) {
+    function (ignored, row) {
       selectContainer(row.containerId);
     };
 

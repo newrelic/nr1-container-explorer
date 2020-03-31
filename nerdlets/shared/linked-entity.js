@@ -1,6 +1,6 @@
 import { Button, navigation, Tooltip } from 'nr1';
 
-const entityTypeToIcon = function(entityType) {
+const entityTypeToIcon = function (entityType) {
   const map = {
     APPLICATION: Button.ICON_TYPE.HARDWARE_AND_SOFTWARE__SOFTWARE__APPLICATION,
     HOST: Button.ICON_TYPE.HARDWARE_AND_SOFTWARE__HARDWARE__SERVER,
@@ -11,7 +11,7 @@ const entityTypeToIcon = function(entityType) {
   const icon = map[entityType] || defaultIcon;
 
   if (!map[entityType]) {
-    console.warn('No icon found for Entity Type: ' + entityType);
+    console.warn(`No icon found for Entity Type: ${entityType}`);
   }
 
   return icon;
@@ -20,7 +20,7 @@ const entityTypeToIcon = function(entityType) {
 export default function LinkedEntity({ entity, name, title, icon }) {
   return (
     <div className="section">
-      <Tooltip text={'View in Modal'}>
+      <Tooltip text="View in Modal">
         <Button
           sizeType={Button.SIZE_TYPE.SMALL}
           iconType={entityTypeToIcon(entity.type)}
@@ -30,13 +30,13 @@ export default function LinkedEntity({ entity, name, title, icon }) {
           {name}
         </Button>
       </Tooltip>
-      <Tooltip text={'View in Entity Explorer'}>
+      <Tooltip text="View in Entity Explorer">
         <Button
           sizeType={Button.SIZE_TYPE.SMALL}
           iconType={Button.ICON_TYPE.INTERFACE__OPERATIONS__DRAG}
           onClick={() => navigation.openEntity(entity.guid)}
           className="entity-explorer-ee-link"
-        ></Button>
+        />
       </Tooltip>
     </div>
   );

@@ -51,7 +51,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
   async removeFilter(name, value) {
     let { filters } = this.state;
 
-    filters = filters.filter(f => !(f.name == name && f.value == value));
+    filters = filters.filter((f) => !(f.name == name && f.value == value));
     this.setFilters(filters);
   }
 

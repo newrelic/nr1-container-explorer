@@ -29,11 +29,12 @@ export default class ContainerHeatMap extends React.Component {
   }
 
   async reload() {
-    let { account, where } = this.props;
+    const { account, where } = this.props;
 
     const samplePeriod = await getProcessSamplePeriod(account.id, where);
-    const timeRange = `SINCE ${samplePeriod +
-      10} seconds ago UNTIL 10 seconds ago`;
+    const timeRange = `SINCE ${
+      samplePeriod + 10
+    } seconds ago UNTIL 10 seconds ago`;
 
     this.setState({ samplePeriod, timeRange });
   }
@@ -50,7 +51,7 @@ export default class ContainerHeatMap extends React.Component {
 
     // if the user clicks on a title (facet value) when viewing as a group, then
     // add to the filter.
-    const onClickTitle = group && (value => setFacetValue(value));
+    const onClickTitle = group && ((value) => setFacetValue(value));
 
     return (
       <Heatmap
@@ -58,11 +59,11 @@ export default class ContainerHeatMap extends React.Component {
         query={nrql}
         key={plot.title}
         title={plot.title}
-        formatLabel={c => c.slice(0, 6)}
+        formatLabel={(c) => c.slice(0, 6)}
         formatValue={plot.formatValue}
         selection={containerId}
         max={plot.max}
-        onSelect={containerId => selectContainer(containerId)}
+        onSelect={(containerId) => selectContainer(containerId)}
         onClickTitle={onClickTitle}
       />
     );
@@ -88,7 +89,7 @@ export default class ContainerHeatMap extends React.Component {
         </div>
       );
     } else {
-      return PLOTS.map(plot => {
+      return PLOTS.map((plot) => {
         return this.renderHeatMap(plot);
       });
     }

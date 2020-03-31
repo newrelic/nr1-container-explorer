@@ -4,7 +4,7 @@ import PLOTS from '../../lib/plots';
 function AccountPicker({ accounts, account, setAccount }) {
   return (
     <Dropdown className="account-picker" label="Account" title={account.name}>
-      {accounts.map(account => {
+      {accounts.map((account) => {
         return (
           <DropdownItem onClick={() => setAccount(account)} key={account.id}>
             {account.name}
@@ -19,7 +19,7 @@ function PlotPicker({ group, counts, plot, setPlot }) {
   if (group || (counts && counts.containers > 500)) {
     return (
       <Dropdown label="Plot" title={plot.title}>
-        {PLOTS.map(p => {
+        {PLOTS.map((p) => {
           return (
             <DropdownItem onClick={() => setPlot(p)} key={p.title}>
               {p.title}
@@ -47,7 +47,7 @@ export default function Header(props) {
               <AccountPicker {...props} />
             </StackItem>
             <StackItem className="plot-picker-stack-item">
-              <PlotPicker {...props}></PlotPicker>
+              <PlotPicker {...props} />
             </StackItem>
           </Stack>
         </StackItem>

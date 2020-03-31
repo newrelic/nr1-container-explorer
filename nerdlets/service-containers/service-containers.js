@@ -59,7 +59,7 @@ export default class ServiceContainers extends React.Component {
 
     // get the container id's that this app runs in
     result = await nrdbQuery(entity.accountId, nrql);
-    const containerIds = result.map(r => r.member);
+    const containerIds = result.map((r) => r.member);
     this.setState({ containerIds });
 
     // look up the infrastucture account(s) that are associated with this entity.
@@ -77,7 +77,7 @@ export default class ServiceContainers extends React.Component {
     // one, but not, take the account with the most matches.
     if (!infraAccounts && containerIds && containerIds.length > 0) {
       const where = `containerId IN (${containerIds
-        .map(cid => `'${cid}'`)
+        .map((cid) => `'${cid}'`)
         .join(',')})`;
       find = { eventType: 'ProcessSample', where };
 

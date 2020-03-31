@@ -16,7 +16,7 @@ function Table({ processData }) {
         </tr>
       </thead>
       <tbody>
-        {processData.map(process => {
+        {processData.map((process) => {
           return (
             <tr key={process.facet[0]}>
               <td className="right">{process.facet[0]}</td>
