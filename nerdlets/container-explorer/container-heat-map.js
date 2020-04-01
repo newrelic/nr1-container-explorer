@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import quote from '../../lib/quote';
 import Heatmap from '../../components/heat-map';
 import getProcessSamplePeriod from '../shared/get-process-sample-period';
@@ -7,12 +7,31 @@ import getProcessSamplePeriod from '../shared/get-process-sample-period';
 import PLOTS from '../../lib/plots';
 
 export default class ContainerHeatMap extends React.Component {
+  static propTypes = {
+    group: PropTypes.string,
+    where: PropTypes.string,
+    account: PropTypes.object,
+    counts: PropTypes.object,
+    plot: PropTypes.object,
+    setFacetValue: PropTypes.func,
+    selectContainer: PropTypes.func,
+    containerId: PropTypes.string,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      // samplePeriod: '',
+      // timeRange: '',
+    };
+  }
+
   componentDidMount() {
     this.reload();
   }
 
   componentDidUpdate({ group, where }) {
-    if (group != this.props.group || where != this.props.where) {
+    if (group !== this.props.group || where !== this.props.where) {
       this.reload();
     }
   }
@@ -29,13 +48,14 @@ export default class ContainerHeatMap extends React.Component {
   }
 
   async reload() {
-    let { account, where } = this.props;
+    const { account, where } = this.props;
 
     const samplePeriod = await getProcessSamplePeriod(account.id, where);
-    const timeRange = `SINCE ${samplePeriod +
-      10} seconds ago UNTIL 10 seconds ago`;
+    const timeRange = `SINCE ${
+      samplePeriod + 10
+    } seconds ago UNTIL 10 seconds ago`;
 
-    this.setState({ samplePeriod, timeRange });
+    this.setState({ timeRange });
   }
 
   renderHeatMap(plot) {
@@ -50,7 +70,7 @@ export default class ContainerHeatMap extends React.Component {
 
     // if the user clicks on a title (facet value) when viewing as a group, then
     // add to the filter.
-    const onClickTitle = group && (value => setFacetValue(value));
+    const onClickTitle = group && ((value) => setFacetValue(value));
 
     return (
       <Heatmap
@@ -58,11 +78,11 @@ export default class ContainerHeatMap extends React.Component {
         query={nrql}
         key={plot.title}
         title={plot.title}
-        formatLabel={c => c.slice(0, 6)}
+        formatLabel={(c) => c.slice(0, 6)}
         formatValue={plot.formatValue}
         selection={containerId}
         max={plot.max}
-        onSelect={containerId => selectContainer(containerId)}
+        onSelect={(containerId) => selectContainer(containerId)}
         onClickTitle={onClickTitle}
       />
     );
@@ -70,7 +90,7 @@ export default class ContainerHeatMap extends React.Component {
 
   render() {
     const { group, counts, plot } = this.props;
-    const { timeRange } = this.state || {};
+    const { timeRange } = this.state;
 
     if (!timeRange) return <div />;
 
@@ -88,7 +108,7 @@ export default class ContainerHeatMap extends React.Component {
         </div>
       );
     } else {
-      return PLOTS.map(plot => {
+      return PLOTS.map((plot) => {
         return this.renderHeatMap(plot);
       });
     }

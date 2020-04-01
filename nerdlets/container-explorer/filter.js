@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Icon, Button } from 'nr1';
+import { Icon } from 'nr1';
 
 export default function Filter(props) {
   const { name, value, removeFilter } = props;
@@ -13,8 +14,13 @@ export default function Filter(props) {
         className="filter-remove-btn"
         onClick={() => removeFilter(name, value)}
       >
-        <Icon type={Icon.TYPE.INTERFACE__SIGN__CLOSE}></Icon>
+        <Icon type={Icon.TYPE.INTERFACE__SIGN__CLOSE} />
       </span>
     </div>
   );
 }
+Filter.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+  removeFilter: PropTypes.func,
+};

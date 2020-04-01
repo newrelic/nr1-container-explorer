@@ -1,12 +1,14 @@
 import React from 'react';
-import { LineChart, NrqlQuery, ChartGroup } from 'nr1';
+import PropTypes from 'prop-types';
+import { PlatformStateContext, LineChart, NrqlQuery, ChartGroup } from 'nr1';
+import { timeRangeToNrql } from '@newrelic/nr1-community';
 
 // roll up all of the facet data into a single summarized series.
 function summarizeFacets(data) {
-  if (!data || data.length == 0) return [];
+  if (!data || data.length === 0) return [];
 
-  let summary = data.shift();
-  data.forEach(series => {
+  const summary = data.shift();
+  data.forEach((series) => {
     series.data.forEach((datum, index) => {
       summary.data[index].y += datum.y;
     });
@@ -30,6 +32,7 @@ function Chart({ account, containerId, select, timeRange }) {
   return (
     <NrqlQuery accountId={account.id} query={nrql}>
       {({ loading, error, data }) => {
+        // eslint-disable-next-line no-console
         if (error) console.log(error);
         if (loading) return <div className="chart" />;
 
@@ -38,33 +41,52 @@ function Chart({ account, containerId, select, timeRange }) {
     </NrqlQuery>
   );
 }
+Chart.propTypes = {
+  account: PropTypes.object,
+  containerId: PropTypes.string,
+  select: PropTypes.string,
+  timeRange: PropTypes.string,
+};
 
-export default function Charts({ containerId, account, timeRange }) {
+export default function Charts({ containerId, account }) {
   return (
-    <ChartGroup>
-      <h4 className="chart-header">CPU</h4>
-      <Chart
-        containerId={containerId}
-        account={account}
-        timeRange={timeRange}
-        select={"average(cpuPercent) AS 'CPU'"}
-      />
-      <h4 className="chart-header">Memory</h4>
-      <Chart
-        containerId={containerId}
-        account={account}
-        timeRange={timeRange}
-        select={"average(memoryResidentSizeBytes) AS 'Memory'"}
-      />
-      <h4 className="chart-header">Disk I/O</h4>
-      <Chart
-        containerId={containerId}
-        account={account}
-        timeRange={timeRange}
-        select={
-          "average(ioReadBytesPerSecond+ioWriteBytesPerSecond) AS 'Disk I/O'"
-        }
-      />
-    </ChartGroup>
+    <PlatformStateContext.Consumer>
+      {(platformState) => {
+        const { timeRange } = platformState;
+        const timeRangeNrql = timeRangeToNrql({ timeRange });
+
+        return (
+          <ChartGroup>
+            <h4 className="chart-header">CPU</h4>
+            <Chart
+              containerId={containerId}
+              account={account}
+              timeRange={timeRangeNrql}
+              select={"average(cpuPercent) AS 'CPU'"}
+            />
+            <h4 className="chart-header">Memory</h4>
+            <Chart
+              containerId={containerId}
+              account={account}
+              timeRange={timeRangeNrql}
+              select={"average(memoryResidentSizeBytes) AS 'Memory'"}
+            />
+            <h4 className="chart-header">Disk I/O</h4>
+            <Chart
+              containerId={containerId}
+              account={account}
+              timeRange={timeRangeNrql}
+              select={
+                "average(ioReadBytesPerSecond+ioWriteBytesPerSecond) AS 'Disk I/O'"
+              }
+            />
+          </ChartGroup>
+        );
+      }}
+    </PlatformStateContext.Consumer>
   );
 }
+Charts.propTypes = {
+  account: PropTypes.object,
+  containerId: PropTypes.string,
+};

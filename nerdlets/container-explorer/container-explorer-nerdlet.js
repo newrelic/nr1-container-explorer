@@ -51,7 +51,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
   async removeFilter(name, value) {
     let { filters } = this.state;
 
-    filters = filters.filter(f => !(f.name == name && f.value == value));
+    filters = filters.filter((f) => !(f.name === name && f.value === value));
     this.setFilters(filters);
   }
 
@@ -67,21 +67,22 @@ export default class ContainerExplorerNerdlet extends React.Component {
         .join(' AND ');
     }
 
-    await this.setState({ filters, where });
-    this.countProcesses();
+    this.setState({ filters, where }, this.countProcesses);
   }
 
   async setAccount(account) {
-    await this.setState({ account, filters: [], where: null, counts: null });
-    this.countProcesses();
+    this.setState(
+      { account, filters: [], where: null, counts: null },
+      this.countProcesses
+    );
   }
 
   async setPlot(plot) {
-    await this.setState({ plot });
+    this.setState({ plot });
   }
 
   async setGroup(group) {
-    await this.setState({ group });
+    this.setState({ group });
   }
 
   async countProcesses() {
@@ -100,7 +101,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
   }
 
   render() {
-    const { account, counts, accounts } = this.state;
+    const { counts, accounts } = this.state;
 
     if (!accounts) {
       return <Spinner />;
@@ -132,7 +133,6 @@ export default class ContainerExplorerNerdlet extends React.Component {
         />
         {counts && (
           <ContainerExplorer
-            launcherUrlState={this.props.launcherUrlState}
             {...this.state}
             addFilter={this.addFilter}
             removeFilter={this.removeFilter}

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Spinner } from 'nr1';
 
 import nrdbQuery from '../../lib/nrdb-query';
@@ -19,8 +20,6 @@ const OMIT_ATTRIBUTES = {
   entityAndPid: true,
   commandLine: true,
   commandName: true,
-  processDisplayName: true,
-
   entityKey: true,
   entityName: true,
 };
@@ -35,20 +34,38 @@ function Attribute({ name, value, onSelectAttribute }) {
     </li>
   );
 }
+Attribute.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+  onSelectAttribute: PropTypes.func,
+};
 
 export default class ContainerAttributes extends React.Component {
+  static propTypes = {
+    account: PropTypes.object,
+    containerId: PropTypes.string,
+    onSelectAttribute: PropTypes.func,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      attributes: [],
+    };
+  }
+
   componentDidMount() {
     this.load();
   }
 
   componentDidUpdate({ containerId }) {
-    if (containerId != this.props.containerId) {
+    if (containerId !== this.props.containerId) {
       this.load();
     }
   }
 
   async load() {
-    this.setState({ attributes: null });
+    this.setState({ attributes: [] });
     const { account, containerId } = this.props;
     const accountId = account.id;
 
@@ -62,21 +79,21 @@ export default class ContainerAttributes extends React.Component {
     });
 
     let attributes = facets.filter(
-      f => f.count == 1 && !OMIT_ATTRIBUTES[f.name]
+      (f) => f.count === 1 && !OMIT_ATTRIBUTES[f.name]
     );
     attributes = attributes.sort((x, y) => x.name.localeCompare(y.name));
     const nrql = `SELECT * from ProcessSample WHERE ${where} LIMIT 1 ${timeWindow}`;
     const results = (await nrdbQuery(accountId, nrql))[0];
 
-    attributes.forEach(attr => {
+    attributes.forEach((attr) => {
       attr.value = results[attr.name];
     });
     this.setState({ attributes });
   }
 
   render() {
-    const { attributes } = this.state || {};
-    if (!attributes) return <Spinner fillContent />;
+    const { attributes } = this.state;
+    if (attributes.length === 0) return <Spinner fillContent />;
 
     const { onSelectAttribute } = this.props;
 
@@ -84,7 +101,7 @@ export default class ContainerAttributes extends React.Component {
       <div className="container-summary-view">
         <h3>{name}</h3>
         <ul className="tags">
-          {attributes.map(attr => {
+          {attributes.map((attr) => {
             return (
               <Attribute
                 key={attr.name}

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import nrdbQuery from '../../lib/nrdb-query';
 import bytesToSize from '../../lib/bytes-to-size';
@@ -16,7 +17,7 @@ function Table({ processData }) {
         </tr>
       </thead>
       <tbody>
-        {processData.map(process => {
+        {processData.map((process) => {
           return (
             <tr key={process.facet[0]}>
               <td className="right">{process.facet[0]}</td>
@@ -31,25 +32,41 @@ function Table({ processData }) {
     </table>
   );
 }
+Table.propTypes = {
+  processData: PropTypes.array,
+};
 
 export default class ProcessTable extends React.Component {
+  static propTypes = {
+    containerId: PropTypes.string,
+    account: PropTypes.object,
+    entityGuid: PropTypes.string,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      //
+    };
+  }
+
   componentDidMount() {
     // refresh every 15 seconds
     this.load();
     this.interval = setInterval(() => this.load(), 15000);
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
   componentDidUpdate({ containerId, entityGuid }) {
     if (
-      containerId != this.props.containerId ||
-      entityGuid != this.props.entityGuid
+      containerId !== this.props.containerId ||
+      entityGuid !== this.props.entityGuid
     ) {
       this.load();
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   async load() {
@@ -65,7 +82,7 @@ export default class ProcessTable extends React.Component {
   }
 
   render() {
-    const { processData } = this.state || {};
+    const { processData } = this.state;
     if (!processData) return <div />;
     return <Table processData={processData} />;
   }

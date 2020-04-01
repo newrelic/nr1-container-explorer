@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import bytesToSize from '../../lib/bytes-to-size';
 
 export default function ContainerTable(props) {
@@ -13,7 +14,7 @@ export default function ContainerTable(props) {
         </tr>
       </thead>
       <tbody>
-        {containerData.map(row => {
+        {containerData.map((row) => {
           return (
             <tr key={row.containerId}>
               <td>{row.name}</td>
@@ -26,3 +27,6 @@ export default function ContainerTable(props) {
     </table>
   );
 }
+ContainerTable.propTypes = {
+  containerData: PropTypes.array,
+};

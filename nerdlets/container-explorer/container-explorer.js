@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid, GridItem, Spinner } from 'nr1';
 import { sortBy } from 'lodash';
 
 import getCardinality from '../../lib/get-cardinality';
-import { timeRangeToNrql } from '@newrelic/nr1-community';
 
 import FacetTable from './facet-table';
 import Filter from './filter';
@@ -20,24 +20,25 @@ const OMIT_KEYS = {
   processDisplayName: true,
 };
 
-function GroupList({ groups, group, selectGroup, showNone }) {
+function GroupList({ groups, group, selectGroup, tooMany }) {
+  const message = tooMany
+    ? 'None: Show CPU, Memory and Disk I/O for top 2000 containers'
+    : 'None: Show CPU, Memory and Disk I/O';
   return (
     <div className="facet-list-container">
       <h3 className="facet-list-header">Group By</h3>
       <ul className="face-list">
-        {showNone && (
-          <li
-            className={`facet ${
-              group === null || group === undefined ? 'selected' : ''
-            }`}
-            key="__none"
-            onClick={() => selectGroup(null)}
-          >
-            <em>None: Show CPU, Memory and Disk I/O</em>
-          </li>
-        )}
-        {groups.map(g => {
-          const className = `facet ${g.name == group && 'selected'}`;
+        <li
+          className={`facet ${
+            group === null || group === undefined ? 'selected' : ''
+          }`}
+          key="__none"
+          onClick={() => selectGroup(null)}
+        >
+          <em>{message}</em>
+        </li>
+        {groups.map((g) => {
+          const className = `facet ${g.name === group && 'selected'}`;
           return (
             <li
               className={className}
@@ -53,8 +54,26 @@ function GroupList({ groups, group, selectGroup, showNone }) {
     </div>
   );
 }
+GroupList.propTypes = {
+  groups: PropTypes.array,
+  group: PropTypes.string,
+  selectGroup: PropTypes.func,
+  tooMany: PropTypes.bool,
+};
 
 export default class ContainerExplorer extends React.Component {
+  static propTypes = {
+    setPlot: PropTypes.func,
+    setGroup: PropTypes.func,
+    where: PropTypes.string,
+    account: PropTypes.object,
+    counts: PropTypes.object,
+    addFilter: PropTypes.func,
+    filters: PropTypes.array,
+    group: PropTypes.string,
+    removeFilter: PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
 
@@ -68,34 +87,37 @@ export default class ContainerExplorer extends React.Component {
     };
   }
 
-  toggleDetailPanel() {
-    this.setState({ detailPanelExpanded: !this.state.detailPanelExpanded });
-  }
-
   async componentDidMount() {
     await this.reload();
+  }
+
+  async componentDidUpdate({ where, account }) {
+    if (where !== this.props.where || account !== this.props.account) {
+      await this.reload();
+    }
   }
 
   componentWillUnmount() {
     if (this.interval) clearInterval(this.interval);
   }
 
-  async componentDidUpdate({ where, account }) {
-    if (where != this.props.where || account != this.props.account) {
-      await this.reload();
-    }
+  toggleDetailPanel() {
+    this.setState((prevState) => {
+      return { detailPanelExpanded: !prevState.detailPanelExpanded };
+    });
   }
 
   async reload() {
     clearInterval(this.interval);
     this.interval = null;
 
-    const startTime = new Date();
-    function logTime(message) {
-      const elapsed = new Date() - startTime;
-      // console.log("Reload", message, elapsed)
-    }
-    logTime('Start Reload');
+    // const startTime = new Date();
+    // function logTime(message) {
+    //   const elapsed = new Date() - startTime;
+    //   console.log("Reload", message, elapsed)
+    // }
+
+    // logTime('Start Reload');
 
     this.setState({ groups: null });
     const { where, account, counts } = this.props;
@@ -107,9 +129,9 @@ export default class ContainerExplorer extends React.Component {
       where,
       timeWindow,
     });
-    logTime('getCardinality');
+    // logTime('getCardinality');
 
-    const groups = facets.filter(facet => {
+    const groups = facets.filter((facet) => {
       return (
         facet.count > 1 &&
         facet.count < counts.containers * 0.6 &&
@@ -132,12 +154,10 @@ export default class ContainerExplorer extends React.Component {
       filters,
       group,
       removeFilter,
-      launcherUrlState,
     } = this.props;
     const { groups, containerId } = this.state || {};
 
     const tooMany = counts.containers > 2000;
-    const timeRange = timeRangeToNrql(launcherUrlState);
     const showFacetTable = tooMany && group;
     const { detailPanelExpanded } = this.state;
 
@@ -161,7 +181,7 @@ export default class ContainerExplorer extends React.Component {
               <GroupList
                 groups={groups}
                 group={group}
-                showNone={!tooMany}
+                tooMany={tooMany}
                 selectGroup={this.setGroup}
               />
             </GridItem>
@@ -171,7 +191,7 @@ export default class ContainerExplorer extends React.Component {
             columnSpan={containerId && !detailPanelExpanded ? 6 : 9}
           >
             <div className="filters-container">
-              {filters.map(filterProps => {
+              {filters.map((filterProps) => {
                 return (
                   <Filter
                     key={filterProps.name}
@@ -187,7 +207,7 @@ export default class ContainerExplorer extends React.Component {
                 {...this.props}
                 {...this.state}
                 selectContainer={this.selectContainer}
-                setFacetValue={value => addFilter(group, value)}
+                setFacetValue={(value) => addFilter(group, value)}
                 setPlot={this.setPlot}
               />
             )}
@@ -195,7 +215,7 @@ export default class ContainerExplorer extends React.Component {
               <FacetTable
                 {...this.props}
                 {...this.state}
-                setFacetValue={value => addFilter(group, value)}
+                setFacetValue={(value) => addFilter(group, value)}
               />
             )}
           </GridItem>
@@ -207,7 +227,6 @@ export default class ContainerExplorer extends React.Component {
               <ContainerPanel
                 account={account}
                 containerId={containerId}
-                timeRange={timeRange}
                 onSelectAttribute={(key, value) => addFilter(key, value)}
                 toggleDetailPanel={this.toggleDetailPanel}
                 showRelatedApps

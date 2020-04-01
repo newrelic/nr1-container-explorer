@@ -23,8 +23,6 @@ export default class ServiceContainers extends React.Component {
   static propTypes = {
     nerdletUrlState: PropTypes.object,
     launcherUrlState: PropTypes.object,
-    width: PropTypes.number,
-    height: PropTypes.number,
   };
 
   constructor(props) {
@@ -35,12 +33,12 @@ export default class ServiceContainers extends React.Component {
   }
 
   componentDidMount() {
-    this.findInfraAcount();
+    this.findInfraAccount();
   }
 
   componentDidUpdate({ nerdletUrlState }) {
-    if (nerdletUrlState.entityGuid != this.props.nerdletUrlState.entityGuid) {
-      this.findInfraAcount();
+    if (nerdletUrlState.entityGuid !== this.props.nerdletUrlState.entityGuid) {
+      this.findInfraAccount();
     }
   }
 
@@ -48,7 +46,7 @@ export default class ServiceContainers extends React.Component {
     this.setState({ containerId });
   }
 
-  async findInfraAcount() {
+  async findInfraAccount() {
     const { entityGuid } = this.props.nerdletUrlState || {};
     const timeRange = timeRangeToNrql(this.props.launcherUrlState);
 
@@ -59,7 +57,7 @@ export default class ServiceContainers extends React.Component {
 
     // get the container id's that this app runs in
     result = await nrdbQuery(entity.accountId, nrql);
-    const containerIds = result.map(r => r.member);
+    const containerIds = result.map((r) => r.member);
     this.setState({ containerIds });
 
     // look up the infrastucture account(s) that are associated with this entity.
@@ -77,9 +75,9 @@ export default class ServiceContainers extends React.Component {
     // one, but not, take the account with the most matches.
     if (!infraAccounts && containerIds && containerIds.length > 0) {
       const where = `containerId IN (${containerIds
-        .map(cid => `'${cid}'`)
+        .map((cid) => `'${cid}'`)
         .join(',')})`;
-      find = { eventType: 'ProcessSample', where };
+      const find = { eventType: 'ProcessSample', where };
 
       infraAccounts = await findRelatedAccountsWith(find);
 
@@ -91,7 +89,7 @@ export default class ServiceContainers extends React.Component {
       await EntityStorageMutation.mutate(storageQuery);
     }
 
-    if (!infraAccounts || infraAccounts.length == 0) {
+    if (!infraAccounts || infraAccounts.length === 0) {
       const searchedAccounts = await accountsWithData('ProcessSample');
       this.setState({ accountDataNotFound: true, searchedAccounts, entity });
     } else {
@@ -108,22 +106,16 @@ export default class ServiceContainers extends React.Component {
   }
 
   render() {
-    // workaround for bug
-    if (this.props.timeRange) return <div />;
-
     const {
       infraAccount,
       containerId,
       entity,
       timeRange,
       accountDataNotFound,
-      searchedAccounts,
     } = this.state;
 
     if (accountDataNotFound) {
-      return (
-        <NoInfrastructureData accounts={searchedAccounts} entity={entity} />
-      );
+      return <NoInfrastructureData entity={entity} />;
     }
 
     if (!entity || !infraAccount)
