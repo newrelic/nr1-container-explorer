@@ -1,3 +1,11 @@
+## [0.8.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.8.0...v0.8.1) (2020-04-01)
+
+
+### Bug Fixes
+
+* **perf:** swap underscore for lodash ([#43](https://github.com/newrelic/nr1-container-explorer/issues/43)) ([b585d6d](https://github.com/newrelic/nr1-container-explorer/commit/b585d6d70f128f294a8099bccaf28323410e3a38)), closes [newrelic#38](https://github.com/newrelic/issues/38)
+* nr1 catalog ga prep ([#44](https://github.com/newrelic/nr1-container-explorer/issues/44)) ([f647aba](https://github.com/newrelic/nr1-container-explorer/commit/f647aba4a5b84d58e83042bc793d8945f579b192)), closes [#36](https://github.com/newrelic/nr1-container-explorer/issues/36)
+
 # [0.8.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.7.1...v0.8.0) (2020-03-06)
 
 
