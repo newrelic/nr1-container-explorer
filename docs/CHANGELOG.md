@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.8.1...v0.9.0) (2020-05-29)
+
+
+### Features
+
+* Switch CI to GitHub Actions ([#46](https://github.com/newrelic/nr1-container-explorer/issues/46)) ([9bf656d](https://github.com/newrelic/nr1-container-explorer/commit/9bf656d9ad69dcf6cde80e5598426be302b4be4f))
+
 ## [0.8.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.8.0...v0.8.1) (2020-04-01)
 
 
