@@ -1,3 +1,13 @@
+## [0.9.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.9.0...v0.9.1) (2020-09-02)
+
+
+### Bug Fixes
+
+* change default branch to main ([d480b22](https://github.com/newrelic/nr1-container-explorer/commit/d480b22a2d7f38e0def4d867215374c4bab0a730))
+* package.json & package-lock.json to reduce vulnerabilities ([641bdfe](https://github.com/newrelic/nr1-container-explorer/commit/641bdfe3a04e0c74922a37fdd646829bc9d282cb))
+* upgrade @newrelic/nr1-community from 1.1.1 to 1.2.0 ([c0bc26d](https://github.com/newrelic/nr1-container-explorer/commit/c0bc26d3dc12386b9f1af56c8aa5a4ad5136d545))
+* upgrade lodash ([b8a0e92](https://github.com/newrelic/nr1-container-explorer/commit/b8a0e9271307a7f252360ca4df758c7e164d8369))
+
 # [0.9.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.8.1...v0.9.0) (2020-05-29)
 
 
