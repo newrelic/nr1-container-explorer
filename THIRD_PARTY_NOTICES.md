@@ -612,7 +612,7 @@ SOFTWARE.
 
 ### babel-eslint
 
-This product includes source derived from [babel-eslint](https://github.com/babel/babel-eslint) ([v10.0.3](https://github.com/babel/babel-eslint/tree/v10.0.3)), distributed under the [MIT License](https://github.com/babel/babel-eslint/blob/v10.0.3/LICENSE):
+This product includes source derived from [babel-eslint](https://github.com/babel/babel-eslint) ([v10.1.0](https://github.com/babel/babel-eslint/tree/v10.1.0)), distributed under the [MIT License](https://github.com/babel/babel-eslint/blob/v10.1.0/LICENSE):
 
 ```
 Copyright (c) 2014-2016 Sebastian McKenzie <sebmck@gmail.com>
@@ -669,7 +669,7 @@ THE SOFTWARE.
 
 ### prettier
 
-This product includes source derived from [prettier](https://github.com/prettier/prettier) ([v2.0.2](https://github.com/prettier/prettier/tree/v2.0.2)), distributed under the [MIT License](https://github.com/prettier/prettier/blob/v2.0.2/LICENSE):
+This product includes source derived from [prettier](https://github.com/prettier/prettier) ([v2.1.1](https://github.com/prettier/prettier/tree/v2.1.1)), distributed under the [MIT License](https://github.com/prettier/prettier/blob/v2.1.1/LICENSE):
 
 ```
 Copyright © James Long and contributors
