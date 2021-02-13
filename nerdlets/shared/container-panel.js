@@ -61,7 +61,9 @@ class Header extends React.Component {
           onClick={() => this.props.toggleDetailPanel()}
         >
           <Icon
-            type={Icon.TYPE.INTERFACE__CHEVRON__CHEVRON_RIGHT__WEIGHT_BOLD}
+            type={
+              Icon.TYPE.INTERFACE__CHEVRON__CHEVRON_RIGHT__WEIGHT_BOLD__SIZE_8
+            }
             color="#000E0E"
             sizeType={Icon.SIZE_TYPE.SMALL}
           />
