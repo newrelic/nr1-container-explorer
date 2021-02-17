@@ -5,7 +5,7 @@ import PLOTS from '../../lib/plots';
 
 function AccountPicker({ accounts, account, setAccount }) {
   return (
-    <Dropdown className="account-picker" title={account.name}>
+    <Dropdown className="account-picker" title={account.name || 'Account'}>
       {accounts.map((account) => {
         return (
           <DropdownItem onClick={() => setAccount(account)} key={account.id}>
