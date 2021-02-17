@@ -1,3 +1,11 @@
+## [0.9.2](https://github.com/newrelic/nr1-container-explorer/compare/v0.9.1...v0.9.2) (2021-02-17)
+
+
+### Bug Fixes
+
+* code review feedback ([417b784](https://github.com/newrelic/nr1-container-explorer/commit/417b7845fc869ffac545c12fb75d53bf7a815e86))
+* fixes deprecation issues ([ab4af5e](https://github.com/newrelic/nr1-container-explorer/commit/ab4af5e4db65574cf6338ea423ad6614e346aa1b))
+
 ## [0.9.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.9.0...v0.9.1) (2020-09-02)
 
 
