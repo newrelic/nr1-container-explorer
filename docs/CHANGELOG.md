@@ -1,3 +1,13 @@
+## [0.9.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.9.0...v0.9.1) (2021-03-09)
+
+
+### Bug Fixes
+
+* package.json & package-lock.json to reduce vulnerabilities ([c6a3f8f](https://github.com/newrelic/nr1-container-explorer/commit/c6a3f8fa7c3df9ea032737d520ebcceaad9f7214))
+* package.json & package-lock.json to reduce vulnerabilities ([641bdfe](https://github.com/newrelic/nr1-container-explorer/commit/641bdfe3a04e0c74922a37fdd646829bc9d282cb))
+* upgrade @newrelic/nr1-community from 1.1.1 to 1.2.0 ([c0bc26d](https://github.com/newrelic/nr1-container-explorer/commit/c0bc26d3dc12386b9f1af56c8aa5a4ad5136d545))
+* upgrade lodash from 4.17.16 to 4.17.19 ([#50](https://github.com/newrelic/nr1-container-explorer/issues/50)) ([58358b8](https://github.com/newrelic/nr1-container-explorer/commit/58358b87452790ca9e02dcbefc517eb6d7e553b8))
+
 ## [0.9.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.9.0...v0.9.1) (2020-08-06)
 
 
