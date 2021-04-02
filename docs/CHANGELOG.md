@@ -1,3 +1,10 @@
+## [0.9.3](https://github.com/newrelic/nr1-container-explorer/compare/v0.9.2...v0.9.3) (2021-04-02)
+
+
+### Bug Fixes
+
+* fix right panel not opening ([b229b04](https://github.com/newrelic/nr1-container-explorer/commit/b229b04793fbb580305fb4d551d2a377393683d9))
+
 ## [0.9.2](https://github.com/newrelic/nr1-container-explorer/compare/v0.9.1...v0.9.2) (2021-02-17)
 
 
