@@ -1,3 +1,10 @@
+## [0.9.4](https://github.com/newrelic/nr1-container-explorer/compare/v0.9.3...v0.9.4) (2021-04-05)
+
+
+### Bug Fixes
+
+* ensure screenshots are 3:2 ([cb85fdd](https://github.com/newrelic/nr1-container-explorer/commit/cb85fdd63ec379790eb52a9c7d04c6e360bd39ea))
+
 ## [0.9.3](https://github.com/newrelic/nr1-container-explorer/compare/v0.9.2...v0.9.3) (2021-04-02)
 
 
