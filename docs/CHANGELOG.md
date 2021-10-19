@@ -1,3 +1,10 @@
+## [0.10.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.10.0...v0.10.1) (2021-10-19)
+
+
+### Bug Fixes
+
+* deprecated platform parameters ([ffbe5e6](https://github.com/newrelic/nr1-container-explorer/commit/ffbe5e686bcf5fb4ec711e10291bbe6de11af694))
+
 # [0.10.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.9.4...v0.10.0) (2021-10-01)
 
 
