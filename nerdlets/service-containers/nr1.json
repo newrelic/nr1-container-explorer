@@ -1,13 +1,14 @@
 {
-    "schemaType": "NERDLET",
-    "id": "service-containers",
-    "displayName": "Containers",
-    "description": "Show Docker Containers",
-    "actionCategory": "troubleshoot",
+  "schemaType": "NERDLET",
+  "id": "service-containers",
+  "displayName": "Containers",
+  "description": "Show Docker Containers",
+  "context": {
     "entities": [
       {
         "domain": "APM",
         "type": "APPLICATION"
       }
-    ] 
+    ]
+  }
 }
