@@ -1,3 +1,10 @@
+# [0.11.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.10.1...v0.11.0) (2021-11-05)
+
+
+### Features
+
+* add catalog keywords and categoryTerms ([5ccada8](https://github.com/newrelic/nr1-container-explorer/commit/5ccada8cd1add0b44b7dcac3c767cf6b7f59bbd9))
+
 ## [0.10.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.10.0...v0.10.1) (2021-10-19)
 
 
