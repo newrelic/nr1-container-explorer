@@ -1,3 +1,10 @@
+## [0.11.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.11.0...v0.11.1) (2021-11-09)
+
+
+### Bug Fixes
+
+* remove screenshot ([f3ffd8c](https://github.com/newrelic/nr1-container-explorer/commit/f3ffd8c5d73115023baa8ef5d80d7e56b362e167))
+
 # [0.11.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.10.1...v0.11.0) (2021-11-05)
 
 
