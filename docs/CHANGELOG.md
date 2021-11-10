@@ -1,3 +1,10 @@
+## [0.11.2](https://github.com/newrelic/nr1-container-explorer/compare/v0.11.1...v0.11.2) (2021-11-10)
+
+
+### Bug Fixes
+
+* adjust size of image to fit catalog prerequisites ([edccb4e](https://github.com/newrelic/nr1-container-explorer/commit/edccb4e05e43e2a18b3d8bf50e2342034ed61458))
+
 ## [0.11.1](https://github.com/newrelic/nr1-container-explorer/compare/v0.11.0...v0.11.1) (2021-11-09)
 
 
