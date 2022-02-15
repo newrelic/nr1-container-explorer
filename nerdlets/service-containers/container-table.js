@@ -5,10 +5,10 @@ import { TableChart } from 'nr1';
 
 export default function ContainerTable(props) {
   const { entity, timeRange, selectContainer } = props;
-  const nrql = `SELECT rate(count(*), 1 minute) AS 'RPM', 
-    average(duration) AS 'R/T', 
+  const nrql = `SELECT rate(count(*), 1 minute) AS 'RPM',
+    average(duration) AS 'R/T',
     percentage(count(*), WHERE error IS true) AS 'Err %'
-    FROM Transaction WHERE entityGuid = '${entity.guid}' 
+    FROM Transaction WHERE entityGuid = '${entity.guid}'
     FACET containerId LIMIT MAX ${timeRange}`.replace(/\n /g, ' ');
 
   // only provide a click handler on the table after we have been
@@ -22,7 +22,7 @@ export default function ContainerTable(props) {
 
   return (
     <TableChart
-      accountId={entity.accountId}
+      accountIds={entity.accountId}
       query={nrql}
       onClickTable={onClickTable}
     />

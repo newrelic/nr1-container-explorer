@@ -125,7 +125,7 @@ export default class ContainerExplorer extends React.Component {
 
     const facets = await getCardinality({
       eventType: 'ProcessSample',
-      accountId: account.id,
+      accountIds: account.id,
       where,
       timeWindow,
     });
@@ -232,7 +232,6 @@ export default class ContainerExplorer extends React.Component {
                 showRelatedApps
                 onClose={() => this.setState({ containerId: null })}
               />
-              } />
             </GridItem>
           )}
         </Grid>

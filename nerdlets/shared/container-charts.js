@@ -22,15 +22,15 @@ function summarizeFacets(data) {
 }
 
 function getNrql({ select, timeRange, containerId }) {
-  return `SELECT ${select} FROM ProcessSample 
-    WHERE containerId='${containerId}' FACET processId 
+  return `SELECT ${select} FROM ProcessSample
+    WHERE containerId='${containerId}' FACET processId
     TIMESERIES LIMIT MAX ${timeRange}`;
 }
 
 function Chart({ account, containerId, select, timeRange }) {
   const nrql = getNrql({ select, timeRange, containerId });
   return (
-    <NrqlQuery accountId={account.id} query={nrql}>
+    <NrqlQuery accountIds={account.id} query={nrql}>
       {({ loading, error, data }) => {
         // eslint-disable-next-line no-console
         if (error) console.log(error);
