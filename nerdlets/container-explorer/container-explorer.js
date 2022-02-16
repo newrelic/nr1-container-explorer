@@ -125,7 +125,7 @@ export default class ContainerExplorer extends React.Component {
 
     const facets = await getCardinality({
       eventType: 'ProcessSample',
-      accountIds: account.id,
+      accountId: account.id,
       where,
       timeWindow,
     });
