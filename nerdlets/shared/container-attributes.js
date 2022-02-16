@@ -72,7 +72,7 @@ export default class ContainerAttributes extends React.Component {
     const where = `containerId = '${containerId}'`;
     const timeWindow = 'SINCE 15 minutes ago';
     const facets = await getCardinality({
-      accountIds,
+      accountId,
       where,
       timeWindow,
       eventType: 'ProcessSample',
@@ -83,7 +83,7 @@ export default class ContainerAttributes extends React.Component {
     );
     attributes = attributes.sort((x, y) => x.name.localeCompare(y.name));
     const nrql = `SELECT * from ProcessSample WHERE ${where} LIMIT 1 ${timeWindow}`;
-    const results = (await nrdbQuery(accountIds, nrql))[0];
+    const results = (await nrdbQuery(accountId, nrql))[0];
 
     attributes.forEach((attr) => {
       attr.value = results[attr.name];
