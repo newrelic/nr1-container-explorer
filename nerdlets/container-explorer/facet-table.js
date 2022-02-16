@@ -24,7 +24,7 @@ export default function FacetTable(props) {
       <TableChart
         fullWidth
         fullHeight
-        accountIds={account.id}
+        accountIds={[account.id]}
         query={nrql}
         onClickTable={onClickTable}
       />
