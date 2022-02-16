@@ -93,7 +93,7 @@ export default class ContainerHeatMap extends React.PureComponent {
     return (
       <div>
         {HEAT_MAPS.map(({ title, select, formatValue, eventType, max }) => {
-          let accountIds = entity.accountId;
+          let accountId = entity.accountId;
 
           // infra data could come from a different account than the entity
           // note: infraAccount may not be found in which case, don't show
@@ -101,7 +101,7 @@ export default class ContainerHeatMap extends React.PureComponent {
           // ALSO need a different time window to get accurate values
           if (eventType === 'ProcessSample') {
             if (!infraAccount) return <div />;
-            accountIds = infraAccount.id;
+            accountId = infraAccount.id;
           }
 
           const nrql = `SELECT ${select} FROM ${eventType}
@@ -110,7 +110,7 @@ export default class ContainerHeatMap extends React.PureComponent {
           return (
             <HeatMap
               title={title}
-              accountIds={[accountIds]}
+              accountIds={[accountId]}
               key={title}
               max={max}
               query={nrql}

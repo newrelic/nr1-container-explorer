@@ -92,13 +92,13 @@ export default class ContainerPanel extends React.Component {
   async load() {
     this.setState({});
     const { account, containerId } = this.props;
-    const accountIds = account.id;
+    const accountId = account.id;
 
     const where = `containerId = '${containerId}'`;
     const timeWindow = 'SINCE 1 minutes ago';
     const nrql = `SELECT entityGuid, hostname, apmApplicationNames from ProcessSample WHERE ${where} LIMIT 1 ${timeWindow}`;
 
-    const results = (await nrdbQuery(accountIds, nrql))[0];
+    const results = (await nrdbQuery(accountId, nrql))[0];
 
     this.setState({ ...results });
   }
