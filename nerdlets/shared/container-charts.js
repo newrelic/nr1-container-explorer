@@ -30,7 +30,7 @@ function getNrql({ select, timeRange, containerId }) {
 function Chart({ account, containerId, select, timeRange }) {
   const nrql = getNrql({ select, timeRange, containerId });
   return (
-    <NrqlQuery accountIds={account.id} query={nrql}>
+    <NrqlQuery accountIds={[account.id]} query={nrql}>
       {({ loading, error, data }) => {
         // eslint-disable-next-line no-console
         if (error) console.log(error);
