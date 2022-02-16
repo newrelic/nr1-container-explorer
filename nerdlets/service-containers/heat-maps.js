@@ -110,7 +110,7 @@ export default class ContainerHeatMap extends React.PureComponent {
           return (
             <HeatMap
               title={title}
-              accountIds={accountIds}
+              accountIds={[accountIds]}
               key={title}
               max={max}
               query={nrql}
