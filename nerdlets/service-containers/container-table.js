@@ -22,7 +22,7 @@ export default function ContainerTable(props) {
 
   return (
     <TableChart
-      accountIds={entity.accountId}
+      accountIds={[entity.accountId]}
       query={nrql}
       onClickTable={onClickTable}
     />
