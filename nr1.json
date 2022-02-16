@@ -1,5 +1,6 @@
 {
   "schemaType": "NERDPACK",
+  "id": "5d870b85-07a5-4213-9bec-f9351fb9c08c",
   "displayName": "Container Explorer",
   "description": "Global visibility of the containers across your infrastructure, easily segmented by tags."
 }
