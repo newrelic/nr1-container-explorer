@@ -18,7 +18,7 @@ import hsl from 'hsl-to-hex';
  * ## Examples
  * ```js
  * // single heatmap of Transaction throughput across all hosts
- * <HeatMap accountIds={1} query={"SELECT count(*) FROM Transaction facet host LIMIT 2000"}/>
+ * <HeatMap accountIds={[1]} query={"SELECT count(*) FROM Transaction facet host LIMIT 2000"}/>
  *
  * // list of heatmaps of Transaction throughput for all hosts grouped by appName
  * <HeatMap accountIds={1} query={"SELECT count(*) FROM Transaction facet host, appName LIMIT 2000"}/>
