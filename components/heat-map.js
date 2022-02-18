@@ -31,7 +31,7 @@ export default class Heatmap extends React.Component {
     /**
      * accountIds for the data to be presented
      */
-    accountIds: PropTypes.number.isRequired,
+    accountIds: PropTypes.arrayOf(PropTypes.number).isRequired,
 
     /**
      * query MUST select a single numerical value
