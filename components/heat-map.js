@@ -21,7 +21,7 @@ import hsl from 'hsl-to-hex';
  * <HeatMap accountIds={[1]} query={"SELECT count(*) FROM Transaction facet host LIMIT 2000"}/>
  *
  * // list of heatmaps of Transaction throughput for all hosts grouped by appName
- * <HeatMap accountIds={1} query={"SELECT count(*) FROM Transaction facet host, appName LIMIT 2000"}/>
+ * <HeatMap accountIds={[1]} query={"SELECT count(*) FROM Transaction facet host, appName LIMIT 2000"}/>
  * ```
  *
  * If 2 facets are provided, a list of grouped heatmaps will be rendered.
