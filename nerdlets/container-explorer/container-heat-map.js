@@ -74,7 +74,7 @@ export default class ContainerHeatMap extends React.Component {
 
     return (
       <Heatmap
-        accountIds={[account.id]}
+        accountId={account.id}
         query={nrql}
         key={plot.title}
         title={plot.title}
