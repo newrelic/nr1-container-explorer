@@ -1,3 +1,18 @@
+# [0.12.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.11.2...v0.12.0) (2022-02-22)
+
+
+### Bug Fixes
+
+* code review fix ([6aee060](https://github.com/newrelic/nr1-container-explorer/commit/6aee0608998710248b73e7f1cec8f88ef6d9abb9))
+* more eslint errors ([d668090](https://github.com/newrelic/nr1-container-explorer/commit/d668090f00ea1626ea487d8a5583223887c73f19))
+* resolved code review ([1cc4093](https://github.com/newrelic/nr1-container-explorer/commit/1cc40934d44e009f42b6e2d1ae7b9cda025194c1))
+* resolved eslint failure ([1f6dbad](https://github.com/newrelic/nr1-container-explorer/commit/1f6dbad81f46ddef0f31109974f5e0905ed68629))
+
+
+### Features
+
+* app deprecations ([d07c8aa](https://github.com/newrelic/nr1-container-explorer/commit/d07c8aa9eadc5e8336a2217474b9328df23e32c1))
+
 ## [0.11.2](https://github.com/newrelic/nr1-container-explorer/compare/v0.11.1...v0.11.2) (2021-11-10)
 
 
