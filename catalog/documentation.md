@@ -17,6 +17,7 @@ This project is distributed under the [Apache 2 license](https://github.com/newr
 ## Dependencies
 
 Requires [`New Relic Infrastructure`](https://newrelic.com/products/infrastructure) agent deployed on hosts running Docker containers.
+Requires `node 16`
 
 ## Caveats
 

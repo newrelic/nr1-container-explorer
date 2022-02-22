@@ -232,7 +232,6 @@ export default class ContainerExplorer extends React.Component {
                 showRelatedApps
                 onClose={() => this.setState({ containerId: null })}
               />
-              } />
             </GridItem>
           )}
         </Grid>

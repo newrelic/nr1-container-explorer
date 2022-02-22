@@ -1,20 +1,20 @@
-import { NrqlQuery, Tooltip, Stack, StackItem } from 'nr1'
+import { NrqlQuery, Tooltip, Stack, StackItem } from 'nr1';
 import PropTypes from 'prop-types';
 import { groupBy, keys, sortBy } from 'lodash';
-import hsl from 'hsl-to-hex'
+import hsl from 'hsl-to-hex';
 
 /**
  * # Heatmap
- * 
+ *
  * component that makes it super easy to visualize a large number data set
  * with a singler faceted NRQL query.
- * 
+ *
  * ## Required packages
  * ```
  *    npm install hsl-to-hex
  *    npm install lodash
  * ```
- * 
+ *
  * ## Examples
  * ```js
  * // single heatmap of Transaction throughput across all hosts
@@ -23,7 +23,7 @@ import hsl from 'hsl-to-hex'
  * // list of heatmaps of Transaction throughput for all hosts grouped by appName
  * <HeatMap accountId={1} query={"SELECT count(*) FROM Transaction facet host, appName LIMIT 2000"}/>
  * ```
- * 
+ *
  * If 2 facets are provided, a list of grouped heatmaps will be rendered.
  */
 export default class Heatmap extends React.Component {
@@ -38,12 +38,12 @@ export default class Heatmap extends React.Component {
      * and facet by one or two dimensions. If 2
      * dimensions are provided, a list of heatmaps
      * will be presented, grouped by the first dimension.
-     * 
+     *
      * Examples:
      *  ```js
      *  // single heatmap with one cell per hostname
      *  query="SELECT count(*) FROM Transaction facet hostname"
-     * 
+     *
      *  // list of heatmaps grouped by appName, then showing
      *  // one map for every appId, and one cell for each hostname
      *  query="SELECT count(*) FROM Transaction facet appName, hostname"
@@ -61,9 +61,9 @@ export default class Heatmap extends React.Component {
     /**
      * default max value for "100%". If any value returned by the query exceeds this,
      * then max is bumped up to that maximum.
-     * 
+     *
      * If max is a function, then this function will be invoked with the computed
-     * max value, enabling the client to "pin" this max to a round number 
+     * max value, enabling the client to "pin" this max to a round number
      */
     max: PropTypes.any,
 
@@ -73,7 +73,7 @@ export default class Heatmap extends React.Component {
     onSelect: PropTypes.func,
 
     /**
-     * selected node (facet name). caller to manage selection state. 
+     * selected node (facet name). caller to manage selection state.
      */
     selection: PropTypes.string,
 
@@ -95,158 +95,202 @@ export default class Heatmap extends React.Component {
     formatLabel: PropTypes.func,
 
     /**
-     * callback when a the title is clicked. Title's value is passed. If 
+     * callback when a the title is clicked. Title's value is passed. If
      * a grouped HeatMap, the title value will be the group's name (e.g. host in the above example)
      */
     onClickTitle: PropTypes.func,
-  }
+  };
 
   render() {
-    let { accountId, query, max } = this.props
+    let { accountId, query, max } = this.props;
 
-    return <NrqlQuery accountId={accountId} query={query}
-              formatType={NrqlQuery.FORMAT_TYPE.RAW}>
-      {({ loading, error, data }) => {
-        if (loading) return <div />
-        if (error) return <pre>{error}</pre>
-        if (!data.facets) {
-          console.log("Bad result", query, error, data)
-          return <div/>
-        }
-  
-        const preparedData = prepare({data, max})
-        
-        // if facet is a string, then render a single heatmap;
-        // otherwise render a group of them
-        if(!preparedData.isMultiFacet) {
-          return <SingleHeatmap {...this.props} {...preparedData}/>
-        }
-        else {
-          return <GroupedHeatMap {...this.props} {...preparedData}/>
-        }
-      }}
-    </NrqlQuery>
+    return (
+      <NrqlQuery
+        accountIds={[accountId]}
+        query={query}
+        formatType={NrqlQuery.FORMAT_TYPE.RAW}
+      >
+        {({ loading, error, data }) => {
+          if (loading) return <div />;
+          if (error) return <pre>{error}</pre>;
+          if (!data.facets) {
+            console.log('Bad result', query, error, data);
+            return <div />;
+          }
+
+          const preparedData = prepare({ data, max });
+
+          // if facet is a string, then render a single heatmap;
+          // otherwise render a group of them
+          if (!preparedData.isMultiFacet) {
+            return <SingleHeatmap {...this.props} {...preparedData} />;
+          } else {
+            return <GroupedHeatMap {...this.props} {...preparedData} />;
+          }
+        }}
+      </NrqlQuery>
+    );
   }
 }
 
 function Node(props) {
-  const { name, value, max, selected, onClick, formatValue, formatLabel } = props
+  const {
+    name,
+    value,
+    max,
+    selected,
+    onClick,
+    formatValue,
+    formatLabel,
+  } = props;
 
-  const normalizedValue = Math.max(Math.min(value / max, 1), 0)
-  const color = heatMapColor(normalizedValue)
+  const normalizedValue = Math.max(Math.min(value / max, 1), 0);
+  const color = heatMapColor(normalizedValue);
 
-  const formattedValue = formatValue ? formatValue(value) : value
-  const formattedLabel = formatLabel ? formatLabel(name) : name
+  const formattedValue = formatValue ? formatValue(value) : value;
+  const formattedLabel = formatLabel ? formatLabel(name) : name;
 
-  const toolTipText = `${formattedLabel}: ${formattedValue}`
-  const className = `node ${selected && 'selected'}`
+  const toolTipText = `${formattedLabel}: ${formattedValue}`;
+  const className = `node ${selected && 'selected'}`;
 
-  return <Tooltip text={toolTipText}>
-    <div className={className} style={{ backgroundColor: color }} onClick={onClick} />
-  </Tooltip>
+  return (
+    <Tooltip text={toolTipText}>
+      <div
+        className={className}
+        style={{ backgroundColor: color }}
+        onClick={onClick}
+      />
+    </Tooltip>
+  );
 }
 
 function SingleHeatmap(props) {
-  const { title, selection, onSelect, data, onClickTitle } = props
+  const { title, selection, onSelect, data, onClickTitle } = props;
 
-  const titleStyle = `heat-map-title ${onClickTitle && "clickable"}`
-  const onClick = onClickTitle && (() => onClickTitle(title))
+  const titleStyle = `heat-map-title ${onClickTitle && 'clickable'}`;
+  const onClick = onClickTitle && (() => onClickTitle(title));
 
-  return <div className="heat-map">
-    <Stack className="heat-map-header" verticalType={Stack.VERTICAL_TYPE.CENTER} fullWidth>
-      <StackItem className={titleStyle}>
-        <span title={title} onClick={onClick}>{title}</span>
-      </StackItem>
-      <StackItem>
-        <Legend {...props}/>
-      </StackItem>
-    </Stack>
-    <div className="heat-map-grid">
-      {data.map(datum => {
-        const selected = datum.name == selection
-        return <Node key={datum.name} {...props} {...datum} selected={selected}
-            onClick={() => onSelect(datum.name)} />
-      })}
+  return (
+    <div className="heat-map">
+      <Stack
+        className="heat-map-header"
+        verticalType={Stack.VERTICAL_TYPE.CENTER}
+        fullWidth
+      >
+        <StackItem className={titleStyle}>
+          <span title={title} onClick={onClick}>
+            {title}
+          </span>
+        </StackItem>
+        <StackItem>
+          <Legend {...props} />
+        </StackItem>
+      </Stack>
+      <div className="heat-map-grid">
+        {data.map((datum) => {
+          const selected = datum.name == selection;
+          return (
+            <Node
+              key={datum.name}
+              {...props}
+              {...datum}
+              selected={selected}
+              onClick={() => onSelect(datum.name)}
+            />
+          );
+        })}
+      </div>
     </div>
-  </div>
+  );
 }
 
 function GroupedHeatMap(props) {
-  const { data } = props
+  const { data } = props;
 
-  const groups = groupBy(data, 'group')
-  const groupNames = keys(groups).sort()
+  const groups = groupBy(data, 'group');
+  const groupNames = keys(groups).sort();
 
-  return <div>
-    {groupNames.map(groupName => {
-      const group = groups[groupName]
-      return <SingleHeatmap key={groupName} {...props} data={group} title={groupName}/>
-    })}
-  </div>
+  return (
+    <div>
+      {groupNames.map((groupName) => {
+        const group = groups[groupName];
+        return (
+          <SingleHeatmap
+            key={groupName}
+            {...props}
+            data={group}
+            title={groupName}
+          />
+        );
+      })}
+    </div>
+  );
 }
 
-function prepare({data, max}) {
-  let maxValue = 0
-  const isMultiFacet = Array.isArray(data.metadata.facet)
+function prepare({ data, max }) {
+  let maxValue = 0;
+  const isMultiFacet = Array.isArray(data.metadata.facet);
 
-  data = data.facets.map(facet => {
-    const value = Object.values(facet.results[0])[0]
-    if(value > maxValue) maxValue = value
+  data = data.facets.map((facet) => {
+    const value = Object.values(facet.results[0])[0];
+    if (value > maxValue) maxValue = value;
 
-    let name = isMultiFacet ? facet.name[1] : facet.name
-    if(!name) name = "<N/A>"
-    const dataPoint = {name, value}
+    let name = isMultiFacet ? facet.name[1] : facet.name;
+    if (!name) name = '<N/A>';
+    const dataPoint = { name, value };
 
-    if(isMultiFacet) {
-      dataPoint.group = facet.name[0]
+    if (isMultiFacet) {
+      dataPoint.group = facet.name[0];
     }
-    return dataPoint    
-  })
+    return dataPoint;
+  });
 
-  if(typeof(max) == "function") {
-    maxValue = max(maxValue)
+  if (typeof max == 'function') {
+    maxValue = max(maxValue);
+  } else if (max) {
+    maxValue = Math.max(max, maxValue);
   }
-  else if(max) {
-    maxValue = Math.max(max, maxValue)
-  }
 
-  data = sortBy(data, "name");
+  data = sortBy(data, 'name');
 
-  return {data, max: maxValue, isMultiFacet}
+  return { data, max: maxValue, isMultiFacet };
 }
 
 function heatMapColor(value) {
-  if(value > 1) throw "heatMapColor: value must be in range (0..1)"
+  if (value > 1) throw 'heatMapColor: value must be in range (0..1)';
 
-  const h = (1 - value) * 70+20
-  const s = 100
-  const l = 40
+  const h = (1 - value) * 70 + 20;
+  const s = 100;
+  const l = 40;
 
-  return hsl(h, s, l)
+  return hsl(h, s, l);
 }
 
-
 function ValueSpectrum() {
-  const values = []
+  const values = [];
   for (var i = 0; i < 1; i += 0.005) {
-    values.push(i)
+    values.push(i);
   }
-  return <div className="heat-map-spectrum">
-    {values.map((value, index) => {
-      const style = { backgroundColor: heatMapColor(value) }
-      return <div key={index} className="slice" style={style} />
-    })}
-  </div>
+  return (
+    <div className="heat-map-spectrum">
+      {values.map((value, index) => {
+        const style = { backgroundColor: heatMapColor(value) };
+        return <div key={index} className="slice" style={style} />;
+      })}
+    </div>
+  );
 }
 
 /**
  * renders a Heatmap legend as a color spectrum
  */
 export function Legend({ title, max, formatValue }) {
-  if(formatValue) max=formatValue(max)
-  return <div className="heat-map-legend">
-    <span className="left">0</span>
-    <ValueSpectrum />
-    <span>{max}</span>
-  </div>
+  if (formatValue) max = formatValue(max);
+  return (
+    <div className="heat-map-legend">
+      <span className="left">0</span>
+      <ValueSpectrum />
+      <span>{max}</span>
+    </div>
+  );
 }
