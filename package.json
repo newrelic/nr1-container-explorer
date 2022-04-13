@@ -13,7 +13,7 @@
     "@newrelic/nr1-community": "^1.2.0",
     "hsl-to-hex": "^1.0.0",
     "lodash": "^4.17.21",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.8.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3"
   },
