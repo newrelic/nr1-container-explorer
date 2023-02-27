@@ -1,6 +1,8 @@
 import React from 'react';
-import { Spinner } from 'nr1';
+import { Icon, nerdlet, Spinner } from 'nr1';
 import { EmptyState } from '@newrelic/nr1-community';
+
+import { HelpModal } from 'nr-labs-components';
 
 import quote from '../../lib/quote';
 import nrdbQuery from '../../lib/nrdb-query';
@@ -25,10 +27,24 @@ export default class ContainerExplorerNerdlet extends React.Component {
     this.state = {
       filters: [],
       plot: PLOTS[0],
+      helpModalOpen: false,
     };
   }
 
   async componentDidMount() {
+    nerdlet.setConfig({
+      actionControls: true,
+      actionControlButtons: [
+        {
+          label: 'Help',
+          hint: 'Quick links to get support',
+          type: 'primary',
+          iconType: Icon.TYPE.INTERFACE__INFO__HELP,
+          onClick: () => this.setHelpModalOpen(true),
+        },
+      ],
+    });
+
     const find = {
       eventType: 'ProcessSample',
       where: 'containerId IS NOT NULL',
@@ -100,8 +116,12 @@ export default class ContainerExplorerNerdlet extends React.Component {
     this.setState({ counts });
   }
 
+  setHelpModalOpen = (helpModalOpen) => {
+    this.setState({ helpModalOpen });
+  };
+
   render() {
-    const { counts, accounts } = this.state;
+    const { counts, accounts, helpModalOpen } = this.state;
 
     if (!accounts) {
       return <Spinner />;
@@ -138,6 +158,36 @@ export default class ContainerExplorerNerdlet extends React.Component {
             removeFilter={this.removeFilter}
             setPlot={this.setPlot}
             setGroup={this.setGroup}
+          />
+        )}
+        {helpModalOpen && (
+          <HelpModal
+            isModalOpen={helpModalOpen}
+            setModalOpen={this.setHelpModalOpen}
+            urls={{
+              docs: 'https://github.com/newrelic/nr1-container-explorer#readme',
+              createIssue:
+                'https://github.com/newrelic/nr1-container-explorer/issues/new?assignees=&labels=bug%2C+needs-triage&template=bug_report.md&title=',
+              createFeature:
+                'https://github.com/newrelic/nr1-container-explorer/issues/new?assignees=&labels=enhancement%2C+needs-triage&template=enhancement.md&title=',
+              createQuestion:
+                'https://github.com/newrelic/nr1-container-explorer/discussions/new/choose',
+            }}
+            ownerBadge={{
+              logo: {
+                src:
+                  'https://drive.google.com/uc?id=1BdXVy2X34rufvG4_1BYb9czhLRlGlgsT',
+                alt: 'New Relic Labs',
+              },
+              blurb: {
+                text: 'This is a New Relic Labs open source app.',
+                link: {
+                  text: 'Take a look at our other repos',
+                  url:
+                    'https://github.com/newrelic?q=nrlabs-viz&type=all&language=&sort=',
+                },
+              },
+            }}
           />
         )}
       </div>
