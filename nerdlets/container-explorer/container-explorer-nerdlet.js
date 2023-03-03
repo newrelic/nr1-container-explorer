@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon, nerdlet, Spinner } from 'nr1';
 import { EmptyState } from '@newrelic/nr1-community';
 
-import { HelpModal } from 'nr-labs-components';
+import { HelpModal, Messages } from 'nr-labs-components';
 
 import quote from '../../lib/quote';
 import nrdbQuery from '../../lib/nrdb-query';
@@ -143,6 +143,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
 
     return (
       <div style={{ height: '100%' }}>
+        <Messages repo="nr1-container-explorer" branch="main" />
         <Header
           {...this.state}
           setAccount={this.setAccount}
