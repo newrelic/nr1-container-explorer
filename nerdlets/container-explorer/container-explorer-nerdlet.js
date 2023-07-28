@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon, nerdlet, Spinner } from 'nr1';
 import { EmptyState } from '@newrelic/nr1-community';
 
-import { HelpModal, Messages } from 'nr-labs-components';
+import { HelpModal, Messages } from '@newrelic/nr-labs-components';
 
 import quote from '../../lib/quote';
 import nrdbQuery from '../../lib/nrdb-query';
@@ -161,36 +161,34 @@ export default class ContainerExplorerNerdlet extends React.Component {
             setGroup={this.setGroup}
           />
         )}
-        {helpModalOpen && (
-          <HelpModal
-            isModalOpen={helpModalOpen}
-            setModalOpen={this.setHelpModalOpen}
-            urls={{
-              docs: 'https://github.com/newrelic/nr1-container-explorer#readme',
-              createIssue:
-                'https://github.com/newrelic/nr1-container-explorer/issues/new?assignees=&labels=bug%2C+needs-triage&template=bug_report.md&title=',
-              createFeature:
-                'https://github.com/newrelic/nr1-container-explorer/issues/new?assignees=&labels=enhancement%2C+needs-triage&template=enhancement.md&title=',
-              createQuestion:
-                'https://github.com/newrelic/nr1-container-explorer/discussions/new/choose',
-            }}
-            ownerBadge={{
-              logo: {
-                src:
-                  'https://drive.google.com/uc?id=1BdXVy2X34rufvG4_1BYb9czhLRlGlgsT',
-                alt: 'New Relic Labs',
+        <HelpModal
+          isModalOpen={helpModalOpen}
+          setModalOpen={this.setHelpModalOpen}
+          urls={{
+            docs: 'https://github.com/newrelic/nr1-container-explorer#readme',
+            createIssue:
+              'https://github.com/newrelic/nr1-container-explorer/issues/new?assignees=&labels=bug%2C+needs-triage&template=bug_report.md&title=',
+            createFeature:
+              'https://github.com/newrelic/nr1-container-explorer/issues/new?assignees=&labels=enhancement%2C+needs-triage&template=enhancement.md&title=',
+            createQuestion:
+              'https://github.com/newrelic/nr1-container-explorer/discussions/new/choose',
+          }}
+          ownerBadge={{
+            logo: {
+              src:
+                'https://drive.google.com/uc?id=1BdXVy2X34rufvG4_1BYb9czhLRlGlgsT',
+              alt: 'New Relic Labs',
+            },
+            blurb: {
+              text: 'This is a New Relic Labs open source app.',
+              link: {
+                text: 'Take a look at our other repos',
+                url:
+                  'https://github.com/newrelic?q=nrlabs-viz&type=all&language=&sort=',
               },
-              blurb: {
-                text: 'This is a New Relic Labs open source app.',
-                link: {
-                  text: 'Take a look at our other repos',
-                  url:
-                    'https://github.com/newrelic?q=nrlabs-viz&type=all&language=&sort=',
-                },
-              },
-            }}
-          />
-        )}
+            },
+          }}
+        />
       </div>
     );
   }
