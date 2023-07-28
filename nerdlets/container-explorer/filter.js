@@ -22,5 +22,5 @@ export default function Filter(props) {
 Filter.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
-  removeFilter: PropTypes.func,
+  removeFilter: PropTypes.func
 };

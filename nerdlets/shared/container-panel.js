@@ -19,7 +19,7 @@ class Header extends React.Component {
     entityGuid: PropTypes.string,
     onClose: PropTypes.func,
     showRelatedApps: PropTypes.bool,
-    toggleDetailPanel: PropTypes.func,
+    toggleDetailPanel: PropTypes.func
   };
 
   constructor(props) {
@@ -33,14 +33,14 @@ class Header extends React.Component {
       apmApplicationNames,
       entityGuid,
       onClose,
-      showRelatedApps,
+      showRelatedApps
     } = this.props;
     const title = `${hostname}: ${containerId.slice(0, 6)}`;
 
     const entity = {
       guid: entityGuid,
       domain: 'INFRA',
-      type: 'HOST',
+      type: 'HOST'
     };
     return (
       <div className="header">
@@ -76,7 +76,7 @@ export default class ContainerPanel extends React.Component {
   static propTypes = {
     account: PropTypes.object,
     containerId: PropTypes.string,
-    onSelectAttribute: PropTypes.func,
+    onSelectAttribute: PropTypes.func
   };
 
   componentDidMount() {

@@ -27,7 +27,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
     this.state = {
       filters: [],
       plot: PLOTS[0],
-      helpModalOpen: false,
+      helpModalOpen: false
     };
   }
 
@@ -40,15 +40,15 @@ export default class ContainerExplorerNerdlet extends React.Component {
           hint: 'Quick links to get support',
           type: 'primary',
           iconType: Icon.TYPE.INTERFACE__INFO__HELP,
-          onClick: () => this.setHelpModalOpen(true),
-        },
-      ],
+          onClick: () => this.setHelpModalOpen(true)
+        }
+      ]
     });
 
     const find = {
       eventType: 'ProcessSample',
       where: 'containerId IS NOT NULL',
-      timeWindow: 'SINCE 1 minute ago',
+      timeWindow: 'SINCE 1 minute ago'
     };
     const accounts = await findRelatedAccountsWith(find);
     await this.setState({ accounts, account: accounts[0] });
@@ -67,7 +67,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
   async removeFilter(name, value) {
     let { filters } = this.state;
 
-    filters = filters.filter((f) => !(f.name === name && f.value === value));
+    filters = filters.filter(f => !(f.name === name && f.value === value));
     this.setFilters(filters);
   }
 
@@ -116,7 +116,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
     this.setState({ counts });
   }
 
-  setHelpModalOpen = (helpModalOpen) => {
+  setHelpModalOpen = helpModalOpen => {
     this.setState({ helpModalOpen });
   };
 
@@ -171,22 +171,22 @@ export default class ContainerExplorerNerdlet extends React.Component {
             createFeature:
               'https://github.com/newrelic/nr1-container-explorer/issues/new?assignees=&labels=enhancement%2C+needs-triage&template=enhancement.md&title=',
             createQuestion:
-              'https://github.com/newrelic/nr1-container-explorer/discussions/new/choose',
+              'https://github.com/newrelic/nr1-container-explorer/discussions/new/choose'
           }}
           ownerBadge={{
             logo: {
               src:
                 'https://drive.google.com/uc?id=1BdXVy2X34rufvG4_1BYb9czhLRlGlgsT',
-              alt: 'New Relic Labs',
+              alt: 'New Relic Labs'
             },
             blurb: {
               text: 'This is a New Relic Labs open source app.',
               link: {
                 text: 'Take a look at our other repos',
                 url:
-                  'https://github.com/newrelic?q=nrlabs-viz&type=all&language=&sort=',
-              },
-            },
+                  'https://github.com/newrelic?q=nrlabs-viz&type=all&language=&sort='
+              }
+            }
           }}
         />
       </div>

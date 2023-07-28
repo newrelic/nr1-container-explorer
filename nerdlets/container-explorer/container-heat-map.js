@@ -15,7 +15,7 @@ export default class ContainerHeatMap extends React.Component {
     plot: PropTypes.object,
     setFacetValue: PropTypes.func,
     selectContainer: PropTypes.func,
-    containerId: PropTypes.string,
+    containerId: PropTypes.string
   };
 
   constructor(props) {
@@ -39,7 +39,7 @@ export default class ContainerHeatMap extends React.Component {
   getNrql(select) {
     const { group, where } = this.props;
     const { timeRange } = this.state || {
-      timeRange: 'SINCE 30 seconds ago UNTIL 15 seconds ago',
+      timeRange: 'SINCE 30 seconds ago UNTIL 15 seconds ago'
     };
 
     const facet = group ? `${quote(group)}, containerId` : 'containerId';
@@ -51,9 +51,8 @@ export default class ContainerHeatMap extends React.Component {
     const { account, where } = this.props;
 
     const samplePeriod = await getProcessSamplePeriod(account.id, where);
-    const timeRange = `SINCE ${
-      samplePeriod + 10
-    } seconds ago UNTIL 10 seconds ago`;
+    const timeRange = `SINCE ${samplePeriod +
+      10} seconds ago UNTIL 10 seconds ago`;
 
     this.setState({ timeRange });
   }
@@ -64,13 +63,13 @@ export default class ContainerHeatMap extends React.Component {
       setFacetValue,
       selectContainer,
       containerId,
-      group,
+      group
     } = this.props;
     const nrql = this.getNrql(plot.select);
 
     // if the user clicks on a title (facet value) when viewing as a group, then
     // add to the filter.
-    const onClickTitle = group && ((value) => setFacetValue(value));
+    const onClickTitle = group && (value => setFacetValue(value));
 
     return (
       <Heatmap
@@ -78,11 +77,11 @@ export default class ContainerHeatMap extends React.Component {
         query={nrql}
         key={plot.title}
         title={plot.title}
-        formatLabel={(c) => c.slice(0, 6)}
+        formatLabel={c => c.slice(0, 6)}
         formatValue={plot.formatValue}
         selection={containerId}
         max={plot.max}
-        onSelect={(containerId) => selectContainer(containerId)}
+        onSelect={containerId => selectContainer(containerId)}
         onClickTitle={onClickTitle}
       />
     );
@@ -108,7 +107,7 @@ export default class ContainerHeatMap extends React.Component {
         </div>
       );
     } else {
-      return PLOTS.map((plot) => {
+      return PLOTS.map(plot => {
         return this.renderHeatMap(plot);
       });
     }

@@ -6,7 +6,7 @@ import PLOTS from '../../lib/plots';
 function AccountPicker({ accounts, account, setAccount }) {
   return (
     <Dropdown className="account-picker" title={account.name || 'Account'}>
-      {accounts.map((account) => {
+      {accounts.map(account => {
         return (
           <DropdownItem onClick={() => setAccount(account)} key={account.id}>
             {account.name}
@@ -19,14 +19,14 @@ function AccountPicker({ accounts, account, setAccount }) {
 AccountPicker.propTypes = {
   accounts: PropTypes.array,
   account: PropTypes.object,
-  setAccount: PropTypes.func,
+  setAccount: PropTypes.func
 };
 
 function PlotPicker({ group, counts, plot, setPlot }) {
   if (group || (counts && counts.containers > 500)) {
     return (
       <Dropdown label="Plot" title={plot.title}>
-        {PLOTS.map((p) => {
+        {PLOTS.map(p => {
           return (
             <DropdownItem onClick={() => setPlot(p)} key={p.title}>
               {p.title}
@@ -42,7 +42,7 @@ PlotPicker.propTypes = {
   group: PropTypes.string,
   counts: PropTypes.object,
   plot: PropTypes.object,
-  setPlot: PropTypes.func,
+  setPlot: PropTypes.func
 };
 
 export default function Header(props) {
@@ -96,5 +96,5 @@ export default function Header(props) {
 Header.propTypes = {
   counts: PropTypes.object,
   removeAllFilters: PropTypes.func,
-  filters: PropTypes.array,
+  filters: PropTypes.array
 };

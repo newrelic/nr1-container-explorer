@@ -8,7 +8,7 @@ function summarizeFacets(data) {
   if (!data || data.length === 0) return [];
 
   const summary = data.shift();
-  data.forEach((series) => {
+  data.forEach(series => {
     series.data.forEach((datum, index) => {
       summary.data[index].y += datum.y;
     });
@@ -45,13 +45,13 @@ Chart.propTypes = {
   account: PropTypes.object,
   containerId: PropTypes.string,
   select: PropTypes.string,
-  timeRange: PropTypes.string,
+  timeRange: PropTypes.string
 };
 
 export default function Charts({ containerId, account }) {
   return (
     <PlatformStateContext.Consumer>
-      {(platformState) => {
+      {platformState => {
         const { timeRange } = platformState;
         const timeRangeNrql = timeRangeToNrql({ timeRange });
 
@@ -88,5 +88,5 @@ export default function Charts({ containerId, account }) {
 }
 Charts.propTypes = {
   account: PropTypes.object,
-  containerId: PropTypes.string,
+  containerId: PropTypes.string
 };
