@@ -14,7 +14,7 @@ export default function FacetTable(props) {
 
   const onClickTable =
     setFacetValue &&
-    function(ignored, row) {
+    function (ignored, row) {
       setFacetValue(row[group]);
     };
 
@@ -35,5 +35,5 @@ FacetTable.propTypes = {
   account: PropTypes.object,
   group: PropTypes.string,
   setFacetValue: PropTypes.func,
-  where: PropTypes.string
+  where: PropTypes.string,
 };

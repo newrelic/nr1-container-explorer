@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, navigation, Tooltip } from 'nr1';
 
-const entityTypeToIcon = function(entityType) {
+const entityTypeToIcon = function (entityType) {
   const map = {
     APPLICATION: Button.ICON_TYPE.HARDWARE_AND_SOFTWARE__SOFTWARE__APPLICATION,
     HOST: Button.ICON_TYPE.HARDWARE_AND_SOFTWARE__HARDWARE__SERVER,
-    SERVICE: Button.ICON_TYPE.HARDWARE_AND_SOFTWARE__SOFTWARE__SERVICE
+    SERVICE: Button.ICON_TYPE.HARDWARE_AND_SOFTWARE__SOFTWARE__SERVICE,
   };
 
   const defaultIcon = map.HOST;
@@ -47,5 +47,5 @@ export default function LinkedEntity({ entity, name }) {
 
 LinkedEntity.propTypes = {
   entity: PropTypes.object,
-  name: PropTypes.string
+  name: PropTypes.string,
 };

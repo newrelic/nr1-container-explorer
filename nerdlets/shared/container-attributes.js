@@ -21,7 +21,7 @@ const OMIT_ATTRIBUTES = {
   commandLine: true,
   commandName: true,
   entityKey: true,
-  entityName: true
+  entityName: true,
 };
 
 function Attribute({ name, value, onSelectAttribute }) {
@@ -37,20 +37,20 @@ function Attribute({ name, value, onSelectAttribute }) {
 Attribute.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
-  onSelectAttribute: PropTypes.func
+  onSelectAttribute: PropTypes.func,
 };
 
 export default class ContainerAttributes extends React.Component {
   static propTypes = {
     account: PropTypes.object,
     containerId: PropTypes.string,
-    onSelectAttribute: PropTypes.func
+    onSelectAttribute: PropTypes.func,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      attributes: []
+      attributes: [],
     };
   }
 
@@ -75,17 +75,17 @@ export default class ContainerAttributes extends React.Component {
       accountId,
       where,
       timeWindow,
-      eventType: 'ProcessSample'
+      eventType: 'ProcessSample',
     });
 
     let attributes = facets.filter(
-      f => f.count === 1 && !OMIT_ATTRIBUTES[f.name]
+      (f) => f.count === 1 && !OMIT_ATTRIBUTES[f.name]
     );
     attributes = attributes.sort((x, y) => x.name.localeCompare(y.name));
     const nrql = `SELECT * from ProcessSample WHERE ${where} LIMIT 1 ${timeWindow}`;
     const results = (await nrdbQuery(accountId, nrql))[0];
 
-    attributes.forEach(attr => {
+    attributes.forEach((attr) => {
       attr.value = results[attr.name];
     });
     this.setState({ attributes });
@@ -101,7 +101,7 @@ export default class ContainerAttributes extends React.Component {
       <div className="container-summary-view">
         <h3>{name}</h3>
         <ul className="tags">
-          {attributes.map(attr => {
+          {attributes.map((attr) => {
             return (
               <Attribute
                 key={attr.name}

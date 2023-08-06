@@ -14,7 +14,7 @@ export default function ContainerTable(props) {
         </tr>
       </thead>
       <tbody>
-        {containerData.map(row => {
+        {containerData.map((row) => {
           return (
             <tr key={row.containerId}>
               <td>{row.name}</td>
@@ -28,5 +28,5 @@ export default function ContainerTable(props) {
   );
 }
 ContainerTable.propTypes = {
-  containerData: PropTypes.array
+  containerData: PropTypes.array,
 };

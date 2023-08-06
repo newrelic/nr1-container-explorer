@@ -6,9 +6,9 @@ export default class Wrapper extends React.PureComponent {
   render() {
     return (
       <PlatformStateContext.Consumer>
-        {launcherUrlState => (
+        {(launcherUrlState) => (
           <NerdletStateContext.Consumer>
-            {nerdletUrlState => (
+            {(nerdletUrlState) => (
               <ServiceContainers
                 launcherUrlState={launcherUrlState}
                 nerdletUrlState={nerdletUrlState}

@@ -17,7 +17,7 @@ function Table({ processData }) {
         </tr>
       </thead>
       <tbody>
-        {processData.map(process => {
+        {processData.map((process) => {
           return (
             <tr key={process.facet[0]}>
               <td className="right">{process.facet[0]}</td>
@@ -33,14 +33,14 @@ function Table({ processData }) {
   );
 }
 Table.propTypes = {
-  processData: PropTypes.array
+  processData: PropTypes.array,
 };
 
 export default class ProcessTable extends React.Component {
   static propTypes = {
     containerId: PropTypes.string,
     account: PropTypes.object,
-    entityGuid: PropTypes.string
+    entityGuid: PropTypes.string,
   };
 
   constructor(props) {

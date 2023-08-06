@@ -17,5 +17,5 @@ export default function NoInfrastructureData({ entity }) {
   );
 }
 NoInfrastructureData.propTypes = {
-  entity: PropTypes.object
+  entity: PropTypes.object,
 };
