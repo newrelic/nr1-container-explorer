@@ -1,6 +1,5 @@
 import React from 'react';
-import { Icon, nerdlet, Spinner } from 'nr1';
-import { EmptyState } from '@newrelic/nr1-community';
+import { EmptyState, Icon, nerdlet, Spinner } from 'nr1';
 
 import { HelpModal, Messages } from '@newrelic/nr-labs-components';
 
@@ -27,7 +26,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
     this.state = {
       filters: [],
       plot: PLOTS[0],
-      helpModalOpen: false
+      helpModalOpen: false,
     };
   }
 
@@ -40,15 +39,15 @@ export default class ContainerExplorerNerdlet extends React.Component {
           hint: 'Quick links to get support',
           type: 'primary',
           iconType: Icon.TYPE.INTERFACE__INFO__HELP,
-          onClick: () => this.setHelpModalOpen(true)
-        }
-      ]
+          onClick: () => this.setHelpModalOpen(true),
+        },
+      ],
     });
 
     const find = {
       eventType: 'ProcessSample',
       where: 'containerId IS NOT NULL',
-      timeWindow: 'SINCE 1 minute ago'
+      timeWindow: 'SINCE 1 minute ago',
     };
     const accounts = await findRelatedAccountsWith(find);
     await this.setState({ accounts, account: accounts[0] });
@@ -67,7 +66,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
   async removeFilter(name, value) {
     let { filters } = this.state;
 
-    filters = filters.filter(f => !(f.name === name && f.value === value));
+    filters = filters.filter((f) => !(f.name === name && f.value === value));
     this.setFilters(filters);
   }
 
@@ -116,7 +115,7 @@ export default class ContainerExplorerNerdlet extends React.Component {
     this.setState({ counts });
   }
 
-  setHelpModalOpen = helpModalOpen => {
+  setHelpModalOpen = (helpModalOpen) => {
     this.setState({ helpModalOpen });
   };
 
@@ -130,12 +129,13 @@ export default class ContainerExplorerNerdlet extends React.Component {
     if (accounts.length === 0) {
       return (
         <EmptyState
-          heading="No Data"
+          fullHeight
+          iconType={EmptyState.ICON_TYPE.DATAVIZ__DATAVIZ__SERVICE_MAP_CHART}
+          title="No Data"
           description="Could not find any infrastructure data with container instrumentation."
-          buttonText="Install New Relic Infrastructure today!"
-          buttonOnClick={() => {
-            const url = 'https://newrelic.com/products/infrastructure';
-            window.open(url);
+          additionalInfoLink={{
+            label: 'Install New Relic Infrastructure today!',
+            to: 'https://newrelic.com/products/infrastructure',
           }}
         />
       );
@@ -171,22 +171,20 @@ export default class ContainerExplorerNerdlet extends React.Component {
             createFeature:
               'https://github.com/newrelic/nr1-container-explorer/issues/new?assignees=&labels=enhancement%2C+needs-triage&template=enhancement.md&title=',
             createQuestion:
-              'https://github.com/newrelic/nr1-container-explorer/discussions/new/choose'
+              'https://github.com/newrelic/nr1-container-explorer/discussions/new/choose',
           }}
           ownerBadge={{
             logo: {
-              src:
-                'https://drive.google.com/uc?id=1BdXVy2X34rufvG4_1BYb9czhLRlGlgsT',
-              alt: 'New Relic Labs'
+              src: 'https://drive.google.com/uc?id=1BdXVy2X34rufvG4_1BYb9czhLRlGlgsT',
+              alt: 'New Relic Labs',
             },
             blurb: {
               text: 'This is a New Relic Labs open source app.',
               link: {
                 text: 'Take a look at our other repos',
-                url:
-                  'https://github.com/newrelic?q=nrlabs-viz&type=all&language=&sort='
-              }
-            }
+                url: 'https://github.com/newrelic?q=nrlabs-viz&type=all&language=&sort=',
+              },
+            },
           }}
         />
       </div>
