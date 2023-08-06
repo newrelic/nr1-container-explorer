@@ -7,11 +7,11 @@ import {
   GridItem,
   Spinner,
   EntityStorageQuery,
-  EntityStorageMutation
+  EntityStorageMutation,
 } from 'nr1';
 
 import nrdbQuery from '../../lib/nrdb-query';
-import { timeRangeToNrql } from '@newrelic/nr1-community';
+import { timeRangeToNrql } from '../../lib/timeRangeToNrql';
 import findRelatedAccountsWith from '../../lib/find-related-account-with';
 import accountsWithData from '../../lib/accounts-with-data';
 
@@ -22,7 +22,7 @@ import NoInfrastructureData from './no-infra-data';
 export default class ServiceContainers extends React.Component {
   static propTypes = {
     nerdletUrlState: PropTypes.object,
-    launcherUrlState: PropTypes.object
+    launcherUrlState: PropTypes.object,
   };
 
   constructor(props) {
@@ -57,7 +57,7 @@ export default class ServiceContainers extends React.Component {
 
     // get the container id's that this app runs in
     result = await nrdbQuery(entity.accountId, nrql);
-    const containerIds = result.map(r => r.member);
+    const containerIds = result.map((r) => r.member);
     this.setState({ containerIds });
 
     // look up the infrastucture account(s) that are associated with this entity.
@@ -65,7 +65,7 @@ export default class ServiceContainers extends React.Component {
     const storageQuery = {
       collection: 'GLOBAL',
       entityGuid,
-      documentId: 'infraAccountsData'
+      documentId: 'infraAccountsData',
     };
     const storageResult = await EntityStorageQuery.query(storageQuery);
 
@@ -75,7 +75,7 @@ export default class ServiceContainers extends React.Component {
     // one, but not, take the account with the most matches.
     if (!infraAccounts && containerIds && containerIds.length > 0) {
       const where = `containerId IN (${containerIds
-        .map(cid => `'${cid}'`)
+        .map((cid) => `'${cid}'`)
         .join(',')})`;
       const find = { eventType: 'ProcessSample', where };
 
@@ -100,7 +100,7 @@ export default class ServiceContainers extends React.Component {
         allInfraAccounts: infraAccounts,
         containerIds,
         entity,
-        timeRange
+        timeRange,
       });
     }
   }
@@ -111,7 +111,7 @@ export default class ServiceContainers extends React.Component {
       containerId,
       entity,
       timeRange,
-      accountDataNotFound
+      accountDataNotFound,
     } = this.state;
 
     if (accountDataNotFound) {
