@@ -1,3 +1,4 @@
+import React from 'react';
 import { NrqlQuery, Tooltip, Stack, StackItem } from 'nr1';
 import PropTypes from 'prop-types';
 import { groupBy, keys, sortBy } from 'lodash';
@@ -134,15 +135,9 @@ export default class Heatmap extends React.Component {
 }
 
 function Node(props) {
-  const {
-    name,
-    value,
-    max,
-    selected,
-    onClick,
-    formatValue,
-    formatLabel,
-  } = props;
+  // eslint-disable-next-line react/prop-types
+  const { name, value, max, selected, onClick, formatValue, formatLabel } =
+    props;
 
   const normalizedValue = Math.max(Math.min(value / max, 1), 0);
   const color = heatMapColor(normalizedValue);
@@ -165,6 +160,7 @@ function Node(props) {
 }
 
 function SingleHeatmap(props) {
+  // eslint-disable-next-line react/prop-types
   const { title, selection, onSelect, data, onClickTitle } = props;
 
   const titleStyle = `heat-map-title ${onClickTitle && 'clickable'}`;
@@ -187,7 +183,7 @@ function SingleHeatmap(props) {
         </StackItem>
       </Stack>
       <div className="heat-map-grid">
-        {data.map((datum) => {
+        {data.map((datum) => { // eslint-disable-line react/prop-types, prettier/prettier
           const selected = datum.name == selection;
           return (
             <Node
@@ -205,7 +201,7 @@ function SingleHeatmap(props) {
 }
 
 function GroupedHeatMap(props) {
-  const { data } = props;
+  const { data } = props; // eslint-disable-line react/prop-types
 
   const groups = groupBy(data, 'group');
   const groupNames = keys(groups).sort();
@@ -284,7 +280,7 @@ function ValueSpectrum() {
 /**
  * renders a Heatmap legend as a color spectrum
  */
-export function Legend({ title, max, formatValue }) {
+export function Legend({ title, max, formatValue }) { // eslint-disable-line react/prop-types, no-unused-vars, prettier/prettier
   if (formatValue) max = formatValue(max);
   return (
     <div className="heat-map-legend">
