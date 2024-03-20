@@ -10,7 +10,7 @@
     "eslint-fix": "eslint nerdlets/ lib/ components/ --fix"
   },
   "dependencies": {
-    "@newrelic/nr-labs-components": "^1.15.1",
+    "@newrelic/nr-labs-components": "^1.22.0",
     "hsl-to-hex": "^1.0.0",
     "lodash": "^4.17.21",
     "prop-types": "15.7.2",
