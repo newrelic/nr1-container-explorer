@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { PlatformStateContext, LineChart, NrqlQuery, ChartGroup } from 'nr1';
-import { timeRangeToNrql } from '../../lib/timeRangeToNrql';
+import { timeRangeToNrql } from '@newrelic/nr-labs-components';
 
 // roll up all of the facet data into a single summarized series.
 function summarizeFacets(data) {

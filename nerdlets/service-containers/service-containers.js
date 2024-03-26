@@ -11,7 +11,7 @@ import {
 } from 'nr1';
 
 import nrdbQuery from '../../lib/nrdb-query';
-import { timeRangeToNrql } from '../../lib/timeRangeToNrql';
+import { timeRangeToNrql } from '@newrelic/nr-labs-components';
 import findRelatedAccountsWith from '../../lib/find-related-account-with';
 import accountsWithData from '../../lib/accounts-with-data';
 
