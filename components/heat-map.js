@@ -135,7 +135,6 @@ export default class Heatmap extends React.Component {
 }
 
 function Node(props) {
-  // eslint-disable-next-line react/prop-types
   const { name, value, max, selected, onClick, formatValue, formatLabel } =
     props;
 
@@ -159,8 +158,17 @@ function Node(props) {
   );
 }
 
+Node.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.number,
+  max: PropTypes.any,
+  selected: PropTypes.bool,
+  onClick: PropTypes.func,
+  formatValue: PropTypes.func,
+  formatLabel: PropTypes.func,
+};
+
 function SingleHeatmap(props) {
-  // eslint-disable-next-line react/prop-types
   const { title, selection, onSelect, data, onClickTitle } = props;
 
   const titleStyle = `heat-map-title ${onClickTitle && 'clickable'}`;
@@ -183,7 +191,7 @@ function SingleHeatmap(props) {
         </StackItem>
       </Stack>
       <div className="heat-map-grid">
-        {data.map((datum) => { // eslint-disable-line react/prop-types, prettier/prettier
+        {data.map((datum) => {
           const selected = datum.name == selection;
           return (
             <Node
@@ -200,8 +208,16 @@ function SingleHeatmap(props) {
   );
 }
 
+SingleHeatmap.propTypes = {
+  title: PropTypes.string,
+  selection: PropTypes.string,
+  data: PropTypes.object,
+  onSelect: PropTypes.func,
+  onClickTitle: PropTypes.func,
+};
+
 function GroupedHeatMap(props) {
-  const { data } = props; // eslint-disable-line react/prop-types
+  const { data } = props;
 
   const groups = groupBy(data, 'group');
   const groupNames = keys(groups).sort();
@@ -222,6 +238,10 @@ function GroupedHeatMap(props) {
     </div>
   );
 }
+
+GroupedHeatMap.propTypes = {
+  data: PropTypes.object,
+};
 
 function prepare({ data, max }) {
   let maxValue = 0;
@@ -280,7 +300,7 @@ function ValueSpectrum() {
 /**
  * renders a Heatmap legend as a color spectrum
  */
-export function Legend({ title, max, formatValue }) { // eslint-disable-line react/prop-types, no-unused-vars, prettier/prettier
+export function Legend({ max, formatValue }) {
   if (formatValue) max = formatValue(max);
   return (
     <div className="heat-map-legend">
@@ -290,3 +310,8 @@ export function Legend({ title, max, formatValue }) { // eslint-disable-line rea
     </div>
   );
 }
+
+Legend.propTypes = {
+  max: PropTypes.any,
+  formatValue: PropTypes.func,
+};
