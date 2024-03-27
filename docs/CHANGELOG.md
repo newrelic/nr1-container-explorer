@@ -1,3 +1,21 @@
+# [0.13.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.12.0...v0.13.0) (2024-03-27)
+
+
+### Bug Fixes
+
+* add return to promise.then() ([7cf46a5](https://github.com/newrelic/nr1-container-explorer/commit/7cf46a58e1592f0a8dad21b49786e12d4b406db9))
+* change empty string to null character ([e5bd1dd](https://github.com/newrelic/nr1-container-explorer/commit/e5bd1dd11c2d09d80ffe4123e47ce2aa668ba0eb))
+* eslint error ([12a7284](https://github.com/newrelic/nr1-container-explorer/commit/12a72848e534452b570bbca4d8e3f091270a278f))
+* eslint errors ([d3ee0f4](https://github.com/newrelic/nr1-container-explorer/commit/d3ee0f497d6933d39736ce2f64e6fb22c823d480))
+* heat-map props and remove eslint react/prop-types directives ([76375d8](https://github.com/newrelic/nr1-container-explorer/commit/76375d8a771dfb924d1706b0f272a31fd612d950))
+* labs log url ([0a5de54](https://github.com/newrelic/nr1-container-explorer/commit/0a5de54a7ed3bc42ff10df329580005b2f841ec7))
+
+
+### Features
+
+* add HelpModal component ([e015b59](https://github.com/newrelic/nr1-container-explorer/commit/e015b59388c8ee96498b8e3a9aa2e6a95362042c))
+* add nrlabs Messages component ([bacb8fb](https://github.com/newrelic/nr1-container-explorer/commit/bacb8fb67d4757793d08c433f003b1bb66468e72))
+
 # [0.12.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.11.2...v0.12.0) (2022-02-22)
 
 
