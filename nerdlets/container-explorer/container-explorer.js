@@ -147,14 +147,8 @@ export default class ContainerExplorer extends React.Component {
   }
 
   render() {
-    const {
-      addFilter,
-      counts,
-      account,
-      filters,
-      group,
-      removeFilter,
-    } = this.props;
+    const { addFilter, counts, account, filters, group, removeFilter } =
+      this.props;
     const { groups, containerId } = this.state || {};
 
     const tooMany = counts.containers > 2000;

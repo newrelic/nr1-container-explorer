@@ -89,7 +89,7 @@ export default class ContainerHeatMap extends React.PureComponent {
     const { entity, infraAccount, selectContainer, containerId } = this.props;
     const { timeRange, where } = this.state;
 
-    if (!infraAccount || !timeRange) return <div />;
+    if (!infraAccount || !timeRange) return null;
     return (
       <div>
         {HEAT_MAPS.map(({ title, select, formatValue, eventType, max }) => {
@@ -100,7 +100,7 @@ export default class ContainerHeatMap extends React.PureComponent {
           // a heatmap for infra metrics
           // ALSO need a different time window to get accurate values
           if (eventType === 'ProcessSample') {
-            if (!infraAccount) return <div />;
+            if (!infraAccount) return null;
             accountId = infraAccount.id;
           }
 

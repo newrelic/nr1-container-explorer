@@ -59,13 +59,8 @@ export default class ContainerHeatMap extends React.Component {
   }
 
   renderHeatMap(plot) {
-    const {
-      account,
-      setFacetValue,
-      selectContainer,
-      containerId,
-      group,
-    } = this.props;
+    const { account, setFacetValue, selectContainer, containerId, group } =
+      this.props;
     const nrql = this.getNrql(plot.select);
 
     // if the user clicks on a title (facet value) when viewing as a group, then

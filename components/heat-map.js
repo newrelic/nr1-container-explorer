@@ -1,3 +1,4 @@
+import React from 'react';
 import { NrqlQuery, Tooltip, Stack, StackItem } from 'nr1';
 import PropTypes from 'prop-types';
 import { groupBy, keys, sortBy } from 'lodash';
@@ -134,15 +135,8 @@ export default class Heatmap extends React.Component {
 }
 
 function Node(props) {
-  const {
-    name,
-    value,
-    max,
-    selected,
-    onClick,
-    formatValue,
-    formatLabel,
-  } = props;
+  const { name, value, max, selected, onClick, formatValue, formatLabel } =
+    props;
 
   const normalizedValue = Math.max(Math.min(value / max, 1), 0);
   const color = heatMapColor(normalizedValue);
@@ -163,6 +157,16 @@ function Node(props) {
     </Tooltip>
   );
 }
+
+Node.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.number,
+  max: PropTypes.any,
+  selected: PropTypes.bool,
+  onClick: PropTypes.func,
+  formatValue: PropTypes.func,
+  formatLabel: PropTypes.func,
+};
 
 function SingleHeatmap(props) {
   const { title, selection, onSelect, data, onClickTitle } = props;
@@ -204,6 +208,14 @@ function SingleHeatmap(props) {
   );
 }
 
+SingleHeatmap.propTypes = {
+  title: PropTypes.string,
+  selection: PropTypes.string,
+  data: PropTypes.object,
+  onSelect: PropTypes.func,
+  onClickTitle: PropTypes.func,
+};
+
 function GroupedHeatMap(props) {
   const { data } = props;
 
@@ -226,6 +238,10 @@ function GroupedHeatMap(props) {
     </div>
   );
 }
+
+GroupedHeatMap.propTypes = {
+  data: PropTypes.object,
+};
 
 function prepare({ data, max }) {
   let maxValue = 0;
@@ -284,7 +300,7 @@ function ValueSpectrum() {
 /**
  * renders a Heatmap legend as a color spectrum
  */
-export function Legend({ title, max, formatValue }) {
+export function Legend({ max, formatValue }) {
   if (formatValue) max = formatValue(max);
   return (
     <div className="heat-map-legend">
@@ -294,3 +310,8 @@ export function Legend({ title, max, formatValue }) {
     </div>
   );
 }
+
+Legend.propTypes = {
+  max: PropTypes.any,
+  formatValue: PropTypes.func,
+};
