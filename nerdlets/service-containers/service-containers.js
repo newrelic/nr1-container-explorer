@@ -52,56 +52,63 @@ export default class ServiceContainers extends React.Component {
 
     let result = await EntityByGuidQuery.query({ entityGuid });
     const entity = result.data.entities[0];
-    const nrql = `SELECT uniques(containerId) FROM Transaction 
+
+    if (entity) {
+      const nrql = `SELECT uniques(containerId) FROM Transaction 
         WHERE entityGuid = '${entityGuid}' ${timeRange}`;
 
-    // get the container id's that this app runs in
-    result = await nrdbQuery(entity.accountId, nrql);
-    const containerIds = result.map((r) => r.member);
-    this.setState({ containerIds });
+      // get the container id's that this app runs in
+      result = await nrdbQuery(entity.accountId, nrql);
+      const containerIds = result.map((r) => r.member);
+      this.setState({ containerIds });
 
-    // look up the infrastucture account(s) that are associated with this entity.
-    // cache for performance.
-    const storageQuery = {
-      collection: 'GLOBAL',
-      entityGuid,
-      documentId: 'infraAccountsData',
-    };
-    const storageResult = await EntityStorageQuery.query(storageQuery);
+      // look up the infrastucture account(s) that are associated with this entity.
+      // cache for performance.
+      const storageQuery = {
+        collection: 'GLOBAL',
+        entityGuid,
+        documentId: 'infraAccountsData',
+      };
+      const storageResult = await EntityStorageQuery.query(storageQuery);
 
-    let infraAccounts = storageResult.data && storageResult.data.infraAccounts;
+      let infraAccounts =
+        storageResult.data && storageResult.data.infraAccounts;
 
-    // find the account(s) that are monitoring these containers. Hopefully there's exactly
-    // one, but not, take the account with the most matches.
-    if (!infraAccounts && containerIds && containerIds.length > 0) {
-      const where = `containerId IN (${containerIds
-        .map((cid) => `'${cid}'`)
-        .join(',')})`;
-      const find = { eventType: 'ProcessSample', where };
+      // find the account(s) that are monitoring these containers. Hopefully there's exactly
+      // one, but not, take the account with the most matches.
+      if (!infraAccounts && containerIds && containerIds.length > 0) {
+        const where = `containerId IN (${containerIds
+          .map((cid) => `'${cid}'`)
+          .join(',')})`;
+        const find = { eventType: 'ProcessSample', where };
 
-      infraAccounts = await findRelatedAccountsWith(find);
+        infraAccounts = await findRelatedAccountsWith(find);
 
-      // cache in entity storage
-      storageQuery.document = { infraAccounts };
-      storageQuery.actionType =
-        EntityStorageMutation.ACTION_TYPE.WRITE_DOCUMENT;
+        // cache in entity storage
+        storageQuery.document = { infraAccounts };
+        storageQuery.actionType =
+          EntityStorageMutation.ACTION_TYPE.WRITE_DOCUMENT;
 
-      await EntityStorageMutation.mutate(storageQuery);
-    }
+        await EntityStorageMutation.mutate(storageQuery);
+      }
 
-    if (!infraAccounts || infraAccounts.length === 0) {
-      const searchedAccounts = await accountsWithData('ProcessSample');
-      this.setState({ accountDataNotFound: true, searchedAccounts, entity });
+      if (!infraAccounts || infraAccounts.length === 0) {
+        const searchedAccounts = await accountsWithData('ProcessSample');
+        this.setState({ accountDataNotFound: true, searchedAccounts, entity });
+      } else {
+        // use the infra account with the most hits as the primary for this entity, and then
+        // store the others otherInfraAccounts so we can show an info box.
+        this.setState({
+          infraAccount: infraAccounts[0],
+          allInfraAccounts: infraAccounts,
+          containerIds,
+          entity,
+          timeRange,
+        });
+      }
     } else {
-      // use the infra account with the most hits as the primary for this entity, and then
-      // store the others otherInfraAccounts so we can show an info box.
-      this.setState({
-        infraAccount: infraAccounts[0],
-        allInfraAccounts: infraAccounts,
-        containerIds,
-        entity,
-        timeRange,
-      });
+      console.log('entity data not found => ', result);
+      this.setState({ accountDataNotFound: true, entity });
     }
   }
 
