@@ -16,12 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 10.x
+          node-version: 16
 
       - name: Cache node_modules
         id: cache-node-modules
@@ -52,14 +54,15 @@ jobs:
       # Checkout fetch-depth: 2 because there's a check to see if package.json
       # was updated, and need at least 2 commits for the check to function properly
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 10.x
+          node-version: 16
 
       - name: Download Cached Deps
         id: cache-node-modules
@@ -163,14 +166,15 @@ jobs:
       # Checkout ref: main because previous job committed third_party_notices and
       # we need to checkout main to pick up that commit
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: main
+          persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 14
+          node-version: 16
 
       - name: Install dependencies
         run: npm ci
