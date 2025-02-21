@@ -1,3 +1,12 @@
+# [0.14.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.13.0...v0.14.0) (2025-02-21)
+
+
+### Features
+
+* entity existence check ([da9c53b](https://github.com/newrelic/nr1-container-explorer/commit/da9c53be282bef7b865514a7de63d0da3db61d38))
+* update wfs ([0a1a964](https://github.com/newrelic/nr1-container-explorer/commit/0a1a9649fb65711eeb224749b79f8b80d7961842))
+* update wfs ([19f9fc0](https://github.com/newrelic/nr1-container-explorer/commit/19f9fc04f873f0fcd8bb18a354b5147526dd145a))
+
 # [0.13.0](https://github.com/newrelic/nr1-container-explorer/compare/v0.12.0...v0.13.0) (2024-03-27)
 
 
