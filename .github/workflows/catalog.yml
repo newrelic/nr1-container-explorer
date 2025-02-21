@@ -4,23 +4,23 @@ on:
   workflow_dispatch:
     inputs:
       appName:
-        description: "NR1 Nerdpack Name"
+        description: 'NR1 Nerdpack Name'
         required: true
       version:
-        description: "Version to update"
+        description: 'Version to update'
         required: true
       ref:
-        description: "Commit SHA to update the submodule to"
+        description: 'Commit SHA to update the submodule to'
         required: true
       user:
-        description: "User who initiated the deployment"
+        description: 'User who initiated the deployment'
         required: true
       action:
-        description: "Action to take with submodule. Possible values: add, update"
+        description: 'Action to take with submodule. Possible values: add, update'
         required: true
-        default: "update"
+        default: 'update'
       url:
-        description: "If action == `add`, must supply URL of repo"
+        description: 'If action == `add`, must supply URL of repo'
         required: false
 jobs:
   job-check-workflow-dispatch-inputs:
